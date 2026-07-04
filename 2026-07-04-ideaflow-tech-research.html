@@ -1,0 +1,819 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IdeaFlow 技術調査レポート</title>
+<style>*,*::before,*::after{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,'Hiragino Sans',sans-serif;line-height:1.6;-webkit-text-size-adjust:100%}img{max-width:100%}</style>
+</head>
+<body>
+<title>IdeaFlow 技術調査レポート</title>
+<style>
+  :root {
+    --bg: #FBFAF6;
+    --card: #FFFFFF;
+    --card-soft: #F5F3EA;
+    --ink: #1E1C16;
+    --muted: #6E6A5C;
+    --line: #E4E0D2;
+    --accent: #8A6D00;          /* 文字用アンバー */
+    --accent-bright: #F2C230;   /* 付箋イエロー(面用) */
+    --accent-wash: #FBF3D4;
+    --dot-red: #C94B4B;
+    --dot-blue: #3B6FD4;
+    --good: #1D7A46;
+    --warn: #9A6B00;
+    --bad: #B54040;
+    --code-bg: #F2F0E6;
+    --shadow: 0 1px 3px rgba(30, 28, 22, .07), 0 8px 24px rgba(30, 28, 22, .05);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #17181C;
+      --card: #1F2127;
+      --card-soft: #23252B;
+      --ink: #ECEAE0;
+      --muted: #A5A193;
+      --line: #34363D;
+      --accent: #E8C33A;
+      --accent-bright: #E8C33A;
+      --accent-wash: #2A2820;
+      --dot-red: #E06A6A;
+      --dot-blue: #6E97E8;
+      --good: #58B380;
+      --warn: #D9A93F;
+      --bad: #D97070;
+      --code-bg: #24262C;
+      --shadow: 0 1px 3px rgba(0, 0, 0, .35), 0 8px 24px rgba(0, 0, 0, .25);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #17181C;
+    --card: #1F2127;
+    --card-soft: #23252B;
+    --ink: #ECEAE0;
+    --muted: #A5A193;
+    --line: #34363D;
+    --accent: #E8C33A;
+    --accent-bright: #E8C33A;
+    --accent-wash: #2A2820;
+    --dot-red: #E06A6A;
+    --dot-blue: #6E97E8;
+    --good: #58B380;
+    --warn: #D9A93F;
+    --bad: #D97070;
+    --code-bg: #24262C;
+    --shadow: 0 1px 3px rgba(0, 0, 0, .35), 0 8px 24px rgba(0, 0, 0, .25);
+  }
+  :root[data-theme="light"] {
+    --bg: #FBFAF6;
+    --card: #FFFFFF;
+    --card-soft: #F5F3EA;
+    --ink: #1E1C16;
+    --muted: #6E6A5C;
+    --line: #E4E0D2;
+    --accent: #8A6D00;
+    --accent-bright: #F2C230;
+    --accent-wash: #FBF3D4;
+    --dot-red: #C94B4B;
+    --dot-blue: #3B6FD4;
+    --good: #1D7A46;
+    --warn: #9A6B00;
+    --bad: #B54040;
+    --code-bg: #F2F0E6;
+    --shadow: 0 1px 3px rgba(30, 28, 22, .07), 0 8px 24px rgba(30, 28, 22, .05);
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Noto Sans JP", "Yu Gothic UI", "Meiryo", system-ui, sans-serif;
+    font-size: 15.5px;
+    line-height: 1.9;
+    -webkit-font-smoothing: antialiased;
+  }
+  .page { max-width: 900px; margin: 0 auto; padding: 48px 24px 96px; }
+
+  /* ---------- ヘッダー ---------- */
+  header.report-head { margin-bottom: 40px; }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 12px; font-weight: 700; letter-spacing: .12em;
+    color: var(--accent); margin-bottom: 14px;
+  }
+  .eyebrow::before {
+    content: ""; width: 14px; height: 14px; border-radius: 3px;
+    background: var(--accent-bright);
+    transform: rotate(-6deg);
+    box-shadow: 1px 1px 0 rgba(30,28,22,.15);
+  }
+  h1 {
+    font-size: clamp(26px, 4.5vw, 34px);
+    line-height: 1.4; margin: 0 0 12px; font-weight: 800;
+    letter-spacing: .01em; text-wrap: balance;
+  }
+  .lede { color: var(--muted); max-width: 42em; margin: 0 0 20px; }
+  .meta-row { display: flex; flex-wrap: wrap; gap: 8px; font-size: 12.5px; color: var(--muted); }
+  .meta-row span {
+    border: 1px solid var(--line); border-radius: 999px;
+    padding: 3px 12px; background: var(--card);
+  }
+
+  /* ---------- 目次 ---------- */
+  nav.toc {
+    background: var(--card); border: 1px solid var(--line); border-radius: 12px;
+    padding: 20px 24px; margin-bottom: 48px; box-shadow: var(--shadow);
+  }
+  nav.toc .toc-title { font-size: 12px; font-weight: 700; letter-spacing: .12em; color: var(--muted); margin-bottom: 10px; }
+  nav.toc ol { margin: 0; padding: 0 0 0 1.4em; columns: 2; column-gap: 32px; font-size: 14px; }
+  nav.toc li { margin: 3px 0; break-inside: avoid; }
+  nav.toc a { color: var(--ink); text-decoration: none; border-bottom: 1px dotted var(--line); }
+  nav.toc a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+  @media (max-width: 640px) { nav.toc ol { columns: 1; } }
+
+  /* ---------- セクション ---------- */
+  section.sec { margin: 0 0 56px; }
+  .sec-head { display: flex; align-items: baseline; gap: 14px; border-bottom: 2px solid var(--ink); padding-bottom: 10px; margin-bottom: 22px; }
+  .sec-num {
+    font-family: "SF Mono", "Consolas", monospace;
+    font-size: 13px; font-weight: 700; color: var(--accent);
+    letter-spacing: .05em; flex: none;
+  }
+  h2 { font-size: 21px; margin: 0; font-weight: 800; line-height: 1.5; text-wrap: balance; }
+  h3 { font-size: 16.5px; margin: 30px 0 10px; font-weight: 700; }
+  p { margin: 0 0 14px; max-width: 46em; }
+  ul, ol { margin: 0 0 14px; padding-left: 1.5em; max-width: 44em; }
+  li { margin: 4px 0; }
+  strong { font-weight: 700; }
+  a { color: var(--accent); }
+  mark {
+    background: var(--accent-wash); color: inherit;
+    padding: 0 .25em; border-radius: 3px;
+    box-shadow: inset 0 -2px 0 var(--accent-bright);
+  }
+
+  /* ---------- TL;DR カード ---------- */
+  .tldr {
+    background: var(--card); border: 1px solid var(--line);
+    border-radius: 12px; box-shadow: var(--shadow);
+    overflow: hidden; margin-bottom: 20px;
+  }
+  .tldr-band { height: 6px; background: var(--accent-bright); }
+  .tldr-body { padding: 24px 28px; }
+  .tldr-verdict { font-size: 17px; font-weight: 700; line-height: 1.7; margin: 0 0 16px; text-wrap: balance; }
+  .stack-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; margin-top: 8px; }
+  .stack-item { background: var(--card-soft); border: 1px solid var(--line); border-radius: 10px; padding: 12px 16px; }
+  .stack-item .role { font-size: 11.5px; font-weight: 700; letter-spacing: .08em; color: var(--muted); margin-bottom: 4px; }
+  .stack-item .pick { font-weight: 700; font-size: 15px; }
+  .stack-item .alt { font-size: 12.5px; color: var(--muted); margin-top: 2px; }
+
+  /* ---------- なぜ / 注意 コールアウト ---------- */
+  .why, .caution {
+    border-radius: 10px; padding: 14px 18px; margin: 16px 0 20px;
+    font-size: 14.5px; max-width: 46em;
+  }
+  .why { background: var(--accent-wash); border-left: 4px solid var(--accent-bright); }
+  .caution { background: var(--card-soft); border-left: 4px solid var(--bad); }
+  .why .label, .caution .label {
+    display: block; font-size: 11.5px; font-weight: 700; letter-spacing: .1em;
+    margin-bottom: 4px;
+  }
+  .why .label { color: var(--accent); }
+  .caution .label { color: var(--bad); }
+  .why p, .caution p { margin: 0 0 8px; }
+  .why p:last-child, .caution p:last-child { margin-bottom: 0; }
+
+  /* ---------- テーブル ---------- */
+  .tablewrap { overflow-x: auto; margin: 16px 0 24px; border: 1px solid var(--line); border-radius: 10px; background: var(--card); box-shadow: var(--shadow); }
+  table { border-collapse: collapse; width: 100%; font-size: 13.5px; line-height: 1.7; }
+  th, td { padding: 10px 14px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--line); }
+  thead th {
+    background: var(--card-soft); font-size: 12px; letter-spacing: .06em;
+    color: var(--muted); font-weight: 700; white-space: nowrap;
+    border-bottom: 2px solid var(--line);
+  }
+  tbody tr:last-child td { border-bottom: none; }
+  td.center, th.center { text-align: center; }
+  .v { font-weight: 700; font-size: 15px; }
+  .v-best { color: var(--good); }
+  .v-ok { color: var(--ink); }
+  .v-meh { color: var(--warn); }
+  .v-bad { color: var(--bad); }
+  .legend { font-size: 12.5px; color: var(--muted); margin-top: -14px; margin-bottom: 20px; }
+
+  /* ---------- 投票ドットモチーフ ---------- */
+  .dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 4px; vertical-align: baseline; }
+  .dot.red { background: var(--dot-red); }
+  .dot.blue { background: var(--dot-blue); }
+
+  /* ---------- コード ---------- */
+  pre {
+    background: var(--code-bg); border: 1px solid var(--line); border-radius: 10px;
+    padding: 16px 20px; overflow-x: auto; font-size: 13px; line-height: 1.75;
+    font-family: "SF Mono", "Consolas", "Menlo", monospace; margin: 14px 0 22px;
+  }
+  code { font-family: "SF Mono", "Consolas", "Menlo", monospace; font-size: .92em; background: var(--code-bg); border-radius: 4px; padding: 1px 5px; }
+  pre code { background: none; padding: 0; }
+
+  /* ---------- アーキテクチャ図 ---------- */
+  .arch { display: flex; flex-direction: column; gap: 0; margin: 20px 0 24px; }
+  .arch-tier {
+    background: var(--card); border: 1px solid var(--line); border-radius: 12px;
+    padding: 16px 20px; box-shadow: var(--shadow);
+  }
+  .arch-tier .tier-name { font-size: 12px; font-weight: 700; letter-spacing: .1em; color: var(--accent); margin-bottom: 10px; }
+  .arch-boxes { display: flex; flex-wrap: wrap; gap: 10px; }
+  .arch-box {
+    background: var(--card-soft); border: 1px solid var(--line); border-radius: 8px;
+    padding: 8px 14px; font-size: 13px; line-height: 1.6;
+  }
+  .arch-box b { display: block; font-size: 13.5px; }
+  .arch-box span { color: var(--muted); font-size: 12px; }
+  .arch-link {
+    display: flex; justify-content: center; gap: 40px;
+    color: var(--muted); font-size: 12.5px; padding: 8px 0;
+  }
+  .arch-link .lk { display: flex; align-items: center; gap: 6px; }
+  .arch-link .lk::before { content: "↕"; color: var(--accent); font-weight: 700; }
+
+  /* ---------- ロードマップ ---------- */
+  .roadmap { list-style: none; padding: 0; margin: 16px 0 8px; max-width: none; }
+  .roadmap li {
+    display: grid; grid-template-columns: 64px 1fr; gap: 16px;
+    padding: 14px 0; border-bottom: 1px solid var(--line); margin: 0;
+  }
+  .roadmap li:last-child { border-bottom: none; }
+  .rm-week {
+    font-family: "SF Mono", "Consolas", monospace; font-size: 12px; font-weight: 700;
+    color: var(--accent); padding-top: 3px; white-space: nowrap;
+  }
+  .rm-body b { display: block; margin-bottom: 2px; }
+  .rm-body { font-size: 14px; }
+  .rm-body .rm-note { color: var(--muted); font-size: 13px; }
+
+  /* ---------- 出典 ---------- */
+  .sources { font-size: 13px; columns: 2; column-gap: 32px; }
+  .sources li { break-inside: avoid; margin: 6px 0; }
+  @media (max-width: 640px) { .sources { columns: 1; } }
+
+  footer.report-foot {
+    margin-top: 64px; padding-top: 20px; border-top: 1px solid var(--line);
+    font-size: 12.5px; color: var(--muted);
+  }
+</style>
+
+<div class="page">
+
+<header class="report-head">
+  <div class="eyebrow">TECHNICAL RESEARCH</div>
+  <h1>IdeaFlow 技術調査レポート<br>— PRD を実現するためのアーキテクチャ選定</h1>
+  <p class="lede">デザインスプリント形式のアイデア創出支援アプリ「IdeaFlow」の MVP（ルーム参加 → 課題整理 → HMW → アイデア発想 → 決定）を実現するために、リアルタイム同期基盤・キャンバス実装・投票の秘匿設計・コストを調査し、推奨スタックをまとめた。</p>
+  <div class="meta-row">
+    <span>調査日: 2026-07-04</span>
+    <span>対象: docs/prd.md（MVP スコープ）</span>
+    <span>前提: 少人数の学生チーム / 低予算</span>
+  </div>
+</header>
+
+<nav class="toc">
+  <div class="toc-title">目次</div>
+  <ol>
+    <li><a href="#tldr">調査サマリー（推奨スタック）</a></li>
+    <li><a href="#requirements">PRD 要件の技術分解</a></li>
+    <li><a href="#stealth">最重要の設計判断: ステルス投票</a></li>
+    <li><a href="#backend">リアルタイム基盤 4 案の比較</a></li>
+    <li><a href="#canvas">付箋ボード（キャンバス）の実装方式</a></li>
+    <li><a href="#details">個別設計ポイント</a></li>
+    <li><a href="#architecture">推奨アーキテクチャ</a></li>
+    <li><a href="#cost">コスト試算</a></li>
+    <li><a href="#risks">リスクと対策</a></li>
+    <li><a href="#roadmap">実装ロードマップ</a></li>
+    <li><a href="#sources">参考資料</a></li>
+  </ol>
+</nav>
+
+<!-- ================================================== -->
+<section class="sec" id="tldr">
+  <div class="sec-head"><span class="sec-num">01</span><h2>調査サマリー（推奨スタック）</h2></div>
+
+  <div class="tldr">
+    <div class="tldr-band"></div>
+    <div class="tldr-body">
+      <p class="tldr-verdict">結論: <mark>CRDT やホワイトボード SDK は不要</mark>。IdeaFlow に必要なのは「サーバー権威のリアクティブ同期」であり、第 1 推奨は <mark>React + Vite + Convex</mark>、第 2 推奨は Supabase 構成。MVP は無料枠内で運用できる。</p>
+      <div class="stack-grid">
+        <div class="stack-item">
+          <div class="role">フロントエンド</div>
+          <div class="pick">React 19 + TypeScript + Vite</div>
+          <div class="alt">SPA で十分（SSR/SEO 不要）</div>
+        </div>
+        <div class="stack-item">
+          <div class="role">リアルタイム基盤 / DB</div>
+          <div class="pick">Convex</div>
+          <div class="alt">代替: Supabase（Realtime + RLS）</div>
+        </div>
+        <div class="stack-item">
+          <div class="role">付箋ボード</div>
+          <div class="pick">DOM + dnd-kit</div>
+          <div class="alt">Canvas ライブラリは不採用</div>
+        </div>
+        <div class="stack-item">
+          <div class="role">UI / ローカル状態</div>
+          <div class="pick">Tailwind CSS + Zustand</div>
+          <div class="alt">フェーズ状態はサーバー側が正</div>
+        </div>
+        <div class="stack-item">
+          <div class="role">認証</div>
+          <div class="pick">匿名認証 + 表示名</div>
+          <div class="alt">招待コード 6 文字で参加</div>
+        </div>
+        <div class="stack-item">
+          <div class="role">ホスティング</div>
+          <div class="pick">Vercel / Cloudflare Pages</div>
+          <div class="alt">静的配信のみ（無料枠）</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="why">
+    <span class="label">なぜこの結論か</span>
+    <p>IdeaFlow には Google Docs 型の「同一テキストの同時編集」が存在しない。共同編集の対象は「付箋の追加・移動・グルーピング」という<strong>独立したオブジェクトの操作</strong>で、競合はほぼ起きない。一方で「ステルス投票」「フェーズ進行」「個人ワーク付箋の秘匿」という<strong>サーバー側でしか実現できない情報の出し分け</strong>が 3 つもある（詳細は §03）。この 2 点から、CRDT（Yjs）やコラボ SDK（Liveblocks）ではなく、サーバー権威モデルの BaaS が設計に一致する。</p>
+    <p>そうしないとどうなるか: CRDT/共有ドキュメント型を選ぶと、全データが全クライアントに複製されるため、投票の秘匿や個人付箋の非公開を<strong>原理的に実現できず</strong>、結局サーバー側 API を別途構築することになり二重投資になる。</p>
+  </div>
+</section>
+
+<!-- ================================================== -->
+<section class="sec" id="requirements">
+  <div class="sec-head"><span class="sec-num">02</span><h2>PRD 要件の技術分解</h2></div>
+  <p>PRD のコア機能一覧（§7）を技術要件に分解した。右列の分類が、後続のアーキテクチャ選定の判断軸になる。</p>
+
+  <div class="tablewrap">
+    <table>
+      <thead>
+        <tr><th>PRD のコア機能</th><th>技術要件</th><th>分類</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>ルーム作成・招待コード参加</td>
+          <td>匿名認証、短い招待コードの発行・照合、メンバー一覧のリアルタイム反映（Presence）</td>
+          <td>共有状態の同期</td>
+        </tr>
+        <tr>
+          <td>デザインスプリント進行フロー（5 フェーズ × Stepper）</td>
+          <td>ルーム単位の状態機械（phase / step）。ホストの操作で全員の画面が同時遷移する</td>
+          <td><strong>サーバー権威</strong></td>
+        </tr>
+        <tr>
+          <td>個人ワーク付箋 + タイマー</td>
+          <td>本人にだけ見える付箋（visibility 制御）、全員で同期するカウントダウン</td>
+          <td><strong>情報の出し分け</strong></td>
+        </tr>
+        <tr>
+          <td>共有・グルーピング</td>
+          <td>付箋のドラッグ移動・グループ割当のリアルタイム同期。ドラッグ中の座標は高頻度・低重要度</td>
+          <td>共有状態の同期</td>
+        </tr>
+        <tr>
+          <td>ステルス投票（<span class="dot red"></span>主観×1・<span class="dot blue"></span>客観×3）</td>
+          <td>投票中は自分の投票だけ見え、他人の投票は<strong>データとしても届かない</strong>こと。決定ステップで集計を公開</td>
+          <td><strong>情報の出し分け</strong></td>
+        </tr>
+        <tr>
+          <td>2 軸マッピング（価値 × 実現難易度）</td>
+          <td>ホストのみドラッグ可能という権限制御をサーバー側で強制</td>
+          <td><strong>サーバー権威</strong></td>
+        </tr>
+        <tr>
+          <td>発想支援ツール / ファシリテーションガイド</td>
+          <td>静的コンテンツ（固定文言）。フェーズ・ステップに応じて出し分けるだけで、バックエンド不要</td>
+          <td>フロントのみ</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>分類すると、<strong>「サーバー権威」と「情報の出し分け」が全体の半分以上</strong>を占める。逆に、自由描画・図形・コネクタといったホワイトボード固有の要件はゼロであり、PRD の Non-Goal（多機能ホワイトボードは目指さない）とも一致する。AI/LLM 連携も Non-Goal のため、推論基盤の調査は対象外とした。</p>
+</section>
+
+<!-- ================================================== -->
+<section class="sec" id="stealth">
+  <div class="sec-head"><span class="sec-num">03</span><h2>最重要の設計判断: ステルス投票がアーキテクチャを決める</h2></div>
+
+  <p>今回の調査で最も重要な発見は、<mark>ステルス投票の要件がリアルタイム基盤の選択肢を強く絞り込む</mark>ことである。</p>
+
+  <p>リアルタイム共同編集の実現方式は大きく 2 系統に分かれる。</p>
+
+  <div class="tablewrap">
+    <table>
+      <thead>
+        <tr><th>方式</th><th>代表</th><th>仕組み</th><th>ステルス投票との相性</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>共有ドキュメント型（CRDT）</strong></td>
+          <td>Yjs、Liveblocks Storage、tldraw sync</td>
+          <td>1 つのドキュメントを全クライアントに複製し、変更を自動マージする</td>
+          <td><span class="v v-bad">✕</span> ドキュメントに入れたデータは全員に届く。UI で隠しても DevTools で他人の投票が見える</td>
+        </tr>
+        <tr>
+          <td><strong>サーバー権威型</strong></td>
+          <td>Convex、Supabase（RLS）、Firebase（Security Rules）</td>
+          <td>データはサーバー側にあり、クライアントには<strong>閲覧を許可した分だけ</strong>を配信する</td>
+          <td><span class="v v-best">◎</span> 「投票中は自分の票のみ」「決定ステップ以降は集計を全員に」をサーバー側で強制できる</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="caution">
+    <span class="label">そうしないとどうなるか</span>
+    <p>「投票データも Yjs ドキュメントに入れて、UI 側で他人の票を非表示にする」実装は一見動くが、ブラウザの開発者ツールを開けば全員の投票がリアルタイムで丸見えになる。ステルス投票は PRD の差別化要素（発言力に左右されない意思決定）そのものなので、<strong>「見えないふり」ではなくデータレベルの秘匿</strong>が必要。同じ理屈が「個人ワーク中の付箋」にも当てはまる。</p>
+  </div>
+
+  <p>同様に、フェーズ進行・ホスト専用操作（2 軸マッピングのドラッグ、フェーズ確定）も、クライアント側のチェックだけでは改ざん可能なため、サーバー側の書き込み検証（「この操作はホストか？」「今このフェーズか？」）が必要になる。つまり IdeaFlow は <strong>「コラボアプリに見えて、実態はサーバー権威のターン制アプリに近い」</strong>。これが基盤選定の指針となる。</p>
+</section>
+
+<!-- ================================================== -->
+<section class="sec" id="backend">
+  <div class="sec-head"><span class="sec-num">04</span><h2>リアルタイム基盤 4 案の比較</h2></div>
+
+  <p>§03 の判断軸を踏まえ、実現可能な 4 案を比較した。</p>
+
+  <div class="tablewrap">
+    <table>
+      <thead>
+        <tr>
+          <th>評価軸</th>
+          <th class="center">A. Convex</th>
+          <th class="center">B. Supabase</th>
+          <th class="center">C. Liveblocks</th>
+          <th class="center">D. Yjs + PartyServer<br>(Cloudflare)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>ステルス投票の秘匿<br><small>（サーバー側の出し分け）</small></td>
+          <td class="center"><span class="v v-best">◎</span><br>query 関数内で自由に制御</td>
+          <td class="center"><span class="v v-best">◎</span><br>RLS ポリシーで行単位制御</td>
+          <td class="center"><span class="v v-bad">✕</span><br>Storage は全員に複製。別途 API が必要</td>
+          <td class="center"><span class="v v-bad">✕</span><br>Doc は全員に複製。DO 側で自作すれば可</td>
+        </tr>
+        <tr>
+          <td>フェーズ進行のサーバー権威</td>
+          <td class="center"><span class="v v-best">◎</span><br>mutation はトランザクショナル</td>
+          <td class="center"><span class="v v-ok">○</span><br>RPC（DB 関数）+ Postgres Changes</td>
+          <td class="center"><span class="v v-meh">△</span></td>
+          <td class="center"><span class="v v-ok">○</span><br>Durable Object が単一の実行点</td>
+        </tr>
+        <tr>
+          <td>リアルタイム反映の実装コスト</td>
+          <td class="center"><span class="v v-best">◎</span><br>useQuery が自動で再購読。手動リフェッチ不要</td>
+          <td class="center"><span class="v v-meh">△</span><br>変更購読→リフェッチを自前設計</td>
+          <td class="center"><span class="v v-best">◎</span><br>Presence/Storage が高水準 API</td>
+          <td class="center"><span class="v v-meh">△</span><br>プロトコル設計から自作</td>
+        </tr>
+        <tr>
+          <td>Presence（参加者一覧・カーソル）</td>
+          <td class="center"><span class="v v-ok">○</span><br>公式 presence コンポーネント</td>
+          <td class="center"><span class="v v-ok">○</span><br>Realtime Presence 内蔵</td>
+          <td class="center"><span class="v v-best">◎</span><br>本命機能</td>
+          <td class="center"><span class="v v-ok">○</span><br>Yjs Awareness</td>
+        </tr>
+        <tr>
+          <td>匿名認証</td>
+          <td class="center"><span class="v v-ok">○</span><br>Convex Auth (anonymous)</td>
+          <td class="center"><span class="v v-best">◎</span><br>signInAnonymously 内蔵</td>
+          <td class="center"><span class="v v-meh">△</span><br>自前トークン発行</td>
+          <td class="center"><span class="v v-meh">△</span><br>自前実装</td>
+        </tr>
+        <tr>
+          <td>型安全性 / DX</td>
+          <td class="center"><span class="v v-best">◎</span><br>スキーマ〜クライアントまで TS 一気通貫</td>
+          <td class="center"><span class="v v-ok">○</span><br>型生成 CLI あり</td>
+          <td class="center"><span class="v v-ok">○</span></td>
+          <td class="center"><span class="v v-meh">△</span></td>
+        </tr>
+        <tr>
+          <td>無料枠（学生チーム規模）</td>
+          <td class="center"><span class="v v-best">◎</span><br>Starter 無料・小規模なら実質 0 円</td>
+          <td class="center"><span class="v v-ok">○</span><br>同時接続 200 / 月 200 万メッセージ</td>
+          <td class="center"><span class="v v-ok">○</span><br>月間 500 アクティブルーム</td>
+          <td class="center"><span class="v v-ok">○</span><br>Workers 無料枠 + DO</td>
+        </tr>
+        <tr>
+          <td>ロックイン / 撤退可能性</td>
+          <td class="center"><span class="v v-meh">△</span><br>独自モデル。ただしバックエンドは OSS でセルフホスト可</td>
+          <td class="center"><span class="v v-best">◎</span><br>実体は Postgres。OSS・セルフホスト可</td>
+          <td class="center"><span class="v v-meh">△</span><br>プロプライエタリ</td>
+          <td class="center"><span class="v v-ok">○</span><br>OSS だが Cloudflare 依存</td>
+        </tr>
+        <tr>
+          <td>総合（IdeaFlow 適合度）</td>
+          <td class="center"><span class="v v-best">◎ 第 1 推奨</span></td>
+          <td class="center"><span class="v v-ok">○ 第 2 推奨</span></td>
+          <td class="center"><span class="v v-meh">△ 不採用</span></td>
+          <td class="center"><span class="v v-meh">△ 不採用</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="legend">◎ = 要件に最適 / ○ = 実用上問題なし / △ = 追加の作り込みが必要 / ✕ = 要件と根本的に不整合</p>
+
+  <h3>A. Convex — 第 1 推奨</h3>
+  <p>TypeScript でクエリ・ミューテーションを書くと、<strong>データ変更時に購読中の全クライアントが自動更新される</strong>リアクティブ BaaS。「ホストが Step を進めたら全員の画面が変わる」「誰かが付箋を出したらボードに現れる」という IdeaFlow の中核体験が、購読 (useQuery) を書くだけで成立する。投票の秘匿も「query 関数が返すデータを絞る」だけで実現でき、§03 の要件と完全に一致する。ミューテーションがトランザクショナルなので、「全員がほぼ同時に最後の 1 票を入れる」ような競合も安全。懸念だったロックインは、バックエンドが OSS 公開（FSL ライセンス）されセルフホスト可能になったことで緩和されている。SQL が使えない点は、MVP のデータモデル（後述、6 テーブル程度）では制約にならない。</p>
+
+  <h3>B. Supabase — 第 2 推奨（こちらを選ぶ条件つき）</h3>
+  <p>Postgres + Row Level Security（RLS）で「投票中は自分の行しか読めない」を宣言的に書ける点は Convex と並んで優秀。匿名認証（signInAnonymously）が公式機能として最も成熟しているのも利点。弱点は、リアルタイム反映を <strong>Postgres Changes / Broadcast の購読とクライアント側の再取得を自分で設計</strong>する必要があり、Convex 比で配線コードが増えること。<strong>SQL・RDB 設計を学びたい、将来セルフホストしたい、日本語の情報量を重視する</strong>ならこちらを選ぶ価値がある。</p>
+
+  <h3>C. Liveblocks — 不採用</h3>
+  <p>Presence・共同編集の DX は最高水準だが、Storage（共有状態）が全クライアント複製型のため、ステルス投票・個人付箋・ホスト権限の 3 要件すべてで別途バックエンドが必要になる。「コラボ SDK + 自前 API」の二重構成になるくらいなら、最初からサーバー権威型 1 本にまとめる方が構成が単純。テキスト共同編集（コメント・ドキュメント）を将来足すことになったら、その時に部分導入すればよい。</p>
+
+  <h3>D. Yjs + PartyServer（Cloudflare Durable Objects）— 不採用</h3>
+  <p>PartyKit は Cloudflare に買収され、後継の PartyServer + Durable Objects として健在。ルーム = Durable Object という対応付けは IdeaFlow のモデルと相性が良く、技術的には最も自由度が高い。ただし認証・永続化・秘匿ロジック・再接続処理をすべて自作することになり、<strong>MVP の価値検証（型に沿えば迷わず決められるか）に到達するまでの距離が最も遠い</strong>。インフラを学ぶ副教材としては魅力的だが、プロダクト検証が目的なら過剰投資。</p>
+
+  <div class="why">
+    <span class="label">なぜ Convex を第 1 推奨にしたか</span>
+    <p>比較表の上 3 行（秘匿・サーバー権威・リアルタイム反映コスト）が IdeaFlow の成立条件であり、3 つすべてが ◎ なのは Convex だけだから。特に「リアルタイム反映の実装コスト」は開発期間に直結する。Supabase 案は成立するが、購読・リフェッチの配線という「プロダクト価値と無関係な作業」が MVP 期間を圧迫する。</p>
+  </div>
+</section>
+
+<!-- ================================================== -->
+<section class="sec" id="canvas">
+  <div class="sec-head"><span class="sec-num">05</span><h2>付箋ボード（キャンバス）の実装方式</h2></div>
+
+  <p>「共有・分類」ステップのボードと 2 軸マッピングをどう作るかを比較した。前提として、必要なのは<strong>付箋のドラッグ・グルーピング・ドット表示のみ</strong>で、自由描画・図形・無限キャンバスは Non-Goal である。</p>
+
+  <div class="tablewrap">
+    <table>
+      <thead>
+        <tr><th>方式</th><th>概要</th><th>評価</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>DOM + dnd-kit</strong>（推奨）</td>
+          <td>付箋を <code>position: absolute</code> の div として描画し、dnd-kit でドラッグ制御。2026 年時点で React の DnD ライブラリのデファクトで、活発にメンテされている</td>
+          <td><span class="v v-best">◎</span> 付箋は数十〜百枚規模で DOM で十分。テキスト入力・IME・アクセシビリティが無料で手に入る。2 軸マッピングも同じ実装を座標系だけ変えて再利用できる</td>
+        </tr>
+        <tr>
+          <td>react-konva（Canvas 描画）</td>
+          <td>HTML5 Canvas 上に付箋を描画</td>
+          <td><span class="v v-meh">△</span> 数千オブジェクト規模なら優位だが、テキスト編集・IME 入力を自前実装する必要があり、付箋アプリでは弱点が直撃する</td>
+        </tr>
+        <tr>
+          <td>tldraw SDK + tldraw sync</td>
+          <td>完成度の高いホワイトボード SDK</td>
+          <td><span class="v v-bad">✕</span> 本番利用は商用ライセンス（年額 $6,000）または申請制の Hobby ライセンスが必要。かつ全機能入りホワイトボードは Non-Goal と衝突し、sync は共有ドキュメント型なので §03 の問題も抱える</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="why">
+    <span class="label">なぜ Canvas ではなく DOM か</span>
+    <p>付箋の本質は「テキストの入力と表示」であり、これは DOM が最も得意とする領域だから。Canvas 系を選ぶと、日本語 IME での入力、テキストの折り返し、スクリーンリーダー対応をすべて自前で作り直すことになる。IdeaFlow の付箋枚数（5 人 × 10 枚前後 × フェーズ）では Canvas の描画性能優位は一切効いてこない。</p>
+  </div>
+</section>
+
+<!-- ================================================== -->
+<section class="sec" id="details">
+  <div class="sec-head"><span class="sec-num">06</span><h2>個別設計ポイント</h2></div>
+
+  <h3>6-1. フェーズ / ステップ進行（Stepper）</h3>
+  <p>ルームの現在地は <code>rooms.phase</code> / <code>rooms.step</code> の 2 フィールドをサーバー側の単一の真実とする。ホストが「次へ」を押すとミューテーションが権限（ホストか）と遷移の妥当性（決定前に飛ばしていないか）を検証して更新し、全クライアントは購読経由で同時に画面遷移する。クライアント側に XState などの状態機械ライブラリを入れる必要はなく、<strong>サーバーの値を描画するだけの「読み取り専用ステート」</strong>に保つのが肝。</p>
+
+  <h3>6-2. タイマー同期</h3>
+  <p>「残り 3:00」をネットワークでカウントダウン配信するのではなく、<strong>終了時刻 <code>timerEndsAt</code>（サーバー時刻）だけを保存</strong>し、各クライアントがローカルで残り時間を計算・描画する。クライアントとサーバーの時計ズレは、接続時にサーバー時刻とのオフセットを一度取得して補正する。そうしないと、毎秒のブロードキャストで帯域を浪費するうえ、遅延で端末ごとに表示がズレる。</p>
+
+  <h3>6-3. ドラッグ座標の同期（高頻度更新の逃がし方)</h3>
+  <p>付箋のドラッグ中の座標を毎フレーム DB に書くと、書き込み回数が爆発する。<strong>「ドラッグ中は ephemeral（一時）チャネルに間引いて送信（50〜100ms スロットル）、ドロップ時に確定座標を 1 回だけ DB に書く」</strong>という 2 層構成にする。Convex なら presence 系コンポーネントまたはスロットルしたミューテーション、Supabase なら Broadcast チャネルが ephemeral 層に該当する。他人のドラッグがカクついても実害はないが、確定位置がズレると議論に影響するため、この非対称性を利用した設計。</p>
+
+  <h3>6-4. 個人ワーク付箋の可視性切替</h3>
+  <p>付箋に <code>visibility: "private" | "shared"</code> を持たせ、private の間はサーバー側で作者本人にしか返さない。共有ステップへの遷移時に一括で shared に切り替える。「個人ワークで安心して書ける」という PRD の価値は、この<strong>データレベルの秘匿</strong>で担保される（§03 と同じ原理）。</p>
+
+  <h3>6-5. 招待コードと匿名参加</h3>
+  <p>参加フローは「6 文字コード入力 → 匿名認証 → 表示名入力 → 入室」。コードは紛らわしい文字（0/O、1/I/l）を除いた 31 文字セットで 6 桁 ≒ 8.9 億通りとし、総当たりを流量制限で防ぐ。アカウント登録を要求しないことが、ハッカソン現場での「全員が 30 秒で入室できる」体験に直結する。ルームには TTL（例: 72 時間）を設け、無料枠のデータ量を守る。</p>
+
+  <h3>6-6. データモデル（叩き台）</h3>
+  <pre><code>rooms      { id, code, hostId, phase, step, timerEndsAt, createdAt }
+members    { roomId, userId, displayName, role: "host" | "member" }
+notes      { roomId, authorId, phase, text, x, y, groupId?,
+             visibility: "private" | "shared" }
+groups     { roomId, phase, label }
+votes      { roomId, phase, targetId, voterId,
+             kind: "subjective" | "objective" }   // 🔴×1 / 🔵×3 の上限はサーバー側で検証
+decisions  { roomId, phase, targetId }            // 各フェーズの確定成果物</code></pre>
+  <p>6 テーブルで MVP 全機能が表現できる。HMW・アイデア・課題はいずれも <code>notes</code> の <code>phase</code> 違いとして扱えるため、フェーズごとに専用テーブルを作らない。2 軸マッピングは notes の x/y を「価値 × 実現難易度」座標として解釈し直すだけで、ボードと同じ仕組みに乗る。</p>
+</section>
+
+<!-- ================================================== -->
+<section class="sec" id="architecture">
+  <div class="sec-head"><span class="sec-num">07</span><h2>推奨アーキテクチャ</h2></div>
+
+  <div class="arch">
+    <div class="arch-tier">
+      <div class="tier-name">クライアント — React 19 + TypeScript + Vite（SPA）</div>
+      <div class="arch-boxes">
+        <div class="arch-box"><b>付箋ボード</b><span>DOM + dnd-kit / 2 軸マップと共通実装</span></div>
+        <div class="arch-box"><b>Stepper + ガイド文言</b><span>サーバーの phase/step を描画するだけ</span></div>
+        <div class="arch-box"><b>投票 UI</b><span><span class="dot red"></span>主観×1 <span class="dot blue"></span>客観×3</span></div>
+        <div class="arch-box"><b>タイマー表示</b><span>endsAt からローカル計算</span></div>
+        <div class="arch-box"><b>発想支援サイドバー</b><span>静的コンテンツ（SCAMPER 等）</span></div>
+        <div class="arch-box"><b>ローカル UI 状態</b><span>Zustand（ドラッグ中・入力中のみ）</span></div>
+      </div>
+    </div>
+    <div class="arch-link">
+      <span class="lk">useQuery: リアクティブ購読（WebSocket）</span>
+      <span class="lk">mutation: 付箋 CRUD・投票・フェーズ遷移</span>
+    </div>
+    <div class="arch-tier">
+      <div class="tier-name">バックエンド — Convex（サーバー権威）</div>
+      <div class="arch-boxes">
+        <div class="arch-box"><b>queries</b><span>閲覧権限に応じた出し分け（秘匿はここで実現）</span></div>
+        <div class="arch-box"><b>mutations</b><span>権限・票数上限・遷移妥当性の検証（トランザクショナル）</span></div>
+        <div class="arch-box"><b>presence</b><span>参加者一覧・ドラッグ中座標（ephemeral）</span></div>
+        <div class="arch-box"><b>scheduler</b><span>タイマー終了処理・ルーム TTL 掃除</span></div>
+        <div class="arch-box"><b>DB</b><span>rooms / members / notes / groups / votes / decisions</span></div>
+      </div>
+    </div>
+  </div>
+
+  <p>配信は Vercel または Cloudflare Pages の無料枠（SPA の静的配信のみ）。SSR が不要なのは、アプリ全体が招待コードの先にありSEO 対象ページが実質ランディング 1 枚だからで、Next.js を採用する動機が薄い。フレームワークを薄く保つことで、コントラクト層（Convex のスキーマと関数シグネチャ）を厳密に定義し、UI 実装側を再生成可能に保つ方針とも整合する。</p>
+
+  <div class="why">
+    <span class="label">Supabase 構成に切り替える場合の差分</span>
+    <p>クライアントはほぼ同じ。バックエンド層が「RLS ポリシー（秘匿）+ DB 関数（検証つき書き込み）+ Realtime 購読（Postgres Changes / Broadcast / Presence）」の組み合わせに置き換わる。追加で必要になるのは、変更通知を受けてからのクエリ再取得の設計（TanStack Query 併用を推奨）。</p>
+  </div>
+</section>
+
+<!-- ================================================== -->
+<section class="sec" id="cost">
+  <div class="sec-head"><span class="sec-num">08</span><h2>コスト試算（学生チーム規模）</h2></div>
+
+  <p>想定負荷: 1 ルーム 5 人前後、同時アクティブ 1〜20 ルーム、1 セッション 1〜2 時間。この規模では<strong>全構成が無料枠に収まる</strong>。</p>
+
+  <div class="tablewrap">
+    <table>
+      <thead>
+        <tr><th>サービス</th><th>無料枠（2026-07 時点）</th><th>有料化の起点</th><th>IdeaFlow での見通し</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Convex</td>
+          <td>Starter プラン無料。小規模アプリは実質 0 円で運用可</td>
+          <td>Pro: $25/開発者/月</td>
+          <td>MVP 検証期間は無料枠内。関数呼び出し数もこの規模では余裕</td>
+        </tr>
+        <tr>
+          <td>Supabase</td>
+          <td>同時リアルタイム接続 200 / 月 200 万メッセージ / DB 500MB</td>
+          <td>Pro: $25/月（接続 500 まで込み、超過 $10/1,000 接続）</td>
+          <td>同時 200 接続 = 5 人ルーム × 40。検証には十分</td>
+        </tr>
+        <tr>
+          <td>Liveblocks（参考）</td>
+          <td>月間アクティブルーム 500 / MAU 無制限</td>
+          <td>Pro: $25/月</td>
+          <td>不採用だが、枠自体は足りる規模</td>
+        </tr>
+        <tr>
+          <td>Vercel / Cloudflare Pages</td>
+          <td>個人・Hobby 無料枠</td>
+          <td>商用化時</td>
+          <td>SPA 静的配信のみなので負荷ほぼゼロ</td>
+        </tr>
+        <tr>
+          <td>tldraw SDK（参考）</td>
+          <td>開発・Hobby（申請制）は無料</td>
+          <td>商用ライセンス 年額 $6,000</td>
+          <td>不採用の根拠の一つ</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>結論として、<strong>MVP の価値検証フェーズで金銭コストは発生しない</strong>。コストよりも、無料枠の「同時接続数」がハッカソン当日のような瞬間ピークで頭打ちにならないかだけ注視すればよい（§09 リスク参照）。</p>
+</section>
+
+<!-- ================================================== -->
+<section class="sec" id="risks">
+  <div class="sec-head"><span class="sec-num">09</span><h2>リスクと対策</h2></div>
+
+  <div class="tablewrap">
+    <table>
+      <thead>
+        <tr><th>リスク</th><th>影響</th><th>対策</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Convex のベンダーロックイン</td>
+          <td>将来の移行コスト</td>
+          <td>バックエンドは OSS（FSL）でセルフホスト可能。さらにデータモデル（§6-6）を Postgres でも表現可能な形に保ち、ドメインロジックを関数として分離しておく</td>
+        </tr>
+        <tr>
+          <td>ハッカソン当日の瞬間ピークで無料枠の同時接続を超過</td>
+          <td>新規入室不可</td>
+          <td>イベント利用が見えた時点で 1 ヶ月だけ Pro（$25）に上げる。両候補とも段階課金なので突発コストは小さい</td>
+        </tr>
+        <tr>
+          <td>招待コードの総当たり・荒らし入室</td>
+          <td>ルーム荒らし</td>
+          <td>コード空間 8.9 億通り + 参加試行の流量制限 + 匿名認証への CAPTCHA（Supabase は公式推奨）。ホストによる強制退出機能を早期に用意</td>
+        </tr>
+        <tr>
+          <td>ドラッグ同期の書き込み過多</td>
+          <td>枠消費・カクつき</td>
+          <td>§6-3 の ephemeral + 確定書き込みの 2 層構成。最悪、ドラッグ中の中継を諦めてドロップ結果だけ同期しても UX は成立する</td>
+        </tr>
+        <tr>
+          <td>匿名ユーザーのセッション消失（リロード・回線切断）</td>
+          <td>付箋・投票の紐付けが切れる</td>
+          <td>匿名認証はトークンが localStorage に残るため通常のリロードは復帰可能。加えて「同じ表示名での再入室時に旧メンバーへ再紐付け」する救済フローを用意</td>
+        </tr>
+        <tr>
+          <td>全員同時操作での競合（付箋の同時移動・最後の 1 票）</td>
+          <td>データ不整合</td>
+          <td>付箋は基本 last-write-wins で実害なし（独立オブジェクトのため）。票数上限・フェーズ遷移だけはトランザクショナルな mutation / DB 関数で厳密に検証</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ================================================== -->
+<section class="sec" id="roadmap">
+  <div class="sec-head"><span class="sec-num">10</span><h2>実装ロードマップ（MVP）</h2></div>
+
+  <p>PRD のフロー順ではなく、<strong>技術リスクが高い順（同期 → 秘匿 → 装飾）</strong>に検証する並びにした。仮に基盤選定に誤りがあっても Step 1〜2 で顕在化する。</p>
+
+  <ol class="roadmap">
+    <li>
+      <span class="rm-week">STEP 1</span>
+      <div class="rm-body">
+        <b>ルーム基盤 — 作成 / 招待コード / 匿名参加 / メンバー一覧（Presence）</b>
+        <span class="rm-note">リアルタイム購読と匿名認証という 2 大リスクをここで検証。5 人で同時入室して名前が即座に並べば基盤選定は正しい</span>
+      </div>
+    </li>
+    <li>
+      <span class="rm-week">STEP 2</span>
+      <div class="rm-body">
+        <b>フェーズ進行 — phase/step のサーバー権威 + Stepper UI + ガイド文言表示</b>
+        <span class="rm-note">ホスト操作で全員の画面が同時遷移することを確認。ガイド文言は静的データなのでこの時点で全フェーズ分入れられる</span>
+      </div>
+    </li>
+    <li>
+      <span class="rm-week">STEP 3</span>
+      <div class="rm-body">
+        <b>付箋 — 個人ワーク（private）+ タイマー + 共有切替 + ボードのドラッグ / グルーピング</b>
+        <span class="rm-note">visibility 切替と ephemeral 座標同期という、このプロダクト固有の設計が正しく動くかの検証</span>
+      </div>
+    </li>
+    <li>
+      <span class="rm-week">STEP 4</span>
+      <div class="rm-body">
+        <b>ステルス投票 — <span class="dot red"></span>×1 / <span class="dot blue"></span>×3 の上限検証 + 集計公開 + 決定ステップ</b>
+        <span class="rm-note">「投票中は他人の票がデータとして届かない」ことを DevTools で確認するテストを必ず入れる</span>
+      </div>
+    </li>
+    <li>
+      <span class="rm-week">STEP 5</span>
+      <div class="rm-body">
+        <b>仕上げ — 2 軸マッピング（ホスト専用ドラッグ）+ 発想支援サイドバー + 全 5 フェーズ通し</b>
+        <span class="rm-note">2 軸マップは Step 3 のボード実装の座標系違い。最後に 5 人で①→⑤の通しリハーサルを行い、PRD の Goal 1（迷わず完走）を検証</span>
+      </div>
+    </li>
+  </ol>
+</section>
+
+<!-- ================================================== -->
+<section class="sec" id="sources">
+  <div class="sec-head"><span class="sec-num">11</span><h2>参考資料</h2></div>
+  <ul class="sources">
+    <li><a href="https://www.convex.dev/pricing" target="_blank" rel="noopener">Convex — Pricing</a></li>
+    <li><a href="https://github.com/get-convex/convex-backend" target="_blank" rel="noopener">Convex — OSS バックエンド（セルフホスト）</a></li>
+    <li><a href="https://stack.convex.dev/best-real-time-databases-compared" target="_blank" rel="noopener">Convex Stack — リアルタイム DB 比較</a></li>
+    <li><a href="https://supabase.com/docs/guides/realtime/limits" target="_blank" rel="noopener">Supabase — Realtime Limits</a></li>
+    <li><a href="https://supabase.com/docs/guides/realtime/pricing" target="_blank" rel="noopener">Supabase — Realtime Pricing</a></li>
+    <li><a href="https://supabase.com/docs/guides/auth/auth-anonymous" target="_blank" rel="noopener">Supabase — Anonymous Sign-Ins</a></li>
+    <li><a href="https://liveblocks.io/docs/pricing/plans" target="_blank" rel="noopener">Liveblocks — Plans / Limits</a></li>
+    <li><a href="https://docs.yjs.dev/" target="_blank" rel="noopener">Yjs — Documentation</a></li>
+    <li><a href="https://blog.cloudflare.com/cloudflare-acquires-partykit/" target="_blank" rel="noopener">Cloudflare — PartyKit 買収発表</a></li>
+    <li><a href="https://github.com/cloudflare/partykit" target="_blank" rel="noopener">PartyServer（Cloudflare / Durable Objects）</a></li>
+    <li><a href="https://tldraw.dev/pricing" target="_blank" rel="noopener">tldraw — Pricing and Licensing</a></li>
+    <li><a href="https://tldraw.dev/blog/announcing-tldraw-sync" target="_blank" rel="noopener">tldraw — Announcing tldraw sync</a></li>
+    <li><a href="https://dndkit.com/" target="_blank" rel="noopener">dnd kit — 公式サイト / Changelog</a></li>
+    <li><a href="https://puckeditor.com/blog/top-5-drag-and-drop-libraries-for-react" target="_blank" rel="noopener">Puck — React DnD ライブラリ比較 (2026)</a></li>
+    <li><a href="https://ably.com/compare/liveblocks-broadcast-vs-supabase" target="_blank" rel="noopener">Ably — Liveblocks vs Supabase Realtime 比較</a></li>
+    <li><a href="https://konvajs.org/docs/react/index.html" target="_blank" rel="noopener">react-konva — Documentation</a></li>
+  </ul>
+</section>
+
+<footer class="report-foot">
+  IdeaFlow 技術調査レポート / docs/prd.md（MVP スコープ）に基づく / 料金・無料枠は 2026-07-04 時点の調査値。採用決定時は各公式ページで一次確認を推奨。
+</footer>
+
+</div>
+
+</body>
+</html>
