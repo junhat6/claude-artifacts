@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Claude Artifacts</title>
+<style>
+:root { --bg:#faf9f7; --fg:#1a1a1a; --muted:#8a8578; --card:#ffffff; --border:#e8e4dc; --accent:#b45309; }
+@media (prefers-color-scheme: dark) {
+  :root { --bg:#191817; --fg:#eceae6; --muted:#8f8a80; --card:#22211f; --border:#38352f; --accent:#e0a458; }
+}
+* { box-sizing:border-box }
+body { margin:0; background:var(--bg); color:var(--fg);
+  font-family:system-ui,-apple-system,'Hiragino Sans',sans-serif; line-height:1.6; }
+main { max-width:640px; margin:0 auto; padding:3rem 1.25rem 4rem; }
+h1 { font-size:1.4rem; margin:0 0 .25rem; }
+p.sub { margin:0 0 2rem; color:var(--muted); font-size:.85rem; }
+ul { list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:.5rem; }
+li.empty { color:var(--muted); }
+li a { display:flex; gap:1rem; align-items:baseline; padding:.8rem 1rem;
+  background:var(--card); border:1px solid var(--border); border-radius:10px;
+  text-decoration:none; color:inherit; }
+li a:hover { border-color:var(--accent); }
+.date { color:var(--muted); font-size:.78rem; font-variant-numeric:tabular-nums; flex-shrink:0; }
+.title { font-weight:600; }
+</style>
+</head>
+<body>
+<main>
+<h1>Claude Artifacts</h1>
+<p class="sub">Claude Code が生成したレポート・ドキュメントの保管庫</p>
+<ul>
+<li class="empty">まだアーティファクトがありません</li>
+</ul>
+</main>
+</body>
+</html>
