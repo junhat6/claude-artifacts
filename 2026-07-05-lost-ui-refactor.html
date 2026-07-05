@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>UIリファクタの現在地</title>
+<style>*,*::before,*::after{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,'Hiragino Sans',sans-serif;line-height:1.6;-webkit-text-size-adjust:100%}img{max-width:100%}</style>
+</head>
+<body>
+<title>UIリファクタの現在地</title>
+<style>
+  :root {
+    --bg: #fafaf8;
+    --surface: #ffffff;
+    --ink: #1d1d1a;
+    --muted: #6b6b63;
+    --line: #e4e4de;
+    --accent: #0e7a3f;
+    --accent-soft: #e8f4ec;
+    --warn: #9a5b09;
+    --warn-soft: #faf2e2;
+    --bad: #a33a2e;
+    --bad-soft: #f9ece9;
+    --mono-bg: #f1f1ec;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #171716;
+      --surface: #1f1f1d;
+      --ink: #ebebe6;
+      --muted: #a1a198;
+      --line: #32322e;
+      --accent: #5cc385;
+      --accent-soft: #1c2f23;
+      --warn: #e0a44c;
+      --warn-soft: #2f2717;
+      --bad: #e08072;
+      --bad-soft: #33201c;
+      --mono-bg: #292925;
+    }
+  }
+  :root[data-theme="light"] {
+    --bg: #fafaf8; --surface: #ffffff; --ink: #1d1d1a; --muted: #6b6b63;
+    --line: #e4e4de; --accent: #0e7a3f; --accent-soft: #e8f4ec;
+    --warn: #9a5b09; --warn-soft: #faf2e2; --bad: #a33a2e; --bad-soft: #f9ece9;
+    --mono-bg: #f1f1ec;
+  }
+  :root[data-theme="dark"] {
+    --bg: #171716; --surface: #1f1f1d; --ink: #ebebe6; --muted: #a1a198;
+    --line: #32322e; --accent: #5cc385; --accent-soft: #1c2f23;
+    --warn: #e0a44c; --warn-soft: #2f2717; --bad: #e08072; --bad-soft: #33201c;
+    --mono-bg: #292925;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic UI", Meiryo, system-ui, sans-serif;
+    line-height: 1.75;
+    margin: 0;
+    font-size: 15px;
+  }
+  main {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 48px 24px 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+  }
+
+  header.page h1 { font-size: 26px; font-weight: 700; margin: 0 0 8px; text-wrap: balance; }
+  header.page p { margin: 0; color: var(--muted); max-width: 44em; }
+  .done-banner {
+    margin-top: 14px;
+    display: inline-block;
+    background: var(--accent-soft);
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 13.5px;
+    border-radius: 999px;
+    padding: 4px 16px;
+  }
+
+  section { display: flex; flex-direction: column; gap: 16px; }
+  .eyebrow { font-size: 12px; font-weight: 700; letter-spacing: 0.14em; color: var(--accent); margin: 0; }
+  section > h2 { font-size: 20px; font-weight: 700; margin: 0; text-wrap: balance; }
+  section > p.lede { margin: 0; color: var(--muted); max-width: 46em; }
+
+  code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.88em;
+    background: var(--mono-bg);
+    border-radius: 5px;
+    padding: 1px 6px;
+    white-space: nowrap;
+  }
+
+  /* ---- 流れ図 ---- */
+  .flow { display: flex; flex-direction: column; align-items: stretch; gap: 0; }
+  .flow-step {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 14px 18px;
+    display: grid;
+    grid-template-columns: minmax(150px, 220px) 1fr;
+    gap: 4px 18px;
+    align-items: baseline;
+  }
+  .flow-step .who { font-weight: 700; font-size: 14.5px; }
+  .flow-step .who small { display: block; font-weight: 400; color: var(--muted); font-size: 12px; line-height: 1.5; }
+  .flow-step .what { color: var(--muted); font-size: 14px; }
+  .flow-step .what strong { color: var(--ink); font-weight: 600; }
+  .flow-arrow {
+    align-self: center;
+    color: var(--muted);
+    font-size: 13px;
+    padding: 2px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .flow-arrow::before { content: "↓"; color: var(--accent); font-weight: 700; }
+  @media (max-width: 560px) { .flow-step { grid-template-columns: 1fr; } }
+
+  /* ---- 対比カラム ---- */
+  .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  @media (max-width: 640px) { .compare { grid-template-columns: 1fr; } }
+  .lane {
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--surface);
+    padding: 16px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .lane h3 { margin: 0; font-size: 14.5px; font-weight: 700; }
+  .lane.bad h3 { color: var(--bad); }
+  .lane.good h3 { color: var(--accent); }
+  .lane ol { margin: 0; padding-left: 1.3em; display: flex; flex-direction: column; gap: 6px; font-size: 14px; }
+  .lane li { color: var(--muted); }
+  .lane li strong { color: var(--ink); }
+  .lane li.hit { background: var(--bad-soft); border-radius: 6px; padding: 4px 8px; list-style-position: inside; margin-left: -8px; }
+  .lane.good li.hit { background: var(--accent-soft); }
+
+  .note { font-size: 13.5px; color: var(--muted); margin: 0; }
+  .note strong { color: var(--ink); }
+
+  /* ---- 残り課題 ---- */
+  .decisions { display: flex; flex-direction: column; gap: 12px; }
+  .decision {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 14px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .decision .row { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+  .decision h3 { font-size: 15px; font-weight: 700; margin: 0; }
+  .decision p { margin: 0; color: var(--muted); font-size: 14px; }
+  .pill { font-size: 12px; font-weight: 700; border-radius: 999px; padding: 2px 12px; white-space: nowrap; }
+  .pill.ok { background: var(--accent-soft); color: var(--accent); }
+
+  /* ---- 折りたたみ(前回の整理) ---- */
+  details {
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--surface);
+    padding: 0;
+  }
+  details summary {
+    cursor: pointer;
+    padding: 14px 20px;
+    font-weight: 700;
+    font-size: 14.5px;
+    list-style-position: inside;
+  }
+  details summary:focus-visible { outline: 2px solid var(--accent); border-radius: 10px; }
+  details .inner { padding: 4px 20px 20px; display: flex; flex-direction: column; gap: 16px; }
+
+  .tablewrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+  table { border-collapse: collapse; width: 100%; font-size: 14px; }
+  th, td { text-align: left; padding: 10px 16px; border-top: 1px solid var(--line); vertical-align: top; }
+  thead th {
+    border-top: none; font-size: 12px; font-weight: 700; letter-spacing: 0.08em;
+    color: var(--muted); background: color-mix(in oklab, var(--surface) 60%, var(--bg));
+  }
+  td.term { font-weight: 700; white-space: nowrap; }
+  td .why { color: var(--muted); }
+  h3.sub { font-size: 14px; font-weight: 700; margin: 8px 0 0; }
+</style>
+
+<main>
+  <header class="page">
+    <h1>UIリファクタの現在地</h1>
+    <p>トースト通知まで実装・検証・コミットが終わり、あなたの push で全部 GitHub に反映済みです。以下は今回のトースト実装の「仕組み」の図解です。</p>
+    <span class="done-banner">✓ 作業はすべて完了 — あなた待ちのものはありません</span>
+  </header>
+
+  <section>
+    <p class="eyebrow">1 ── 仕組みの全体図</p>
+    <h2>「保存しました」が出るまでの流れ</h2>
+    <p class="lede">登場する部品は4つだけです。それぞれ役割が1つずつあり、この順に仕事が流れます。</p>
+    <div class="flow">
+      <div class="flow-step">
+        <div class="who">SubmitButton / ConfirmButton<small>src/components/</small></div>
+        <div class="what"><strong>押す係。</strong>送信中はスピナーを出して連打を防ぐ(<code>useFormStatus</code> で「いま送信中か」を知る)。ConfirmButton は前に確認ダイアログを挟むだけで、あとは同じ。</div>
+      </div>
+      <div class="flow-arrow">フォームが送信される</div>
+      <div class="flow-step">
+        <div class="who">ToastForm<small>src/components/ToastForm.tsx(新設)</small></div>
+        <div class="what"><strong>通訳係。</strong>ただの <code>&lt;form&gt;</code> の皮。Server Action を呼び、返ってきた結果(ActionResult)を見て <code>toast.success()</code> か <code>toast.error()</code> を呼ぶ。</div>
+      </div>
+      <div class="flow-arrow">サーバーで実行</div>
+      <div class="flow-step">
+        <div class="who">Server Action<small>src/app/actions.ts</small></div>
+        <div class="what"><strong>実務係。</strong>DB更新などをして、成功なら <code>{ ok: true, message: "保存しました" }</code>、失敗なら <code>{ ok: false, message: 理由 }</code> を <strong>return</strong> する。この戻り値の型が <code>ActionResult</code>(contracts/forms.ts で定義)。</div>
+      </div>
+      <div class="flow-arrow">結果が ToastForm に戻り、toast() が呼ばれる</div>
+      <div class="flow-step">
+        <div class="who">Toaster<small>src/app/layout.tsx に1個だけ</small></div>
+        <div class="what"><strong>表示係。</strong>sonner ライブラリの掲示板。アプリ全体で1個置いてあり、どこから <code>toast()</code> を呼んでも右下にポップアップを出す。</div>
+      </div>
+    </div>
+    <p class="note">ポイント: ToastForm は「どのアクションか」を知りません。<strong>メッセージはサーバー側(actions.ts)が決めて返す</strong>ので、文言を変えたいときは actions.ts だけ触れば済みます。</p>
+  </section>
+
+  <section>
+    <p class="eyebrow">2 ── 設計方針</p>
+    <h2>なぜ「throw ではなく戻り値」に全部書き換えたか</h2>
+    <p class="lede">Next.js の公式ドキュメントにある規約です。「起こりうるエラー(入力ミス・未回答など)は throw せず、値として return せよ」。理由は throw した先の行き先にあります。</p>
+    <div class="compare">
+      <div class="lane bad">
+        <h3>throw する(前の作り)</h3>
+        <ol>
+          <li>「まだ回答がありません」を <strong>throw new Error(...)</strong></li>
+          <li>Next.js はこれを「予期しないクラッシュ」として扱う</li>
+          <li class="hit">本番では詳細が隠され、<strong>汎用エラー画面に飛ばされる</strong></li>
+          <li>入力した内容も画面の文脈も失われ、その場で直せない</li>
+        </ol>
+      </div>
+      <div class="lane good">
+        <h3>戻り値で返す(今の作り)</h3>
+        <ol>
+          <li>「まだ回答がありません」を <strong>return { ok: false, message }</strong></li>
+          <li>ToastForm が結果を受け取る</li>
+          <li class="hit"><strong>その場に留まったまま赤トースト</strong>で理由が出る</li>
+          <li>入力はそのまま。直してもう一度押せばいい</li>
+        </ol>
+      </div>
+    </div>
+    <p class="note"><strong>redirect を try の外に出した理由:</strong> Next.js の <code>redirect()</code> は実は「特殊な例外を throw して遷移する」仕組みです。try の中に置くと自作の catch がその例外を「エラー」と誤解して握りつぶし、<strong>遷移しなくなる</strong>。だからイベント作成などでは、DB 処理だけを try に入れ、<code>redirect()</code> は try の外に置いています。</p>
+  </section>
+
+  <section>
+    <p class="eyebrow">3 ── 見つけたバグ</p>
+    <h2>useEffect 版で「削除のトーストだけ出なかった」理由</h2>
+    <p class="lede">初版の ToastForm は「結果を state に入れて、useEffect がそれを見てトーストを出す」作りでした。設定の保存では動いたのに、参加者の削除では出ない。違いは<strong>成功するとフォーム自身が消えるかどうか</strong>です。</p>
+    <div class="compare">
+      <div class="lane bad">
+        <h3>初版(useEffect 方式)× 参加者削除</h3>
+        <ol>
+          <li>「外す」を実行 → サーバーで削除成功</li>
+          <li>結果と一緒に「新しい画面(その行なし)」が届く</li>
+          <li class="hit">行ごと ToastForm が<strong>アンマウント(消滅)</strong></li>
+          <li>トーストを出すはずの useEffect は、実行される前に持ち主ごと消えた → <strong>何も出ない</strong></li>
+        </ol>
+      </div>
+      <div class="lane good">
+        <h3>現行(action 内で直接 toast)</h3>
+        <ol>
+          <li>「外す」を実行 → サーバーで削除成功</li>
+          <li class="hit">結果を受け取った<strong>その場で toast() を呼ぶ</strong>(useEffect を待たない)</li>
+          <li>sonner の toast() はコンポーネントの外にある掲示板への書き込みなので、直後にフォームが消えても影響なし</li>
+          <li>行が消え、トーストも出る</li>
+        </ol>
+      </div>
+    </div>
+    <p class="note">同じ理由で危なかった仲間: 「完了にする」(押すとボタン自体が消える)、「グループに投稿する」(押すと投稿済み表示に置き換わる)。現行方式ならすべて安全です。</p>
+  </section>
+
+  <section>
+    <p class="eyebrow">4 ── 残り課題</p>
+    <h2>残っているもの</h2>
+    <div class="decisions">
+      <div class="decision">
+        <div class="row">
+          <h3>GitHubの履歴に残ったpng 約300KB</h3>
+          <span class="pill ok">放置でOK(推奨)</span>
+        </div>
+        <p>push済みコミット <code>06b19a4</code> に一時スクショ3枚が混入。最新版からは削除済みで、実害は履歴がわずかに重いだけです。</p>
+      </div>
+      <div class="decision">
+        <div class="row">
+          <h3>空状態の画面(Empty)の実物確認</h3>
+          <span class="pill ok">次に見かけたら一瞥</span>
+        </div>
+        <p>データが空の環境でまだ実物を見ていません。崩れていないかだけ確認してください。</p>
+      </div>
+    </div>
+  </section>
+
+  <details>
+    <summary>前回の整理を開く(shadcn 移行で何が変わったか・用語辞典)</summary>
+    <div class="inner">
+      <h3 class="sub">変更サマリ(shadcn 移行)</h3>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>前</th><th>後</th><th>なぜ</th></tr></thead>
+          <tbody>
+            <tr><td><code>space-y-*</code> で余白</td><td><code>flex flex-col gap-*</code></td><td class="why">shadcnのルール。marginの相殺事故がない</td></tr>
+            <tr><td>div+Labelの手組みフォーム</td><td><code>FieldGroup</code> / <code>Field</code></td><td class="why">ラベル紐付け・無効状態が部品側で保証される</td></tr>
+            <tr><td>「まだ〜がありません」のCard手組み</td><td><code>Empty</code></td><td class="why">空状態の専用部品がある</td></tr>
+            <tr><td><code>text-green-600</code> など生の色</td><td><code>text-success</code> / <code>text-warning</code></td><td class="why">globals.cssの変数で一元管理</td></tr>
+            <tr><td>読み込み中は真っ白</td><td><code>loading.tsx</code>(Skeleton)</td><td class="why">遷移直後に骨組みを即表示</td></tr>
+            <tr><td>DB問い合わせが直列</td><td><code>Promise.all</code></td><td class="why">events/[id]とsettingsの表示が遅かった</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <h3 class="sub">用語ミニ辞典</h3>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>用語</th><th>一言でいうと</th><th>この作業での役割</th></tr></thead>
+          <tbody>
+            <tr><td class="term">ActionResult</td><td>アクションの結果の型 <code>{ ok, message }</code></td><td class="why">サーバーとUIの共通言語。contracts/forms.tsで定義</td></tr>
+            <tr><td class="term">ToastForm</td><td>結果をトーストに変換するフォームの皮</td><td class="why">全ページの11フォームがこれに置き換わった</td></tr>
+            <tr><td class="term">sonner / Toaster</td><td>トーストのライブラリ / その表示台</td><td class="why">layout.tsxに1個。toast()でどこからでも出せる</td></tr>
+            <tr><td class="term">revalidatePath</td><td>「この画面のデータを取り直して」の合図</td><td class="why">保存後にページが最新化される仕組み。削除バグの引き金でもあった</td></tr>
+            <tr><td class="term">アンマウント</td><td>コンポーネントが画面から取り外されること</td><td class="why">削除で行ごとフォームが消え、useEffect版トーストが失われた原因</td></tr>
+            <tr><td class="term">useFormStatus</td><td>「自分のいるフォームが送信中か」を知るReactの機能</td><td class="why">SubmitButton/ConfirmButtonのスピナーの心臓部</td></tr>
+            <tr><td class="term">Field / FieldGroup</td><td>フォーム1項目の入れ物 / 並べる入れ物</td><td class="why">手組みフォームの骨格を置き換えた</td></tr>
+            <tr><td class="term">Empty / Skeleton / Spinner</td><td>空状態 / 読み込み骨組み / くるくる</td><td class="why">shadcnの専用部品。手組みdivを置き換えた</td></tr>
+            <tr><td class="term">*:w-full</td><td>直下の子を全幅にするTailwind記法</td><td class="why">保存ボタン全幅化の犯人。ボタンをFieldの外に出して解決</td></tr>
+            <tr><td class="term">セマンティックトークン</td><td>色に意味の名前を付けた変数</td><td class="why"><code>--success</code>/<code>--warning</code>をglobals.cssに追加</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </details>
+</main>
+
+</body>
+</html>
