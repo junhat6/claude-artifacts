@@ -1,0 +1,521 @@
+<!doctype html><html><head><!-- frame-runtime --><script>window.__FRAME_PREAMBLE={"capabilities":{"mcp":"mcp.BQqQVVN_.js"},"transforms":"_transforms.DYk1Ltlh.js"}</script><script>(function(){"use strict";const X="modulepreload",Y=function(e){return"/"+e},Z={},U=function(t,n,u){let o=Promise.resolve();function i(f){const a=new Event("vite:preloadError",{cancelable:!0});if(a.payload=f,window.dispatchEvent(a),!a.defaultPrevented)throw f}return o.then(f=>{for(const a of f||[])a.status==="rejected"&&i(a.reason);return t().catch(i)})},D=["light","dark","system"];function $(e){if(e==null||typeof e!="object")return!1;const t=e.__frame_init;return t!=null&&typeof t=="object"}function q(e){if(e==null||typeof e!="object")return!1;const t=e.__frame_theme;if(t==null||typeof t!="object")return!1;const n=t.theme;return typeof n=="string"&&D.includes(n)}function M(e){if(window===top||e.type==="auxclick"&&e.button!==1)return;const t=e.composedPath?e.composedPath():[e.target];let n=null;for(let f=0;f<t.length;f++){const a=t[f];if(a&&a.matches&&a.matches("a[href],area[href]")){n=a;break}}if(!n&&e.target&&e.target.closest&&(n=e.target.closest("a[href],area[href]")),!n)return;const u=n.getAttribute("href");if(!u)return;let o,i;try{o=new URL(u,document.baseURI),i=new URL(document.baseURI).origin}catch{return}(o.protocol==="http:"||o.protocol==="https:")&&o.origin!==i&&(e.preventDefault(),parent.postMessage({__frame_nav:!0,url:o.href},"*"))}const L={};function y(e){if(window===top)return;const t=Date.now();t-(L[e]||0)<500||(L[e]=t,parent.postMessage({__frame_engaged:!0,kind:e},"*"))}const F=2e3,T=["wheel","touchstart","touchmove","keydown","pointerdown"];let k=0;function B(e){e.isTrusted&&(k=Date.now())}function z(){addEventListener("click",M,!0),addEventListener("auxclick",M,!0)}function W(){for(let e=0;e<T.length;e++)addEventListener(T[e],B,{capture:!0,passive:!0});addEventListener("scroll",e=>{e.isTrusted&&Date.now()-k<F&&y("scroll")},{capture:!0,passive:!0}),addEventListener("pointermove",e=>{e.isTrusted&&y("pointer")},{capture:!0,passive:!0}),addEventListener("click",e=>{e.isTrusted&&y("click")},{capture:!0,passive:!0})}function x(e,t,n){const u=[...t.values()].filter(o=>o.targets.some(i=>i.startsWith(e+".")));return{wrap(o,i){const f=`${e}.${o}`,a=u.filter(s=>s.targets.includes(f));return a.length===0?(...s)=>{try{return i(...s)}catch(d){return Promise.reject(d)}}:(...s)=>{let d=s;for(const c of a){const l=c.module.parameters;if(l)try{d=l(d)}catch{return Promise.reject({code:"transform_error",id:c.id,scope:e,message:"parameters transform failed"})}}let m;try{m=i(...d)}catch(c){m=Promise.reject(c)}return m.then(c=>{for(let l=a.length-1;l>=0;l--){const h=a[l],p=h.module.returns;if(p)try{c=p(c)}catch{return n({id:h.id,scope:e,leg:"returns"}),c}}return c},c=>{for(let l=a.length-1;l>=0;l--){const h=a[l],p=h.module.throws;if(p)try{c=p(c)}catch{return n({id:h.id,scope:e,leg:"throws"}),Promise.reject(c)}}return Promise.reject(c)})}}}}function H(e,t,n,u=()=>{}){const o=new Set(e.changes??[]),i=new Map;for(const f of o){const a=t[f];a&&i.set(f,a)}return{contract:e.contract,changes:o,flags:new Set(e.flags??[]),capabilities:e.capabilities??{},transforms:i,shellOrigin:n.shellOrigin,mount:n.mount,pipe:f=>x(f,i,u)}}(function(){const e=Object.defineProperty,t=globalThis,n=["RTCPeerConnection","webkitRTCPeerConnection","RTCDataChannel","RTCIceCandidate","RTCSessionDescription","RTCRtpSender","RTCRtpReceiver"];let u=0;for(let o=0;o<n.length;o++){const i=n[o];try{e(t,i,{value:void 0,writable:!1,configurable:!1})}catch{try{delete t[i]}catch{}try{e(t,i,{value:void 0,writable:!1,configurable:!0})}catch{}}typeof t[i]=="function"&&u++}if(u&&window!==top)try{parent.postMessage({__frame_rtc_lockdown_failed:u},"*")}catch{}})();const K=1e4,G=Object.freeze([...window.__FRAME_PREAMBLE?.origins??["https://claude.ai","https://preview.claude.ai"]]);function J(e){for(const t of G)if(t.endsWith(":*"))try{const n=new URL(e);if(`${n.protocol}//${n.hostname}:*`===t)return!0}catch{}else if(e===t)return!0;return!1}const w=Object.freeze({...window.__FRAME_PREAMBLE?.capabilities??{}}),E=window.__FRAME_PREAMBLE?.transforms,C=/^[\w.-]+\.js$/,V=/^[a-z][a-z0-9_-]{0,63}$/;let A=null,g=null;function P(e,t,n){try{Object.defineProperty(e,t,{value:n,writable:!1,configurable:!1,enumerable:!0})}catch{try{Object.defineProperty(e,t,{value:n,writable:!1,configurable:!0,enumerable:!0})}catch{}}}let R=!1;function N(e){const t=document.documentElement;e==="light"||e==="dark"?(t.dataset.theme=e,t.style.colorScheme=e,R=!0):R&&(delete t.dataset.theme,t.style.colorScheme="",R=!1)}const _=new Map;function Q(e,t){const n=_.get(e);if(!n)return;Object.assign(n.impl,t),n.impl.__settled=()=>Promise.reject({code:"capability_removed",message:`${e}: method not in this runtime`});const u=n.queue;n.queue=[];for(const o of u){const i=t[o.method];i?i(...o.args).then(o.resolve,o.reject):o.reject({code:"capability_removed",message:`${e}.${o.method} is not in this runtime`})}}function O(e,t){const n=_.get(e);if(!n)return;n.impl.__settled=()=>Promise.reject(t);const u=n.queue;n.queue=[];for(const o of u)o.reject(t)}const j=Object.getOwnPropertyDescriptor(window,"claude");if(window!==top&&!(j&&j.writable===!1)){z(),W();const e=j?.value??{};P(window,"claude",e);const t=s=>{const d={impl:Object.create(null),queue:[]};_.set(s,d);const m=new Proxy(d.impl,{get:(c,l)=>{if(typeof l=="string"&&!(l==="then"||l==="toJSON"||l==="valueOf"))return l==="toString"?Object.prototype.toString:(...h)=>{const p=c[l]??c.__settled;return p?p(...h):new Promise((b,S)=>{d.queue.push({method:l,args:h,resolve:b,reject:S})})}},set:()=>!1});P(e,s,m)};for(const s of Object.keys(w)){if(e[s]!==void 0){P(e,s,e[s]);continue}t(s)}let n=null,u=null,o=0;const i=s=>{s.source!==parent||!J(s.origin)||$(s.data)&&(n=s.data.__frame_init,g=s.origin,removeEventListener("message",i),clearTimeout(o),u?.())};addEventListener("message",i),parent.postMessage({__frame_connect:!0},"*");const f=new Promise(s=>{u=s,o=setTimeout(()=>{removeEventListener("message",i),s()},K)}),a=document.readyState==="loading"?new Promise(s=>document.addEventListener("DOMContentLoaded",()=>s(),{once:!0})):Promise.resolve();f.then(async()=>{if(!n||!g){for(const r of _.keys())O(r,{code:"not_granted",message:"frame initialization did not arrive - capability unavailable"});return}N(n.theme);const s=g;addEventListener("message",r=>{r.source!==parent||r.origin!==s||q(r.data)&&N(r.data.__frame_theme.theme)});const d=r=>U(()=>import("/_runtime/"+r),void 0),m=Object.keys(n.capabilities??{});for(const r of m)Object.hasOwn(w,r)||V.test(r)&&e[r]===void 0&&(t(r),O(r,{code:"capability_disabled",message:"capability not in this runtime generation"}));const c=m.filter(r=>Object.hasOwn(w,r)).map(r=>[r,w[r]]).filter(r=>typeof r[1]=="string"&&C.test(r[1])),[l,...h]=await Promise.allSettled([E&&C.test(E)?d(E):Promise.resolve({}),...c.map(([,r])=>d(r))]),p=g;A=H(n,l.status==="fulfilled"&&l.value?.TRANSFORMS||{},{shellOrigin:p,mount:Q},r=>parent.postMessage({__frame_cap_telemetry:r},p));const b=r=>parent.postMessage({__frame_cap_telemetry:{kind:"cap-load-error",cap:r}},p),S=A;h.forEach((r,v)=>{const I=c[v][0];if(r.status!=="fulfilled"){b(I);return}try{r.value?.install?.(S)}catch{b(I)}});for(const[r,v]of _)v.queue.length===0&&Object.keys(v.impl).length>0||O(r,{code:m.includes(r)?"capability_disabled":"not_granted",message:"capability not available in this session"});await a,parent.postMessage({__frame_ready:!0},g)})}})();</script><!-- /frame-runtime --><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}</style></head><body>
+<title>貸出履歴の閲覧 — 実装解説ドシエ</title>
+<style>
+  :root {
+    --bg: #FBFAF8;
+    --surface: #FFFFFF;
+    --surface2: #F4F1EC;
+    --ink: #26201D;
+    --muted: #6F655E;
+    --faint: #9C918A;
+    --accent: #A31631;
+    --accent-ink: #FFFFFF;
+    --accent-soft: #F7E8EA;
+    --line: #E5DFD8;
+    --line-strong: #CFC7BE;
+    --good: #2E6E4E;
+    --good-soft: #E5F0E9;
+    --warn: #8A5A12;
+    --warn-soft: #F7EEDD;
+    --code-bg: #221D1B;
+    --code-ink: #E9E3DC;
+    --code-line: #37302C;
+    --code-cmt: #837770;
+    --code-str: #A9C98F;
+    --code-sym: #D9A15F;
+    --code-kw: #E4728B;
+    --code-dsl: #85B7D6;
+    --code-const: #E0C185;
+    --code-num: #C79ED2;
+    --shadow: 0 1px 2px rgba(38,32,29,.05), 0 4px 16px rgba(38,32,29,.05);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #17130F; --surface: #201B17; --surface2: #282221; --ink: #EDE7E0;
+      --muted: #A99E96; --faint: #7E746D; --accent: #E36A80; --accent-ink: #2A0A12;
+      --accent-soft: #3A2226; --line: #372F2A; --line-strong: #4A413B;
+      --good: #7FC49E; --good-soft: #22322A; --warn: #DFAE5E; --warn-soft: #362C1B;
+      --code-bg: #14100E; --code-line: #2E2723;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 4px 16px rgba(0,0,0,.25);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #17130F; --surface: #201B17; --surface2: #282221; --ink: #EDE7E0;
+    --muted: #A99E96; --faint: #7E746D; --accent: #E36A80; --accent-ink: #2A0A12;
+    --accent-soft: #3A2226; --line: #372F2A; --line-strong: #4A413B;
+    --good: #7FC49E; --good-soft: #22322A; --warn: #DFAE5E; --warn-soft: #362C1B;
+    --code-bg: #14100E; --code-line: #2E2723;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 4px 16px rgba(0,0,0,.25);
+  }
+  :root[data-theme="light"] {
+    --bg: #FBFAF8; --surface: #FFFFFF; --surface2: #F4F1EC; --ink: #26201D;
+    --muted: #6F655E; --faint: #9C918A; --accent: #A31631; --accent-ink: #FFFFFF;
+    --accent-soft: #F7E8EA; --line: #E5DFD8; --line-strong: #CFC7BE;
+    --good: #2E6E4E; --good-soft: #E5F0E9; --warn: #8A5A12; --warn-soft: #F7EEDD;
+    --code-bg: #221D1B; --code-ink: #E9E3DC; --code-line: #37302C;
+    --code-cmt: #837770; --code-str: #A9C98F; --code-sym: #D9A15F; --code-kw: #E4728B;
+    --code-dsl: #85B7D6; --code-const: #E0C185; --code-num: #C79ED2;
+    --shadow: 0 1px 2px rgba(38,32,29,.05), 0 4px 16px rgba(38,32,29,.05);
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 24px; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font-family: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", "Noto Sans JP", sans-serif;
+    font-size: 15px; line-height: 1.85; -webkit-font-smoothing: antialiased;
+  }
+  .serif { font-family: "Hiragino Mincho ProN", "Yu Mincho", "Noto Serif JP", serif; }
+  code, pre, .mono { font-family: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace; }
+
+  .frame { display: grid; grid-template-columns: 232px minmax(0, 1fr); max-width: 1180px; margin: 0 auto; gap: 40px; padding: 0 28px; }
+  @media (max-width: 940px) { .frame { grid-template-columns: minmax(0, 1fr); gap: 0; padding: 0 18px; } }
+
+  .toc { position: sticky; top: 0; align-self: start; height: 100vh; overflow-y: auto; padding: 36px 0 24px; }
+  .toc-title { font-size: 11px; letter-spacing: .18em; color: var(--faint); text-transform: uppercase; margin: 0 0 14px 2px; }
+  .toc ol { list-style: none; margin: 0; padding: 0; border-left: 1px solid var(--line); }
+  .toc a {
+    display: flex; gap: 9px; align-items: baseline; padding: 6px 10px 6px 14px; margin-left: -1px;
+    color: var(--muted); text-decoration: none; font-size: 13px; line-height: 1.5; border-left: 2px solid transparent;
+  }
+  .toc a .no { font-size: 11px; color: var(--faint); font-variant-numeric: tabular-nums; }
+  .toc a:hover { color: var(--ink); }
+  .toc a.now { color: var(--accent); border-left-color: var(--accent); font-weight: 600; }
+  .toc a.now .no { color: var(--accent); }
+  .toc a:focus-visible, a:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+  @media (max-width: 940px) { .toc { display: none; } }
+
+  main { padding: 44px 0 90px; min-width: 0; }
+
+  .doc-head { border-bottom: 3px double var(--line-strong); padding-bottom: 26px; margin-bottom: 14px; }
+  .doc-eyebrow { display: flex; align-items: center; gap: 10px; font-size: 12px; letter-spacing: .14em; color: var(--accent); font-weight: 600; }
+  .doc-eyebrow::before { content: ""; width: 26px; height: 1px; background: var(--accent); }
+  h1 { font-size: clamp(26px, 4.5vw, 38px); line-height: 1.35; margin: 10px 0 8px; font-weight: 600; letter-spacing: .02em; text-wrap: balance; }
+  .doc-sub { color: var(--muted); font-size: 14px; margin: 0 0 18px; max-width: 46em; }
+  .stack-row { display: flex; flex-wrap: wrap; gap: 7px; }
+  .chip {
+    display: inline-flex; align-items: center; gap: 5px; font-size: 12px; line-height: 1; padding: 6px 10px;
+    border: 1px solid var(--line); border-radius: 999px; background: var(--surface); color: var(--muted); white-space: nowrap;
+  }
+  .chip b { color: var(--ink); font-weight: 600; }
+  .chip.ver { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
+  .repo-line { margin-top: 16px; font-size: 13px; color: var(--muted); }
+  .repo-line a { color: var(--accent); }
+
+  section { padding: 40px 0 8px; border-bottom: 1px solid var(--line); }
+  section:last-of-type { border-bottom: none; }
+  .sec-head { display: flex; align-items: baseline; gap: 14px; margin-bottom: 6px; }
+  .sec-no {
+    font-size: 12px; font-weight: 700; letter-spacing: .1em; color: var(--accent); border: 1px solid var(--accent);
+    padding: 3px 8px; border-radius: 3px; font-variant-numeric: tabular-nums; white-space: nowrap; align-self: center;
+  }
+  h2 { font-size: 23px; margin: 0; font-weight: 600; letter-spacing: .02em; line-height: 1.4; text-wrap: balance; }
+  .sec-req { font-size: 12px; color: var(--faint); margin: 0 0 18px 0; }
+  h3 { font-size: 15px; margin: 30px 0 10px; letter-spacing: .06em; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+  h3::before { content: ""; width: 8px; height: 8px; background: var(--accent); border-radius: 1px; flex: none; }
+  p { margin: 0 0 14px; max-width: 44em; }
+  section > p:first-of-type, .lead { font-size: 15.5px; }
+  li { margin-bottom: 6px; }
+  ul, ol { padding-left: 1.4em; margin: 0 0 14px; max-width: 44em; }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  strong { font-weight: 700; }
+  .small { font-size: 13px; color: var(--muted); }
+
+  p code, li code, td code, .qa code, h2 code, dd code {
+    background: var(--surface2); border: 1px solid var(--line); padding: .5px 5px; border-radius: 4px; font-size: .88em; white-space: nowrap;
+  }
+
+  .codebox { margin: 16px 0 20px; border-radius: 8px; overflow: hidden; box-shadow: var(--shadow); }
+  .codebox .path {
+    background: var(--code-bg); color: var(--code-cmt); border-bottom: 1px solid var(--code-line);
+    font-size: 11.5px; padding: 8px 14px; letter-spacing: .04em; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+    font-family: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+  }
+  .codebox .path .lang { color: var(--code-sym); }
+  .codebox pre { margin: 0; background: var(--code-bg); color: var(--code-ink); padding: 14px 16px; overflow-x: auto; font-size: 12.8px; line-height: 1.75; }
+  .tok-s { color: var(--code-str); }
+  .tok-c { color: var(--code-cmt); font-style: italic; }
+  .tok-y { color: var(--code-sym); }
+  .tok-k { color: var(--code-kw); }
+  .tok-d { color: var(--code-dsl); }
+  .tok-t { color: var(--code-const); }
+  .tok-n { color: var(--code-num); }
+
+  .why { border-left: 3px solid var(--accent); background: var(--accent-soft); padding: 14px 18px; border-radius: 0 8px 8px 0; margin: 16px 0 20px; max-width: 46em; }
+  .why .cap { font-size: 12px; font-weight: 700; letter-spacing: .12em; color: var(--accent); margin-bottom: 6px; }
+  .why p { margin-bottom: 8px; max-width: none; }
+  .why p:last-child { margin-bottom: 0; }
+  .note { border-left: 3px solid var(--warn); background: var(--warn-soft); padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 16px 0 20px; max-width: 46em; font-size: 13.5px; }
+  .note .cap { font-weight: 700; color: var(--warn); font-size: 12px; letter-spacing: .1em; margin-bottom: 4px; }
+
+  .feats { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 10px; margin: 14px 0 20px; padding: 0; list-style: none; max-width: none; }
+  .feats li { margin: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 11px 13px; font-size: 13px; line-height: 1.65; }
+  .feats .fname { display: flex; align-items: center; gap: 8px; font-weight: 700; margin-bottom: 3px; flex-wrap: wrap; }
+  .feats .fname code { background: none; border: none; padding: 0; font-size: 12.5px; color: var(--accent); white-space: normal; }
+  .vtag { font-size: 10px; font-weight: 700; letter-spacing: .06em; color: var(--accent); background: var(--accent-soft); border-radius: 3px; padding: 2px 5px; white-space: nowrap; }
+  .feats .fdesc { color: var(--muted); }
+
+  .difflist { list-style: none; padding: 0; margin: 12px 0 20px; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; max-width: 46em; }
+  .difflist li { margin: 0; border-bottom: 1px solid var(--line); }
+  .difflist li:last-child { border-bottom: none; }
+  .difflist a { display: flex; align-items: baseline; gap: 12px; padding: 9px 14px; text-decoration: none; color: var(--ink); font-size: 13.5px; background: var(--surface); }
+  .difflist a:hover { background: var(--surface2); }
+  .difflist .sha { font-family: ui-monospace, Menlo, monospace; font-size: 12px; color: var(--accent); white-space: nowrap; min-width: 4.6em; }
+  .difflist .pr { font-weight: 700; color: var(--accent); white-space: nowrap; min-width: 4.6em; font-size: 12.5px; }
+  .difflist .arrow { margin-left: auto; color: var(--faint); font-size: 12px; }
+
+  .sources { background: var(--surface2); border: 1px solid var(--line); border-radius: 8px; padding: 14px 18px; margin: 16px 0 24px; font-size: 13.5px; max-width: 46em; }
+  .sources .cap { font-size: 11.5px; font-weight: 700; letter-spacing: .14em; color: var(--faint); margin-bottom: 8px; }
+  .sources ul { list-style: none; padding: 0; margin: 0; }
+  .sources li { margin-bottom: 7px; }
+  .sources li:last-child { margin-bottom: 0; }
+  .sources .kw { color: var(--muted); }
+  .sources .kw code { white-space: normal; }
+
+  .qa { border: 1px solid var(--line); border-radius: 10px; background: var(--surface); margin: 0 0 14px; max-width: 48em; box-shadow: var(--shadow); }
+  .qa summary { cursor: pointer; list-style: none; padding: 14px 18px; display: flex; gap: 12px; align-items: baseline; font-weight: 600; line-height: 1.6; }
+  .qa summary::-webkit-details-marker { display: none; }
+  .qa summary .q { color: var(--accent); font-weight: 800; font-size: 13px; letter-spacing: .06em; flex: none; }
+  .qa summary::after { content: "＋"; margin-left: auto; color: var(--faint); flex: none; }
+  .qa[open] summary::after { content: "−"; }
+  .qa .a { padding: 2px 18px 16px 44px; border-top: 1px dashed var(--line); }
+  .qa .a p { font-size: 14px; margin: 10px 0 8px; }
+  .qa .verdict { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .08em; border-radius: 3px; padding: 2px 8px; margin-right: 6px; vertical-align: 1px; }
+  .qa .verdict.ok { color: var(--good); background: var(--good-soft); }
+  .qa .verdict.gap { color: var(--warn); background: var(--warn-soft); }
+
+  .strengths { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin: 16px 0 26px; padding: 0; list-style: none; max-width: none; }
+  .strengths li { margin: 0; border: 1px solid var(--line); border-top: 3px solid var(--accent); border-radius: 8px; background: var(--surface); padding: 14px 16px; font-size: 13.5px; box-shadow: var(--shadow); }
+  .strengths b { display: block; font-size: 14.5px; margin-bottom: 4px; }
+  .strengths span { color: var(--muted); }
+
+  footer { margin-top: 30px; padding-top: 18px; border-top: 3px double var(--line-strong); color: var(--faint); font-size: 12.5px; }
+</style>
+
+<div class="frame">
+<nav class="toc" aria-label="目次">
+  <p class="toc-title">目次</p>
+  <ol>
+    <li><a href="#overview"><span class="no">00</span>概要</a></li>
+    <li><a href="#scope"><span class="no">01</span>認可とスコープ切り替え</a></li>
+    <li><a href="#filter"><span class="no">02</span>絞り込み・並び替え</a></li>
+    <li><a href="#view"><span class="no">03</span>ビューとUI</a></li>
+    <li><a href="#qa"><span class="no">04</span>想定問答</a></li>
+  </ol>
+</nav>
+
+<main>
+<header class="doc-head">
+  <p class="doc-eyebrow">レビュー会 準備資料 · 2026-07-07</p>
+  <h1 class="serif">貸出履歴の閲覧 — 実装解説</h1>
+  <p class="doc-sub">発展要件4「各ユーザーが自分の貸出履歴を閲覧できる／管理者は全ユーザーの貸出履歴を参照可能」の実装。必須要件ドシエの想定問答 Q4 で「未実装だが、返却を削除ではなく状態遷移にしたので履歴データ自体は残っている」と書いていた宿題への回答にあたる。</p>
+  <div class="stack-row">
+    <span class="chip ver"><b>Rails 8.1.3</b></span>
+    <span class="chip">kaminari <b>ページネーション</b></span>
+    <span class="chip">daisyUI <b>5系（tabs-box）</b></span>
+    <span class="chip">TDD <b>Minitest</b></span>
+    <span class="chip">認可 <b>admin? 分岐（gemなし）</b></span>
+  </div>
+  <p class="repo-line">PR: <a href="https://github.com/junhat6/book-management-system-speee/pull/15/files" target="_blank" rel="noopener">#15 貸出履歴の閲覧</a> ・ テスト: <code>rails test</code>（158 tests, 409 assertions, 0 failures）</p>
+</header>
+
+<!-- ================================================================ -->
+<section id="overview">
+  <div class="sec-head"><span class="sec-no">00</span><h2 class="serif">概要</h2></div>
+  <p class="sec-req">発展要件4（貸出履歴の閲覧）</p>
+
+  <p class="lead">スキーマ変更は<strong>なし</strong>。返却機能（必須要件4）を実装した時点で <code>returned_at</code> を更新するだけの状態遷移にしていたため、貸出履歴はテーブルに全件残っていた。今回はそれを<strong>読む経路（コントローラ・スコープ・ビュー）を追加しただけ</strong>で実現している。</p>
+
+  <div class="tblwrap">
+    <table>
+      <thead><tr><th>誰が</th><th>見えるもの</th><th>実現方法</th></tr></thead>
+      <tbody>
+        <tr><td>一般ユーザー</td><td>自分の貸出履歴のみ</td><td><code>Current.user.rentals</code>（関連経由の絞り込み＝認可）</td></tr>
+        <tr><td>管理者</td><td>全ユーザーの履歴＋借主名</td><td><code>Rental.all</code> ＋ ビュー側で <code>admin?</code> 時のみ「借主」列を表示</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>絞り込み（貸出中／返却済み／すべて）とソート（貸出日・返却日）は、UI/UX改善（発展要件5）で書籍一覧に導入した kaminari + <code>sort_link</code> + <code>preserved_list_params</code> のパターンをそのまま <code>Rental</code> にも展開したもの。ルーティングは books 配下にネストせず、既存のトップレベル <code>resources :rentals</code>（返却用の <code>update</code> が既にある）に <code>index</code> を足しただけ——貸出履歴は「本の下にぶら下がる情報」ではなく「ユーザー単位の一覧」だと考えたため。</p>
+
+  <h3>差分を見る</h3>
+  <ul class="difflist">
+    <li><a href="https://github.com/junhat6/book-management-system-speee/pull/15/files" target="_blank" rel="noopener"><span class="pr">PR #15</span>貸出履歴の閲覧を実装（feature/rental-history → Files changed）<span class="arrow">↗</span></a></li>
+    <li><a href="https://github.com/junhat6/book-management-system-speee/commit/3a06c24" target="_blank" rel="noopener"><span class="sha">3a06c24</span>同内容の単一コミット diff<span class="arrow">↗</span></a></li>
+  </ul>
+</section>
+
+<!-- ================================================================ -->
+<section id="scope">
+  <div class="sec-head"><span class="sec-no">01</span><h2 class="serif">認可とスコープ切り替え</h2></div>
+  <p class="sec-req">「一般ユーザーは自分のみ／管理者は全員」の作り分け</p>
+
+  <p class="lead">新しい認可の仕組みは<strong>何も足していない</strong>。既存の <code>admin?</code>（<code>app/controllers/concerns/authorization.rb</code>、書籍のCRUD制限で既に使っていたもの）で、対象スコープをどちらの <code>ActiveRecord::Relation</code> にするか出し分けているだけ。</p>
+
+  <div class="codebox">
+    <div class="path"><span>app/controllers/rentals_controller.rb（index・抜粋）</span><span class="lang">ruby</span></div>
+    <pre><code class="ruby">def index
+  @rentals = rental_scope.includes(:user, :book)
+                         .with_status(params[:status])
+                         .sorted(params[:sort], params[:direction])
+                         .page(params[:page])
+end
+
+private
+
+def rental_scope
+  admin? ? Rental.all : Current.user.rentals
+end</code></pre>
+  </div>
+
+  <div class="why">
+    <div class="cap">なぜこの設計か（そうしないとどうなるか）</div>
+    <p><strong>Pundit などの認可 gem を導入しなかった</strong>。このアプリの認可要件は「管理者かどうかの二択」だけで、複雑なポリシーオブジェクトが要るほどの分岐はない。既存の <code>require_admin</code>/<code>admin?</code> と地続きの1行で足りるところに gem を足すと、判断基準が「この画面は concern、あの画面は Pundit」と割れてしまい、かえって読みづらくなる。</p>
+    <p><strong>認可は if 文ではなく「関連から辿れるかどうか」で表現する</strong>。<code>rental_scope</code> が返すのが <code>Current.user.rentals</code> という関連である限り、他ユーザーの履歴はこの先の <code>with_status</code>／<code>sorted</code>／<code>page</code> にどう合成しても<em>検索範囲そのものに入らない</em>。返却機能（<code>set_own_active_rental</code>）で使ったのと同じイディオムをそのまま一覧にも展開した形。</p>
+  </div>
+
+  <h3>差分を見る</h3>
+  <ul class="difflist">
+    <li><a href="https://github.com/junhat6/book-management-system-speee/pull/15/files" target="_blank" rel="noopener"><span class="pr">PR #15</span>Files changed（rentals_controller.rb）<span class="arrow">↗</span></a></li>
+  </ul>
+
+  <div class="sources">
+    <div class="cap">情報源</div>
+    <ul>
+      <li><a href="https://railsguides.jp/active_record_querying.html" target="_blank" rel="noopener">Active Record クエリインターフェイス</a> — 関連（<code>has_many</code>）が返す <code>ActiveRecord::Relation</code> にさらに条件を重ねられる仕組みの原典。「認可 = 関連経由の絞り込み」という考え方の土台になっている章。</li>
+      <li class="kw">検索キーワード: <code>Rails scope association authorization pattern</code> / <code>ActiveRecord::Relation chaining</code></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================================================================ -->
+<section id="filter">
+  <div class="sec-head"><span class="sec-no">02</span><h2 class="serif">絞り込み・並び替え</h2></div>
+  <p class="sec-req">ステータス（貸出中／返却済み／すべて）フィルタと貸出日・返却日ソート</p>
+
+  <p class="lead"><code>Rental</code> モデルに <code>with_status</code> と <code>sorted</code> の2スコープを追加。どちらも書籍一覧（<code>Book.sorted</code>）で既に確立していた「許可リスト方式」をそのまま踏襲している。</p>
+
+  <div class="codebox">
+    <div class="path"><span>app/models/rental.rb（ステータス絞り込み）</span><span class="lang">ruby</span></div>
+    <pre><code class="ruby">STATUS_LABELS = { "active" => "貸出中", "returned" => "返却済み" }.freeze
+
+scope :with_status, ->(status) {
+  case status.to_s
+  when "active" then active
+  when "returned" then where.not(returned_at: nil)
+  else all
+  end
+}</code></pre>
+  </div>
+
+  <div class="codebox">
+    <div class="path"><span>app/models/rental.rb（並び替え）</span><span class="lang">ruby</span></div>
+    <pre><code class="ruby">SORTABLE_COLUMNS = %w[created_at returned_at].freeze
+
+scope :sorted, ->(column, direction) {
+  if SORTABLE_COLUMNS.include?(column.to_s)
+    dir = %w[asc desc].include?(direction.to_s) ? direction.to_sym : :asc
+    order(column.to_s => dir, id: :desc)
+  else
+    order(created_at: :desc, id: :desc)
+  end
+}</code></pre>
+  </div>
+
+  <div class="why">
+    <div class="cap">なぜこの設計か（そうしないとどうなるか）</div>
+    <p><strong><code>params[:sort]</code> を <code>order</code> に直接渡さない</strong>。もし <code>order(params[:sort] => params[:direction])</code> と書いてしまうと、URL の <code>sort</code> パラメータをそのままカラム名として使うことになり、任意のカラムを指定されるSQLインジェクションの経路になる。<code>SORTABLE_COLUMNS</code> という許可リストに含まれる値だけを通し、それ以外は黙って安全なデフォルト（貸出日の新しい順）に落とすことで防いでいる。</p>
+    <p><strong><code>id: :desc</code> を第2キーに必ず添える</strong>。<code>created_at</code> だけでソートすると、同時刻に複数件あった場合の順序がDBの内部実装依存になり、ページネーションで1ページ目と2ページ目の境界にある行が重複したり消えたりし得る。一意な <code>id</code> を第2キーにすることで、同値があっても常に全順序が確定する。</p>
+    <p><strong>ステータスと違い、ソートは <code>case/when</code> ではなく許可リスト＋<code>order</code></strong>にしている。ステータスは「貸出中／返却済み」という<em>意味のある2値</em>なので分岐で書いた方が読みやすいが、ソート対象カラムは今後増える可能性がある「データの並べ替えキー」なので、許可リストに1語足すだけで拡張できる形にしてある。</p>
+  </div>
+
+  <div class="note">
+    <div class="cap">テストの見どころ</div>
+    <code>test/models/rental_test.rb</code> では <code>Rental.sorted("user_id", "asc")</code> のように<strong>許可リスト外のカラムをわざと渡し</strong>、デフォルトの並び順にフォールバックすることを確認している。「防御コードが実際に効いている」ことをテストで裏付けている。
+  </div>
+
+  <h3>差分を見る</h3>
+  <ul class="difflist">
+    <li><a href="https://github.com/junhat6/book-management-system-speee/pull/15/files" target="_blank" rel="noopener"><span class="pr">PR #15</span>Files changed（rental.rb・rental_test.rb）<span class="arrow">↗</span></a></li>
+  </ul>
+
+  <div class="sources">
+    <div class="cap">情報源</div>
+    <ul>
+      <li><a href="https://railsguides.jp/active_record_querying.html" target="_blank" rel="noopener">Active Record クエリインターフェイス</a> — <code>scope</code> の定義方法・<code>order</code> への複数キー指定はこの章。</li>
+      <li><a href="https://railsguides.jp/active_record_validations.html" target="_blank" rel="noopener">Active Record バリデーション</a> — 「ユーザー入力を許可リストで検証する」という考え方自体はバリデーションの章の思想と共通。</li>
+      <li class="kw">検索キーワード: <code>Rails scope lambda arguments</code> / <code>ActiveRecord order SQL injection allowlist</code> / <code>order id tiebreaker pagination</code></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================================================================ -->
+<section id="view">
+  <div class="sec-head"><span class="sec-no">03</span><h2 class="serif">ビューとUI</h2></div>
+  <p class="sec-req">レスポンシブ対応・daisyUI タブ・テスト容易性のための <code>dom_id</code></p>
+
+  <p class="lead">書籍一覧（発展要件5）と同じ「スマホはカード、md以上はテーブル」の二重レイアウトを踏襲。加えて、各行に <code>dom_id</code> でID を振ることで、「どのユーザーの、どの貸出行が見えているか」をテストから厳密に検証できるようにした。</p>
+
+  <div class="codebox">
+    <div class="path"><span>app/helpers/rentals_helper.rb（全文）</span><span class="lang">ruby</span></div>
+    <pre><code class="ruby">module RentalsHelper
+  def preserved_rental_list_params(overrides = {})
+    {
+      status: params[:status].presence,
+      sort: params[:sort].presence,
+      direction: params[:direction].presence
+    }.merge(overrides).compact
+  end
+
+  def rental_sort_link(column, label)
+    active = params[:sort] == column
+    current_direction = params[:direction] == "desc" ? "desc" : "asc"
+    next_direction = active &amp;&amp; current_direction == "asc" ? "desc" : "asc"
+    arrow = active ? (current_direction == "asc" ? " ▲" : " ▼") : ""
+
+    link_to "#{label}#{arrow}",
+            rentals_path(preserved_rental_list_params(sort: column, direction: next_direction)),
+            class: "link link-hover"
+  end
+end</code></pre>
+  </div>
+
+  <div class="codebox">
+    <div class="path"><span>app/views/rentals/index.html.erb（タブと行ID・抜粋）</span><span class="lang">ruby</span></div>
+    <pre><code class="ruby">&lt;div class="tabs tabs-box w-fit mb-6"&gt;
+  &lt;%= link_to "すべて", rentals_path(preserved_rental_list_params(status: nil)),
+        class: "tab #{'tab-active' if params[:status].blank?}" %&gt;
+  &lt;% Rental::STATUS_LABELS.each do |value, label| %&gt;
+    &lt;%= link_to label, rentals_path(preserved_rental_list_params(status: value)),
+          class: "tab #{'tab-active' if params[:status] == value}" %&gt;
+  &lt;% end %&gt;
+&lt;/div&gt;
+
+&lt;tr id="&lt;%= dom_id(rental) %&gt;" class="hover"&gt;
+  ...
+&lt;/tr&gt;</code></pre>
+  </div>
+
+  <div class="why">
+    <div class="cap">なぜこの設計か（そうしないとどうなるか）</div>
+    <p><strong><code>dom_id(rental)</code> で各行に <code>rental_42</code> のようなIDを振った</strong>のは見た目のためではなくテストのため。このアプリは Rails 標準の <code>assigns</code>（コントローラのインスタンス変数をテストから覗く仕組み）を使っておらず、既存のテストも <code>response.body</code> への <code>assert_match</code> で検証するスタイル。今回は同じ本を複数ユーザーが時期違いで借りている fixture（<code>rentals(:one)</code> と <code>rentals(:two)</code> は同じ本）があり、<strong>本のタイトルでは「誰の履歴か」を区別できない</strong>。<code>dom_id</code> でレコード単位のIDを振ることで、「このレンタルIDが body に含まれるか」というレコード粒度の厳密な検証ができるようになった。</p>
+    <p><strong>daisyUI のクラス名は <code>tabs-boxed</code> ではなく <code>tabs-box</code></strong>。daisyUI 4系の <code>tabs-boxed</code> は5系で <code>tabs-box</code> にリネームされており、実装前に <code>app/assets/tailwind/daisyui.mjs</code> を直接 grep してこのプロジェクトが daisyUI 5.5.23 であることを確認してから書いた。もし旧名のまま書いていたら、CSSはエラーにならず<em>静かに無効なクラス名として無視される</em>ため、レビュー時までタブの見た目だけが崩れたままになっていたはずの箇所。</p>
+  </div>
+
+  <h3>差分を見る</h3>
+  <ul class="difflist">
+    <li><a href="https://github.com/junhat6/book-management-system-speee/pull/15/files" target="_blank" rel="noopener"><span class="pr">PR #15</span>Files changed（rentals_helper.rb・views/rentals）<span class="arrow">↗</span></a></li>
+  </ul>
+
+  <div class="sources">
+    <div class="cap">情報源</div>
+    <ul>
+      <li><a href="https://api.rubyonrails.org/classes/ActionView/RecordIdentifier.html" target="_blank" rel="noopener">API: ActionView::RecordIdentifier</a> — <code>dom_id</code> が <code>"#{model_name.param_key}_#{to_param}"</code> という規約で文字列化する仕様の原典。</li>
+      <li><a href="https://railsguides.jp/layouts_and_rendering.html" target="_blank" rel="noopener">レイアウトとレンダリング</a> — パーシャル（<code>render "status_badge", rental: rental</code>）の使い方はこの章。</li>
+      <li class="kw">検索キーワード: <code>Rails dom_id ActionView::RecordIdentifier</code> / <code>daisyUI 5 tabs-box migration</code></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================================================================ -->
+<section id="qa">
+  <div class="sec-head"><span class="sec-no">04</span><h2 class="serif">想定問答 — 強みと、正直な弱点</h2></div>
+  <p class="sec-req">レビュー会で聞かれそうな質問と回答の準備</p>
+
+  <h3>まず押さえる3つの強み</h3>
+  <ul class="strengths">
+    <li><b>認可がコントローラ1行</b><span><code>admin? ? Rental.all : Current.user.rentals</code> だけで閲覧範囲が決まる。既存の認可パターンとの一貫性（→ 01）</span></li>
+    <li><b>スキーマ変更ゼロ</b><span>返却を状態遷移として設計していたおかげで、履歴閲覧はモデルのスコープとビューの追加だけで実現できた（→ 00）</span></li>
+    <li><b>同一データでも区別できるテスト</b><span>同じ本を借りた別ユーザーの履歴を <code>dom_id</code> ベースで区別して検証。fixture の制約に負けない検証手段を選んだ（→ 03）</span></li>
+  </ul>
+
+  <h3>想定問答（クリックで回答を開く）</h3>
+
+  <details class="qa">
+    <summary><span class="q">Q1</span>返却期限や延滞は表示されますか？</summary>
+    <div class="a">
+      <p><span class="verdict gap">未実装</span><code>rentals</code> テーブルに返却期限（due date）のカラムがなく、貸出日と返却日（<code>returned_at</code>）しか持っていないため、延滞判定はできません。要件4は「閲覧できる」ことのみを求めており延滞管理までは範囲に含めていないと判断し、今回は対象外にしました。<strong>やるなら</strong>：<code>due_at</code> カラムを追加し、<code>Rental</code> に <code>scope :overdue, -&gt; { active.where(due_at: ...Time.current) }</code> のようなスコープを足せば、ステータスフィルタに「延滞中」を1つ増やすだけの拡張で済む設計になっています。</p>
+    </div>
+  </details>
+
+  <details class="qa">
+    <summary><span class="q">Q2</span>管理者は特定の1ユーザーだけの履歴に絞り込めますか？</summary>
+    <div class="a">
+      <p><span class="verdict gap">未実装（スコープ外と判断）</span>実装前に「ステータスフィルタのみ」「ステータス＋ユーザー絞り込み」の2案で確認を取り、後者は要件4の範囲を超えるスコープ拡大だと判断してあえて見送りました。<strong>やるなら</strong>：<code>rental_scope</code> に <code>admin? &amp;&amp; params[:user_id].present? ? Rental.where(user_id: params[:user_id]) : ...</code> を1段足し、管理者向けのユーザー選択セレクトをビューに追加するだけで実装できます。認可の1行にもう1条件足す形なので、既存の設計を壊さずに拡張できます。</p>
+    </div>
+  </details>
+
+  <details class="qa">
+    <summary><span class="q">Q3</span>履歴が数千件に増えても一覧は重くなりませんか？</summary>
+    <div class="a">
+      <p><span class="verdict ok">対策済み</span><code>includes(:user, :book)</code> でN+1を防ぎ、<code>kaminari</code> の <code>.page</code> で1ページに出す件数を固定しているので、行数がどれだけ増えてもクエリ数・1リクエストで返す行数は増えません。書籍一覧（発展要件5）で確立したページネーション基盤をそのまま流用できた形です。</p>
+    </div>
+  </details>
+
+  <details class="qa">
+    <summary><span class="q">Q4</span>なぜ <code>books</code> や <code>users</code> の配下にネストしなかったのですか？</summary>
+    <div class="a">
+      <p><span class="verdict ok">説明できる選択</span>貸出履歴は「特定の本に対する操作履歴」ではなく「ユーザーが今まで借りたものの一覧」なので、本単位のリソース（<code>books/:id/rentals</code>）にはなじみません。<code>users</code> 配下も検討しましたが、このアプリには <code>users#show</code>/<code>index</code> の前例がなく、ネストする必然性もなかったため、返却用に既にあったトップレベルの <code>resources :rentals</code> に <code>index</code> を足す形に決めました。</p>
+    </div>
+  </details>
+
+  <details class="qa">
+    <summary><span class="q">Q5</span>一般ユーザー向けの一覧にも「借主」列を出さないのはなぜですか？</summary>
+    <div class="a">
+      <p><span class="verdict ok">説明できる選択</span>一般ユーザーの一覧は常に自分自身の履歴だけなので、借主名を出しても情報量がゼロです。<code>admin?</code> で列そのものを出し分け、一般ユーザーの画面をその分シンプルに保っています。</p>
+    </div>
+  </details>
+</section>
+
+<footer>
+  <p>貸出履歴の閲覧 実装解説ドシエ ・ 生成 2026-07-07 ・ ソース: <a href="https://github.com/junhat6/book-management-system-speee" target="_blank" rel="noopener">junhat6/book-management-system-speee</a>（main @ cca34e3、本機能は PR #15）</p>
+</footer>
+</main>
+</div>
+
+<script>
+(function () {
+  var esc = function (s) {
+    return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  };
+  var re = /("(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*')|(#[^\n]*)|(:[A-Za-z_][A-Za-z0-9_]*[?!]?|\b[A-Za-z_][A-Za-z0-9_]*:(?=\s))|\b(class|module|def|end|do|if|unless|else|elsif|then|return|private|extend|include|self|true|false|nil|case|when|rescue|begin)\b|\b(validates|validate|has_many|has_one|belongs_to|has_secure_password|normalizes|scope|before_save|before_action|skip_before_action|helper_method|rescue_from|allow_unauthenticated_access|rate_limit|add_index|create_table|resources|resource|root|get|mount|attr_reader|delegate|redirect_to|render|link_to)\b|\b([A-Z][A-Za-z0-9_]*(?:::[A-Z][A-Za-z0-9_]*)*)\b|\b(\d+(?:\.\d+)?)\b/g;
+  var cls = ["tok-s", "tok-c", "tok-y", "tok-k", "tok-d", "tok-t", "tok-n"];
+  document.querySelectorAll("pre > code.ruby").forEach(function (block) {
+    var src = block.textContent;
+    var out = "";
+    var last = 0;
+    var m;
+    re.lastIndex = 0;
+    while ((m = re.exec(src)) !== null) {
+      out += esc(src.slice(last, m.index));
+      var i;
+      for (i = 1; i <= 7; i++) { if (m[i] !== undefined) break; }
+      out += '<span class="' + cls[i - 1] + '">' + esc(m[0]) + "</span>";
+      last = m.index + m[0].length;
+    }
+    out += esc(src.slice(last));
+    block.innerHTML = out;
+  });
+
+  var links = Array.prototype.slice.call(document.querySelectorAll(".toc a"));
+  var map = {};
+  links.forEach(function (a) { map[a.getAttribute("href").slice(1)] = a; });
+  if ("IntersectionObserver" in window) {
+    var current = null;
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) {
+          if (current) current.classList.remove("now");
+          current = map[e.target.id];
+          if (current) current.classList.add("now");
+        }
+      });
+    }, { rootMargin: "-15% 0px -70% 0px" });
+    document.querySelectorAll("main section[id]").forEach(function (s) { io.observe(s); });
+  }
+})();
+</script>
+
+</body></html>

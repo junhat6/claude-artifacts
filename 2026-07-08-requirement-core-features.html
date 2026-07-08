@@ -1,0 +1,1076 @@
+<!doctype html><html><head><!-- frame-runtime --><script>window.__FRAME_PREAMBLE={"capabilities":{"mcp":"mcp.BQqQVVN_.js"},"transforms":"_transforms.DYk1Ltlh.js"}</script><script>(function(){"use strict";const X="modulepreload",Y=function(e){return"/"+e},Z={},U=function(t,n,u){let o=Promise.resolve();function i(f){const a=new Event("vite:preloadError",{cancelable:!0});if(a.payload=f,window.dispatchEvent(a),!a.defaultPrevented)throw f}return o.then(f=>{for(const a of f||[])a.status==="rejected"&&i(a.reason);return t().catch(i)})},D=["light","dark","system"];function $(e){if(e==null||typeof e!="object")return!1;const t=e.__frame_init;return t!=null&&typeof t=="object"}function q(e){if(e==null||typeof e!="object")return!1;const t=e.__frame_theme;if(t==null||typeof t!="object")return!1;const n=t.theme;return typeof n=="string"&&D.includes(n)}function M(e){if(window===top||e.type==="auxclick"&&e.button!==1)return;const t=e.composedPath?e.composedPath():[e.target];let n=null;for(let f=0;f<t.length;f++){const a=t[f];if(a&&a.matches&&a.matches("a[href],area[href]")){n=a;break}}if(!n&&e.target&&e.target.closest&&(n=e.target.closest("a[href],area[href]")),!n)return;const u=n.getAttribute("href");if(!u)return;let o,i;try{o=new URL(u,document.baseURI),i=new URL(document.baseURI).origin}catch{return}(o.protocol==="http:"||o.protocol==="https:")&&o.origin!==i&&(e.preventDefault(),parent.postMessage({__frame_nav:!0,url:o.href},"*"))}const L={};function y(e){if(window===top)return;const t=Date.now();t-(L[e]||0)<500||(L[e]=t,parent.postMessage({__frame_engaged:!0,kind:e},"*"))}const F=2e3,T=["wheel","touchstart","touchmove","keydown","pointerdown"];let k=0;function B(e){e.isTrusted&&(k=Date.now())}function z(){addEventListener("click",M,!0),addEventListener("auxclick",M,!0)}function W(){for(let e=0;e<T.length;e++)addEventListener(T[e],B,{capture:!0,passive:!0});addEventListener("scroll",e=>{e.isTrusted&&Date.now()-k<F&&y("scroll")},{capture:!0,passive:!0}),addEventListener("pointermove",e=>{e.isTrusted&&y("pointer")},{capture:!0,passive:!0}),addEventListener("click",e=>{e.isTrusted&&y("click")},{capture:!0,passive:!0})}function x(e,t,n){const u=[...t.values()].filter(o=>o.targets.some(i=>i.startsWith(e+".")));return{wrap(o,i){const f=`${e}.${o}`,a=u.filter(s=>s.targets.includes(f));return a.length===0?(...s)=>{try{return i(...s)}catch(d){return Promise.reject(d)}}:(...s)=>{let d=s;for(const c of a){const l=c.module.parameters;if(l)try{d=l(d)}catch{return Promise.reject({code:"transform_error",id:c.id,scope:e,message:"parameters transform failed"})}}let m;try{m=i(...d)}catch(c){m=Promise.reject(c)}return m.then(c=>{for(let l=a.length-1;l>=0;l--){const h=a[l],p=h.module.returns;if(p)try{c=p(c)}catch{return n({id:h.id,scope:e,leg:"returns"}),c}}return c},c=>{for(let l=a.length-1;l>=0;l--){const h=a[l],p=h.module.throws;if(p)try{c=p(c)}catch{return n({id:h.id,scope:e,leg:"throws"}),Promise.reject(c)}}return Promise.reject(c)})}}}}function H(e,t,n,u=()=>{}){const o=new Set(e.changes??[]),i=new Map;for(const f of o){const a=t[f];a&&i.set(f,a)}return{contract:e.contract,changes:o,flags:new Set(e.flags??[]),capabilities:e.capabilities??{},transforms:i,shellOrigin:n.shellOrigin,mount:n.mount,pipe:f=>x(f,i,u)}}(function(){const e=Object.defineProperty,t=globalThis,n=["RTCPeerConnection","webkitRTCPeerConnection","RTCDataChannel","RTCIceCandidate","RTCSessionDescription","RTCRtpSender","RTCRtpReceiver"];let u=0;for(let o=0;o<n.length;o++){const i=n[o];try{e(t,i,{value:void 0,writable:!1,configurable:!1})}catch{try{delete t[i]}catch{}try{e(t,i,{value:void 0,writable:!1,configurable:!0})}catch{}}typeof t[i]=="function"&&u++}if(u&&window!==top)try{parent.postMessage({__frame_rtc_lockdown_failed:u},"*")}catch{}})();const K=1e4,G=Object.freeze([...window.__FRAME_PREAMBLE?.origins??["https://claude.ai","https://preview.claude.ai"]]);function J(e){for(const t of G)if(t.endsWith(":*"))try{const n=new URL(e);if(`${n.protocol}//${n.hostname}:*`===t)return!0}catch{}else if(e===t)return!0;return!1}const w=Object.freeze({...window.__FRAME_PREAMBLE?.capabilities??{}}),E=window.__FRAME_PREAMBLE?.transforms,C=/^[\w.-]+\.js$/,V=/^[a-z][a-z0-9_-]{0,63}$/;let A=null,g=null;function P(e,t,n){try{Object.defineProperty(e,t,{value:n,writable:!1,configurable:!1,enumerable:!0})}catch{try{Object.defineProperty(e,t,{value:n,writable:!1,configurable:!0,enumerable:!0})}catch{}}}let R=!1;function N(e){const t=document.documentElement;e==="light"||e==="dark"?(t.dataset.theme=e,t.style.colorScheme=e,R=!0):R&&(delete t.dataset.theme,t.style.colorScheme="",R=!1)}const _=new Map;function Q(e,t){const n=_.get(e);if(!n)return;Object.assign(n.impl,t),n.impl.__settled=()=>Promise.reject({code:"capability_removed",message:`${e}: method not in this runtime`});const u=n.queue;n.queue=[];for(const o of u){const i=t[o.method];i?i(...o.args).then(o.resolve,o.reject):o.reject({code:"capability_removed",message:`${e}.${o.method} is not in this runtime`})}}function O(e,t){const n=_.get(e);if(!n)return;n.impl.__settled=()=>Promise.reject(t);const u=n.queue;n.queue=[];for(const o of u)o.reject(t)}const j=Object.getOwnPropertyDescriptor(window,"claude");if(window!==top&&!(j&&j.writable===!1)){z(),W();const e=j?.value??{};P(window,"claude",e);const t=s=>{const d={impl:Object.create(null),queue:[]};_.set(s,d);const m=new Proxy(d.impl,{get:(c,l)=>{if(typeof l=="string"&&!(l==="then"||l==="toJSON"||l==="valueOf"))return l==="toString"?Object.prototype.toString:(...h)=>{const p=c[l]??c.__settled;return p?p(...h):new Promise((b,S)=>{d.queue.push({method:l,args:h,resolve:b,reject:S})})}},set:()=>!1});P(e,s,m)};for(const s of Object.keys(w)){if(e[s]!==void 0){P(e,s,e[s]);continue}t(s)}let n=null,u=null,o=0;const i=s=>{s.source!==parent||!J(s.origin)||$(s.data)&&(n=s.data.__frame_init,g=s.origin,removeEventListener("message",i),clearTimeout(o),u?.())};addEventListener("message",i),parent.postMessage({__frame_connect:!0},"*");const f=new Promise(s=>{u=s,o=setTimeout(()=>{removeEventListener("message",i),s()},K)}),a=document.readyState==="loading"?new Promise(s=>document.addEventListener("DOMContentLoaded",()=>s(),{once:!0})):Promise.resolve();f.then(async()=>{if(!n||!g){for(const r of _.keys())O(r,{code:"not_granted",message:"frame initialization did not arrive - capability unavailable"});return}N(n.theme);const s=g;addEventListener("message",r=>{r.source!==parent||r.origin!==s||q(r.data)&&N(r.data.__frame_theme.theme)});const d=r=>U(()=>import("/_runtime/"+r),void 0),m=Object.keys(n.capabilities??{});for(const r of m)Object.hasOwn(w,r)||V.test(r)&&e[r]===void 0&&(t(r),O(r,{code:"capability_disabled",message:"capability not in this runtime generation"}));const c=m.filter(r=>Object.hasOwn(w,r)).map(r=>[r,w[r]]).filter(r=>typeof r[1]=="string"&&C.test(r[1])),[l,...h]=await Promise.allSettled([E&&C.test(E)?d(E):Promise.resolve({}),...c.map(([,r])=>d(r))]),p=g;A=H(n,l.status==="fulfilled"&&l.value?.TRANSFORMS||{},{shellOrigin:p,mount:Q},r=>parent.postMessage({__frame_cap_telemetry:r},p));const b=r=>parent.postMessage({__frame_cap_telemetry:{kind:"cap-load-error",cap:r}},p),S=A;h.forEach((r,v)=>{const I=c[v][0];if(r.status!=="fulfilled"){b(I);return}try{r.value?.install?.(S)}catch{b(I)}});for(const[r,v]of _)v.queue.length===0&&Object.keys(v.impl).length>0||O(r,{code:m.includes(r)?"capability_disabled":"not_granted",message:"capability not available in this session"});await a,parent.postMessage({__frame_ready:!0},g)})}})();</script><!-- /frame-runtime --><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}</style></head><body>
+<title>図書管理システム 実装解説 — レビュー会準備</title>
+<style>
+  :root {
+    --bg: #FBFAF8;
+    --surface: #FFFFFF;
+    --surface2: #F4F1EC;
+    --ink: #26201D;
+    --muted: #6F655E;
+    --faint: #9C918A;
+    --accent: #A31631;
+    --accent-ink: #FFFFFF;
+    --accent-soft: #F7E8EA;
+    --line: #E5DFD8;
+    --line-strong: #CFC7BE;
+    --good: #2E6E4E;
+    --good-soft: #E5F0E9;
+    --warn: #8A5A12;
+    --warn-soft: #F7EEDD;
+    --code-bg: #221D1B;
+    --code-ink: #E9E3DC;
+    --code-line: #37302C;
+    --code-cmt: #837770;
+    --code-str: #A9C98F;
+    --code-sym: #D9A15F;
+    --code-kw: #E4728B;
+    --code-dsl: #85B7D6;
+    --code-const: #E0C185;
+    --code-num: #C79ED2;
+    --shadow: 0 1px 2px rgba(38,32,29,.05), 0 4px 16px rgba(38,32,29,.05);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #17130F;
+      --surface: #201B17;
+      --surface2: #282221;
+      --ink: #EDE7E0;
+      --muted: #A99E96;
+      --faint: #7E746D;
+      --accent: #E36A80;
+      --accent-ink: #2A0A12;
+      --accent-soft: #3A2226;
+      --line: #372F2A;
+      --line-strong: #4A413B;
+      --good: #7FC49E;
+      --good-soft: #22322A;
+      --warn: #DFAE5E;
+      --warn-soft: #362C1B;
+      --code-bg: #14100E;
+      --code-line: #2E2723;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 4px 16px rgba(0,0,0,.25);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #17130F;
+    --surface: #201B17;
+    --surface2: #282221;
+    --ink: #EDE7E0;
+    --muted: #A99E96;
+    --faint: #7E746D;
+    --accent: #E36A80;
+    --accent-ink: #2A0A12;
+    --accent-soft: #3A2226;
+    --line: #372F2A;
+    --line-strong: #4A413B;
+    --good: #7FC49E;
+    --good-soft: #22322A;
+    --warn: #DFAE5E;
+    --warn-soft: #362C1B;
+    --code-bg: #14100E;
+    --code-line: #2E2723;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 4px 16px rgba(0,0,0,.25);
+  }
+  :root[data-theme="light"] {
+    --bg: #FBFAF8;
+    --surface: #FFFFFF;
+    --surface2: #F4F1EC;
+    --ink: #26201D;
+    --muted: #6F655E;
+    --faint: #9C918A;
+    --accent: #A31631;
+    --accent-ink: #FFFFFF;
+    --accent-soft: #F7E8EA;
+    --line: #E5DFD8;
+    --line-strong: #CFC7BE;
+    --good: #2E6E4E;
+    --good-soft: #E5F0E9;
+    --warn: #8A5A12;
+    --warn-soft: #F7EEDD;
+    --code-bg: #221D1B;
+    --code-ink: #E9E3DC;
+    --code-line: #37302C;
+    --code-cmt: #837770;
+    --code-str: #A9C98F;
+    --code-sym: #D9A15F;
+    --code-kw: #E4728B;
+    --code-dsl: #85B7D6;
+    --code-const: #E0C185;
+    --code-num: #C79ED2;
+    --shadow: 0 1px 2px rgba(38,32,29,.05), 0 4px 16px rgba(38,32,29,.05);
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 24px; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", "Noto Sans JP", sans-serif;
+    font-size: 15px;
+    line-height: 1.85;
+    -webkit-font-smoothing: antialiased;
+  }
+  .serif { font-family: "Hiragino Mincho ProN", "Yu Mincho", "Noto Serif JP", serif; }
+  code, pre, .mono {
+    font-family: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+  }
+
+  .frame { display: grid; grid-template-columns: 232px minmax(0, 1fr); max-width: 1180px; margin: 0 auto; gap: 40px; padding: 0 28px; }
+  @media (max-width: 940px) { .frame { grid-template-columns: minmax(0, 1fr); gap: 0; padding: 0 18px; } }
+
+  /* ---- sidebar ---- */
+  .toc { position: sticky; top: 0; align-self: start; height: 100vh; overflow-y: auto; padding: 36px 0 24px; }
+  .toc-title { font-size: 11px; letter-spacing: .18em; color: var(--faint); text-transform: uppercase; margin: 0 0 14px 2px; }
+  .toc ol { list-style: none; margin: 0; padding: 0; border-left: 1px solid var(--line); }
+  .toc a {
+    display: flex; gap: 9px; align-items: baseline;
+    padding: 6px 10px 6px 14px; margin-left: -1px;
+    color: var(--muted); text-decoration: none; font-size: 13px; line-height: 1.5;
+    border-left: 2px solid transparent;
+  }
+  .toc a .no { font-size: 11px; color: var(--faint); font-variant-numeric: tabular-nums; }
+  .toc a:hover { color: var(--ink); }
+  .toc a.now { color: var(--accent); border-left-color: var(--accent); font-weight: 600; }
+  .toc a.now .no { color: var(--accent); }
+  .toc a:focus-visible, a:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+  @media (max-width: 940px) { .toc { display: none; } }
+
+  main { padding: 44px 0 90px; min-width: 0; }
+
+  /* ---- header ---- */
+  .doc-head { border-bottom: 3px double var(--line-strong); padding-bottom: 26px; margin-bottom: 14px; }
+  .doc-eyebrow { display: flex; align-items: center; gap: 10px; font-size: 12px; letter-spacing: .14em; color: var(--accent); font-weight: 600; }
+  .doc-eyebrow::before { content: ""; width: 26px; height: 1px; background: var(--accent); }
+  h1 { font-size: clamp(26px, 4.5vw, 38px); line-height: 1.35; margin: 10px 0 8px; font-weight: 600; letter-spacing: .02em; text-wrap: balance; }
+  .doc-sub { color: var(--muted); font-size: 14px; margin: 0 0 18px; max-width: 46em; }
+  .stack-row { display: flex; flex-wrap: wrap; gap: 7px; }
+  .chip {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 12px; line-height: 1; padding: 6px 10px;
+    border: 1px solid var(--line); border-radius: 999px;
+    background: var(--surface); color: var(--muted); white-space: nowrap;
+  }
+  .chip b { color: var(--ink); font-weight: 600; }
+  .chip.ver { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
+  .repo-line { margin-top: 16px; font-size: 13px; color: var(--muted); }
+  .repo-line a { color: var(--accent); }
+
+  /* ---- sections ---- */
+  section { padding: 40px 0 8px; border-bottom: 1px solid var(--line); }
+  section:last-of-type { border-bottom: none; }
+  .sec-head { display: flex; align-items: baseline; gap: 14px; margin-bottom: 6px; }
+  .sec-no {
+    font-size: 12px; font-weight: 700; letter-spacing: .1em;
+    color: var(--accent); border: 1px solid var(--accent);
+    padding: 3px 8px; border-radius: 3px; font-variant-numeric: tabular-nums;
+    white-space: nowrap; align-self: center;
+  }
+  h2 { font-size: 23px; margin: 0; font-weight: 600; letter-spacing: .02em; line-height: 1.4; text-wrap: balance; }
+  .sec-req { font-size: 12px; color: var(--faint); margin: 0 0 18px 0; }
+  h3 { font-size: 15px; margin: 30px 0 10px; letter-spacing: .06em; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+  h3::before { content: ""; width: 8px; height: 8px; background: var(--accent); border-radius: 1px; flex: none; }
+  p { margin: 0 0 14px; max-width: 44em; }
+  section > p:first-of-type, .lead { font-size: 15.5px; }
+  li { margin-bottom: 6px; }
+  ul, ol { padding-left: 1.4em; margin: 0 0 14px; max-width: 44em; }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  strong { font-weight: 700; }
+  .small { font-size: 13px; color: var(--muted); }
+
+  /* inline code */
+  p code, li code, td code, .qa code, h2 code, dd code {
+    background: var(--surface2); border: 1px solid var(--line);
+    padding: .5px 5px; border-radius: 4px; font-size: .88em; white-space: nowrap;
+  }
+
+  /* ---- code blocks ---- */
+  .codebox { margin: 16px 0 20px; border-radius: 8px; overflow: hidden; box-shadow: var(--shadow); }
+  .codebox .path {
+    background: var(--code-bg); color: var(--code-cmt);
+    border-bottom: 1px solid var(--code-line);
+    font-size: 11.5px; padding: 8px 14px; letter-spacing: .04em;
+    display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+    font-family: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+  }
+  .codebox .path .lang { color: var(--code-sym); }
+  .codebox pre { margin: 0; background: var(--code-bg); color: var(--code-ink); padding: 14px 16px; overflow-x: auto; font-size: 12.8px; line-height: 1.75; }
+  .tok-s { color: var(--code-str); }
+  .tok-c { color: var(--code-cmt); font-style: italic; }
+  .tok-y { color: var(--code-sym); }
+  .tok-k { color: var(--code-kw); }
+  .tok-d { color: var(--code-dsl); }
+  .tok-t { color: var(--code-const); }
+  .tok-n { color: var(--code-num); }
+
+  /* ---- callouts ---- */
+  .why { border-left: 3px solid var(--accent); background: var(--accent-soft); padding: 14px 18px; border-radius: 0 8px 8px 0; margin: 16px 0 20px; max-width: 46em; }
+  .why .cap { font-size: 12px; font-weight: 700; letter-spacing: .12em; color: var(--accent); margin-bottom: 6px; }
+  .why p { margin-bottom: 8px; max-width: none; }
+  .why p:last-child { margin-bottom: 0; }
+  .note { border-left: 3px solid var(--warn); background: var(--warn-soft); padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 16px 0 20px; max-width: 46em; font-size: 13.5px; }
+  .note .cap { font-weight: 700; color: var(--warn); font-size: 12px; letter-spacing: .1em; margin-bottom: 4px; }
+
+  /* ---- rails feature list ---- */
+  .feats { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 10px; margin: 14px 0 20px; padding: 0; list-style: none; max-width: none; }
+  .feats li { margin: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 11px 13px; font-size: 13px; line-height: 1.65; }
+  .feats .fname { display: flex; align-items: center; gap: 8px; font-weight: 700; margin-bottom: 3px; flex-wrap: wrap; }
+  .feats .fname code { background: none; border: none; padding: 0; font-size: 12.5px; color: var(--accent); white-space: normal; }
+  .vtag { font-size: 10px; font-weight: 700; letter-spacing: .06em; color: var(--accent); background: var(--accent-soft); border-radius: 3px; padding: 2px 5px; white-space: nowrap; }
+  .feats .fdesc { color: var(--muted); }
+
+  /* ---- diff links ---- */
+  .difflist { list-style: none; padding: 0; margin: 12px 0 20px; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; max-width: 46em; }
+  .difflist li { margin: 0; border-bottom: 1px solid var(--line); }
+  .difflist li:last-child { border-bottom: none; }
+  .difflist a { display: flex; align-items: baseline; gap: 12px; padding: 9px 14px; text-decoration: none; color: var(--ink); font-size: 13.5px; background: var(--surface); }
+  .difflist a:hover { background: var(--surface2); }
+  .difflist .sha { font-family: ui-monospace, Menlo, monospace; font-size: 12px; color: var(--accent); white-space: nowrap; min-width: 4.6em; }
+  .difflist .pr { font-weight: 700; color: var(--accent); white-space: nowrap; min-width: 4.6em; font-size: 12.5px; }
+  .difflist .arrow { margin-left: auto; color: var(--faint); font-size: 12px; }
+
+  /* ---- sources ---- */
+  .sources { background: var(--surface2); border: 1px solid var(--line); border-radius: 8px; padding: 14px 18px; margin: 16px 0 24px; font-size: 13.5px; max-width: 46em; }
+  .sources .cap { font-size: 11.5px; font-weight: 700; letter-spacing: .14em; color: var(--faint); margin-bottom: 8px; }
+  .sources ul { list-style: none; padding: 0; margin: 0; }
+  .sources li { margin-bottom: 7px; }
+  .sources li:last-child { margin-bottom: 0; }
+  .sources .kw { color: var(--muted); }
+  .sources .kw code { white-space: normal; }
+
+  /* ---- tables ---- */
+  .tblwrap { overflow-x: auto; margin: 14px 0 20px; border: 1px solid var(--line); border-radius: 8px; }
+  table { border-collapse: collapse; width: 100%; font-size: 13.5px; background: var(--surface); }
+  th, td { text-align: left; padding: 9px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { font-size: 12px; letter-spacing: .08em; color: var(--faint); font-weight: 600; white-space: nowrap; background: var(--surface2); }
+  tr:last-child td { border-bottom: none; }
+  td a { white-space: nowrap; }
+
+  /* ---- ER diagram ---- */
+  .er-wrap { overflow-x: auto; margin: 18px 0 8px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); box-shadow: var(--shadow); }
+  .er-wrap svg { display: block; min-width: 980px; width: 100%; height: auto; }
+  .er-legend { display: flex; gap: 18px; flex-wrap: wrap; font-size: 12.5px; color: var(--muted); margin: 10px 2px 20px; }
+  .er-legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .lg-m2m { width: 22px; height: 3px; background: var(--accent); border-radius: 2px; }
+  .lg-o2m { width: 22px; height: 0; border-top: 2px solid var(--faint); }
+
+  /* ---- three layer diagram ---- */
+  .layers { display: grid; gap: 0; margin: 18px 0 20px; max-width: 46em; }
+  .layer { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 18px; box-shadow: var(--shadow); }
+  .layer .lhead { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 4px; }
+  .layer .lno { font-size: 11px; font-weight: 700; color: var(--accent-ink); background: var(--accent); border-radius: 999px; padding: 3px 9px; letter-spacing: .08em; white-space: nowrap; }
+  .layer .lname { font-weight: 700; font-size: 14.5px; }
+  .layer .lrole { font-size: 11.5px; color: var(--faint); margin-left: auto; letter-spacing: .06em; }
+  .layer p { font-size: 13.5px; color: var(--muted); margin: 0; max-width: none; }
+  .layer p code { white-space: normal; }
+  .layer-gap { display: flex; align-items: center; gap: 10px; padding: 8px 4px 8px 22px; color: var(--faint); font-size: 12.5px; }
+  .layer-gap::before { content: "↓"; color: var(--accent); font-size: 15px; }
+
+  /* ---- Q&A ---- */
+  .qa { border: 1px solid var(--line); border-radius: 10px; background: var(--surface); margin: 0 0 14px; max-width: 48em; box-shadow: var(--shadow); }
+  .qa summary { cursor: pointer; list-style: none; padding: 14px 18px; display: flex; gap: 12px; align-items: baseline; font-weight: 600; line-height: 1.6; }
+  .qa summary::-webkit-details-marker { display: none; }
+  .qa summary .q { color: var(--accent); font-weight: 800; font-size: 13px; letter-spacing: .06em; flex: none; }
+  .qa summary::after { content: "＋"; margin-left: auto; color: var(--faint); flex: none; }
+  .qa[open] summary::after { content: "−"; }
+  .qa .a { padding: 2px 18px 16px 44px; border-top: 1px dashed var(--line); }
+  .qa .a p { font-size: 14px; margin: 10px 0 8px; }
+  .qa .verdict { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .08em; border-radius: 3px; padding: 2px 8px; margin-right: 6px; vertical-align: 1px; }
+  .qa .verdict.ok { color: var(--good); background: var(--good-soft); }
+  .qa .verdict.gap { color: var(--warn); background: var(--warn-soft); }
+
+  .strengths { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin: 16px 0 26px; padding: 0; list-style: none; max-width: none; }
+  .strengths li { margin: 0; border: 1px solid var(--line); border-top: 3px solid var(--accent); border-radius: 8px; background: var(--surface); padding: 14px 16px; font-size: 13.5px; box-shadow: var(--shadow); }
+  .strengths b { display: block; font-size: 14.5px; margin-bottom: 4px; }
+  .strengths span { color: var(--muted); }
+
+  footer { margin-top: 30px; padding-top: 18px; border-top: 3px double var(--line-strong); color: var(--faint); font-size: 12.5px; }
+</style>
+
+<div class="frame">
+<nav class="toc" aria-label="目次">
+  <p class="toc-title">目次</p>
+  <ol>
+    <li><a href="#overview"><span class="no">00</span>全体像とER図</a></li>
+    <li><a href="#auth"><span class="no">01</span>ユーザー認証</a></li>
+    <li><a href="#crud"><span class="no">02</span>書籍CRUD</a></li>
+    <li><a href="#m2m"><span class="no">03</span>多対多（著者）</a></li>
+    <li><a href="#rental"><span class="no">04</span>貸出と三層防御</a></li>
+    <li><a href="#return"><span class="no">05</span>返却</a></li>
+    <li><a href="#search"><span class="no">06</span>書籍検索</a></li>
+    <li><a href="#infra"><span class="no">07</span>デプロイと開発基盤</a></li>
+    <li><a href="#qa"><span class="no">08</span>想定問答</a></li>
+  </ol>
+</nav>
+
+<main>
+<header class="doc-head">
+  <p class="doc-eyebrow">レビュー会 準備資料 · 2026-07-06</p>
+  <h1 class="serif">図書管理システム — 実装解説ドシエ</h1>
+  <p class="doc-sub">卒業課題の必須要件6項目について「何を・どう・なぜ」実装したかを機能単位で整理する。各セクションにコード抜粋・活用した Rails 機能・GitHub の diff リンク・Rails ガイドの出典を併記。</p>
+  <div class="stack-row">
+    <span class="chip ver"><b>Rails 8.1.3</b></span>
+    <span class="chip">Ruby <b>3.3.11</b></span>
+    <span class="chip">DB <b>SQLite</b>（本番も）</span>
+    <span class="chip">Hotwire <b>Turbo + Stimulus</b></span>
+    <span class="chip"><b>importmap</b>（Node なし）</span>
+    <span class="chip">Tailwind 4 + <b>daisyUI</b></span>
+    <span class="chip"><b>Solid</b> Queue / Cache / Cable</span>
+    <span class="chip">デプロイ <b>Fly.io</b>（東京 nrt）</span>
+  </div>
+  <p class="repo-line">リポジトリ: <a href="https://github.com/junhat6/book-management-system-speee" target="_blank" rel="noopener">junhat6/book-management-system-speee</a> ・ テスト: <code>rails test</code>（Minitest, TDD で作成）</p>
+</header>
+
+<!-- ================================================================ -->
+<section id="overview">
+  <div class="sec-head"><span class="sec-no">00</span><h2 class="serif">全体像とER図</h2></div>
+  <p class="sec-req">必須要件 3（リレーション構造）・6（ER図）に対応</p>
+
+  <p class="lead">アプリのテーブルは6つ。要件の核である <strong>1対多（users → rentals）</strong>と<strong>多対多（books ↔ authors、中間テーブル book_authors 経由）</strong>を中心に、認証用の sessions テーブルが加わる。</p>
+
+  <div class="er-wrap">
+  <svg viewBox="0 0 1120 470" role="img" aria-label="ER図：users, sessions, rentals, books, book_authors, authors の6テーブルと関連">
+    <style>
+      .tbl-h { fill: var(--accent); }
+      .tbl-hx { fill: var(--accent-ink); font-size: 13px; font-weight: 700; font-family: ui-monospace, Menlo, monospace; }
+      .tbl-b { fill: var(--surface); stroke: var(--line-strong); }
+      .col { fill: var(--ink); font-size: 11.5px; font-family: ui-monospace, Menlo, monospace; }
+      .tag { fill: var(--accent); font-size: 10px; font-weight: 700; font-family: ui-monospace, Menlo, monospace; }
+      .tag2 { fill: var(--faint); font-size: 10px; font-family: ui-monospace, Menlo, monospace; }
+      .edge { stroke: var(--faint); stroke-width: 1.6; fill: none; }
+      .edge-m2m { stroke: var(--accent); stroke-width: 2.4; fill: none; }
+      .mult { fill: var(--muted); font-size: 11px; font-weight: 700; font-family: ui-monospace, Menlo, monospace; }
+      .er-note { fill: var(--accent); font-size: 11px; font-weight: 600; }
+      .er-note2 { fill: var(--muted); font-size: 11px; }
+    </style>
+
+    <!-- edges (drawn first, under boxes) -->
+    <line class="edge" x1="230" y1="125" x2="330" y2="125"/>
+    <text class="mult" x="238" y="118">1</text><text class="mult" x="312" y="118">N</text>
+    <line class="edge" x1="560" y1="125" x2="650" y2="125"/>
+    <text class="mult" x="634" y="118">1</text><text class="mult" x="568" y="118">N</text>
+    <line class="edge" x1="125" y1="196" x2="125" y2="300"/>
+    <text class="mult" x="133" y="212">1</text><text class="mult" x="133" y="292">N</text>
+    <line class="edge-m2m" x1="755" y1="196" x2="755" y2="300"/>
+    <text class="mult" x="763" y="212">1</text><text class="mult" x="763" y="292">N</text>
+    <line class="edge-m2m" x1="940" y1="352" x2="880" y2="352"/>
+    <text class="mult" x="924" y="345">1</text><text class="mult" x="886" y="345">N</text>
+
+    <!-- users -->
+    <g>
+      <rect class="tbl-b" x="20" y="50" width="210" height="146" rx="6"/>
+      <path class="tbl-h" d="M20 56 a6 6 0 0 1 6 -6 h198 a6 6 0 0 1 6 6 v24 h-210 z"/>
+      <text class="tbl-hx" x="32" y="70">users</text>
+      <text class="col" x="32" y="98">id</text><text class="tag" x="200" y="98">PK</text>
+      <text class="col" x="32" y="119">name</text>
+      <text class="col" x="32" y="140">email_address</text><text class="tag" x="200" y="140">UQ</text>
+      <text class="col" x="32" y="161">password_digest</text>
+      <text class="col" x="32" y="182">admin</text><text class="tag2" x="164" y="182">boolean</text>
+    </g>
+
+    <!-- rentals -->
+    <g>
+      <rect class="tbl-b" x="330" y="70" width="230" height="126" rx="6"/>
+      <path class="tbl-h" d="M330 76 a6 6 0 0 1 6 -6 h218 a6 6 0 0 1 6 6 v24 h-230 z"/>
+      <text class="tbl-hx" x="342" y="90">rentals（貸出履歴）</text>
+      <text class="col" x="342" y="118">id</text><text class="tag" x="530" y="118">PK</text>
+      <text class="col" x="342" y="139">user_id</text><text class="tag" x="530" y="139">FK</text>
+      <text class="col" x="342" y="160">book_id</text><text class="tag" x="530" y="160">FK</text>
+      <text class="col" x="342" y="181">returned_at</text><text class="tag2" x="475" y="181">NULL=貸出中</text>
+    </g>
+    <text class="er-note" x="330" y="222">◆ 部分ユニーク index：returned_at IS NULL の行だけ</text>
+    <text class="er-note" x="345" y="240">book_id が一意 → 二重貸出を DB が禁止（→ 04）</text>
+
+    <!-- books -->
+    <g>
+      <rect class="tbl-b" x="650" y="50" width="210" height="146" rx="6"/>
+      <path class="tbl-h" d="M650 56 a6 6 0 0 1 6 -6 h198 a6 6 0 0 1 6 6 v24 h-210 z"/>
+      <text class="tbl-hx" x="662" y="70">books</text>
+      <text class="col" x="662" y="98">id</text><text class="tag" x="830" y="98">PK</text>
+      <text class="col" x="662" y="119">title</text>
+      <text class="col" x="662" y="140">isbn</text><text class="tag" x="830" y="140">UQ</text>
+      <text class="col" x="662" y="161">published_year</text>
+      <text class="col" x="662" y="182">publisher</text>
+    </g>
+
+    <!-- sessions -->
+    <g>
+      <rect class="tbl-b" x="20" y="300" width="210" height="125" rx="6"/>
+      <path class="tbl-h" d="M20 306 a6 6 0 0 1 6 -6 h198 a6 6 0 0 1 6 6 v24 h-210 z"/>
+      <text class="tbl-hx" x="32" y="320">sessions</text>
+      <text class="col" x="32" y="348">id</text><text class="tag" x="200" y="348">PK</text>
+      <text class="col" x="32" y="369">user_id</text><text class="tag" x="200" y="369">FK</text>
+      <text class="col" x="32" y="390">ip_address</text>
+      <text class="col" x="32" y="411">user_agent</text>
+    </g>
+    <text class="er-note2" x="20" y="450">Rails 8 標準認証：ログイン＝行の作成（→ 01）</text>
+
+    <!-- book_authors -->
+    <g>
+      <rect class="tbl-b" x="650" y="300" width="230" height="104" rx="6"/>
+      <path class="tbl-h" d="M650 306 a6 6 0 0 1 6 -6 h218 a6 6 0 0 1 6 6 v24 h-230 z"/>
+      <text class="tbl-hx" x="662" y="320">book_authors（中間）</text>
+      <text class="col" x="662" y="348">id</text><text class="tag" x="850" y="348">PK</text>
+      <text class="col" x="662" y="369">book_id</text><text class="tag" x="850" y="369">FK</text>
+      <text class="col" x="662" y="390">author_id</text><text class="tag" x="850" y="390">FK</text>
+    </g>
+    <text class="er-note" x="650" y="430">◆ (book_id, author_id) 複合ユニーク index（→ 03）</text>
+
+    <!-- authors -->
+    <g>
+      <rect class="tbl-b" x="940" y="310" width="160" height="83" rx="6"/>
+      <path class="tbl-h" d="M940 316 a6 6 0 0 1 6 -6 h148 a6 6 0 0 1 6 6 v24 h-160 z"/>
+      <text class="tbl-hx" x="952" y="330">authors</text>
+      <text class="col" x="952" y="358">id</text><text class="tag" x="1070" y="358">PK</text>
+      <text class="col" x="952" y="379">name</text><text class="tag" x="1070" y="379">UQ</text>
+    </g>
+  </svg>
+  </div>
+  <div class="er-legend">
+    <span><span class="lg-o2m"></span>1対多</span>
+    <span><span class="lg-m2m"></span>多対多を構成する関連（books ↔ authors、has_many :through）</span>
+    <span>PK=主キー / FK=外部キー / UQ=ユニーク index</span>
+  </div>
+
+  <h3>機能と差分の対応表（レビュー当日のクイックリファレンス）</h3>
+  <div class="tblwrap">
+    <table>
+      <thead><tr><th>機能</th><th>差分の見方</th><th>主要ファイル</th></tr></thead>
+      <tbody>
+        <tr><td><a href="#auth">01 認証</a></td><td>main 直接コミット（6件）</td><td><code>app/controllers/concerns/authentication.rb</code> ほか</td></tr>
+        <tr><td><a href="#crud">02 書籍CRUD</a></td><td>main 直接コミット（7件）</td><td><code>app/controllers/books_controller.rb</code></td></tr>
+        <tr><td><a href="#m2m">03 多対多</a></td><td>main 直接コミット（4件・ADR あり）</td><td><code>app/models/{book,author,book_author}.rb</code></td></tr>
+        <tr><td><a href="#rental">04 貸出</a></td><td><a href="https://github.com/junhat6/book-management-system-speee/pull/6/files" target="_blank" rel="noopener">PR #6</a></td><td><code>app/models/rental.rb</code>・migration</td></tr>
+        <tr><td><a href="#return">05 返却</a></td><td><a href="https://github.com/junhat6/book-management-system-speee/pull/7/files" target="_blank" rel="noopener">PR #7</a></td><td><code>app/controllers/rentals_controller.rb</code></td></tr>
+        <tr><td><a href="#search">06 検索</a></td><td><a href="https://github.com/junhat6/book-management-system-speee/pull/8/files" target="_blank" rel="noopener">PR #8</a></td><td><code>app/models/book.rb</code>（scope :search）</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="small">途中から開発フローを「main 直接コミット」→「feature ブランチ + PR」に切り替えたため、diff の見方が2通り混在している。PR がある機能は Files changed タブで機能単位の差分がそのまま見られる。</p>
+</section>
+
+<!-- ================================================================ -->
+<section id="auth">
+  <div class="sec-head"><span class="sec-no">01</span><h2 class="serif">ユーザー認証</h2></div>
+  <p class="sec-req">必須要件 1（会員登録・ログイン・ログアウト、貸出返却はログイン済みのみ）＋発展（パスワードリセット）</p>
+
+  <p class="lead">Rails 8 の標準認証ジェネレータ（<code>bin/rails generate authentication</code>）と同じ構成で実装。<strong>Devise などの認証 gem を使わず、フレームワーク標準の部品だけで組んでいる</strong>のがポイント。最初は自前の <code>session[:user_id]</code> 方式で作り、セッション固定攻撃対策を挟んで、Rails 8 標準構成に移行するという3段階を踏んだ（経緯は <code>docs/authentication.md</code> に記録）。</p>
+
+  <h3>中核：Authentication concern（クローズ既定）</h3>
+  <div class="codebox">
+    <div class="path"><span>app/controllers/concerns/authentication.rb</span><span class="lang">ruby</span></div>
+    <pre><code class="ruby">module Authentication
+  extend ActiveSupport::Concern
+
+  included do
+    before_action :require_authentication   # 全アクションを既定で保護
+    helper_method :authenticated?
+  end
+
+  class_methods do
+    def allow_unauthenticated_access(**options)
+      skip_before_action :require_authentication, **options
+    end
+  end
+
+  private
+    def require_authentication
+      resume_session || request_authentication
+    end
+
+    def resume_session
+      Current.session ||= find_session_by_cookie
+    end
+
+    def find_session_by_cookie
+      Session.find_by(id: cookies.signed[:session_id]) if cookies.signed[:session_id]
+    end
+
+    def start_new_session_for(user)
+      user.sessions.create!(user_agent: request.user_agent, ip_address: request.remote_ip).tap do |session|
+        Current.session = session
+        cookies.signed.permanent[:session_id] = { value: session.id, httponly: true, same_site: :lax }
+      end
+    end
+end</code></pre>
+  </div>
+
+  <div class="why">
+    <div class="cap">なぜこの設計か</div>
+    <p><strong>「既定で全部ロック、公開ページだけ opt-out」</strong>という向きが肝。<code>ApplicationController</code> が include するので、新しいコントローラを作った瞬間から認証必須になる。逆向き（既定オープンで保護したいページに before_action を足す）だと、<em>足し忘れたページが認証なしで公開される</em>事故が構造的に起こる。忘れたときに安全側に倒れる設計。</p>
+    <p>ログイン状態は cookie に user_id を直接入れるのではなく、<strong>sessions テーブルの行 ID を署名付き cookie に入れる</strong>。セッションが DB の行なので「パスワード変更時に全端末をログアウトさせる」（<code>sessions.destroy_all</code>）が1行で書ける。cookie は <code>httponly</code>（JS から読めない = XSS 対策）+ <code>same_site: :lax</code>（CSRF 緩和）+ 署名付き（改ざん検知）。</p>
+  </div>
+
+  <h3>User モデルとログイン処理</h3>
+  <div class="codebox">
+    <div class="path"><span>app/models/user.rb</span><span class="lang">ruby</span></div>
+    <pre><code class="ruby">class User < ApplicationRecord
+  has_secure_password
+  has_many :sessions, dependent: :destroy
+  has_many :rentals, dependent: :restrict_with_error  # 履歴が残るユーザーは消せない
+
+  normalizes :email_address, with: ->(e) { e.strip.downcase }
+
+  validates :name, presence: true
+  validates :email_address, presence: true, uniqueness: { case_sensitive: false }
+  validates :password, presence: true, length: { minimum: 8 }, if: :password_required?
+end</code></pre>
+  </div>
+  <div class="codebox">
+    <div class="path"><span>app/controllers/sessions_controller.rb（抜粋）</span><span class="lang">ruby</span></div>
+    <pre><code class="ruby">allow_unauthenticated_access only: %i[ new create ]
+rate_limit to: 10, within: 3.minutes, only: :create,
+  with: -> { redirect_to new_session_path, alert: "しばらく時間をおいてから再度お試しください" }
+
+def create
+  if user = User.authenticate_by(params.permit(:email_address, :password))
+    start_new_session_for user
+    redirect_to after_authentication_url, notice: "ログインしました"
+  else
+    redirect_to new_session_path, alert: "メールアドレスまたはパスワードが正しくありません"
+  end
+end</code></pre>
+  </div>
+
+  <h3>活用した Rails の機能</h3>
+  <ul class="feats">
+    <li><div class="fname"><code>has_secure_password</code></div><div class="fdesc">bcrypt でハッシュ化して <code>password_digest</code> に保存。<code>authenticate</code> / 確認入力の検証を自動提供。</div></li>
+    <li><div class="fname"><code>normalizes</code><span class="vtag">7.1+</span></div><div class="fdesc">保存時も検索時もメールを strip + downcase に正規化。「大文字で登録した人がログインできない」を防ぐ。</div></li>
+    <li><div class="fname"><code>User.authenticate_by</code><span class="vtag">7.1+</span></div><div class="fdesc">ユーザーが存在しない場合もダミーのハッシュ計算を行い応答時間を揃える（タイミング攻撃によるメールアドレス列挙の対策）。</div></li>
+    <li><div class="fname"><code>rate_limit</code><span class="vtag">8.0+</span></div><div class="fdesc">ログイン試行を 3分10回に制限（ブルートフォース対策）。gem なしのコントローラ組み込み機能。</div></li>
+    <li><div class="fname"><code>ActiveSupport::CurrentAttributes</code></div><div class="fdesc"><code>Current.user</code> でリクエスト中どこからでも現在ユーザーを参照。リクエスト毎に自動リセット。</div></li>
+    <li><div class="fname">パスワードリセットトークン<span class="vtag">8.1</span></div><div class="fdesc"><code>has_secure_password</code> の既定 <code>reset_token: true</code> により <code>password_reset_token</code>（15分期限）が自動生成される。<strong>モデルに1行も書いてないのに動く</strong>理由として説明できるようにしておく。</div></li>
+  </ul>
+
+  <p>パスワードリセットのメールは本番では Resend の HTTP API 経由（Fly.io/Render は SMTP がブロックされがちなため）。リセット成功時は <code>@user.sessions.destroy_all</code> で全端末ログアウト、また「そのメールアドレスが存在するか」を応答で漏らさないよう、存在有無にかかわらず同じ完了メッセージを返す。</p>
+
+  <h3>差分を見る（実装の時系列）</h3>
+  <ul class="difflist">
+    <li><a href="https://github.com/junhat6/book-management-system-speee/commit/a0ffc56" target="_blank" rel="noopener"><span class="sha">a0ffc56</span>自前 session[:user_id] 方式で認証を初期実装<span class="arrow">↗</span></a></li>
+    <li><a href="https://github.com/junhat6/book-management-system-speee/commit/1d737c4" target="_blank" rel="noopener"><span class="sha">1d737c4</span>セッション固定攻撃対策（ログイン時に reset_session）<span class="arrow">↗</span></a></li>
+    <li><a href="https://github.com/junhat6/book-management-system-speee/commit/0ea72d6" target="_blank" rel="noopener"><span class="sha">0ea72d6</span>Rails 8 標準構成へ移行（Session モデル + Current + concern）<span class="arrow">↗</span></a></li>
+    <li><a href="https://github.com/junhat6/book-management-system-speee/commit/9d7defa" target="_blank" rel="noopener"><span class="sha">9d7defa</span>パスワード再設定機能 + メール送信<span class="arrow">↗</span></a></li>
+    <li><a href="https://github.com/junhat6/book-management-system-speee/commit/c39366d" target="_blank" rel="noopener"><span class="sha">c39366d</span>Resend で本番メール送信（SMTP 設定を削除）<span class="arrow">↗</span></a></li>
+    <li><a href="https://github.com/junhat6/book-management-system-speee/commit/b6ac688" target="_blank" rel="noopener"><span class="sha">b6ac688</span>email → email_address リネーム（Rails 8 規約に合わせる）<span class="arrow">↗</span></a></li>
+  </ul>
+
+  <div class="sources">
+    <div class="cap">情報源</div>
+    <ul>
+      <li><a href="https://railsguides.jp/security.html" target="_blank" rel="noopener">Rails セキュリティガイド</a> — セッション固定攻撃・CSRF・cookie の各対策がなぜ必要かはこの章が原典。</li>
+      <li><a href="https://api.rubyonrails.org/classes/ActiveModel/SecurePassword/ClassMethods.html" target="_blank" rel="noopener">API: has_secure_password</a> — 8.1 の <code>reset_token</code> 既定を含む正確な仕様。</li>
+      <li class="kw">検索キーワード: <code>Rails 8 authentication generator</code> / <code>authenticate_by timing attack</code> / <code>ActiveSupport CurrentAttributes</code></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================================================================ -->
+<section id="crud">
+  <div class="sec-head"><span class="sec-no">02</span><h2 class="serif">書籍CRUD</h2></div>
+  <p class="sec-req">必須要件 2（書籍の登録・閲覧・更新・削除。属性：タイトル・ISBN・出版年・出版社・著者）</p>
+
+  <p class="lead">books を <code>resources</code> による RESTful リソースとして実装。閲覧系（index / show）はゲスト可、書き込み系はログイン必須という切り分けを <code>allow_unauthenticated_access</code> の1行で表現している。</p>
+
+  <div class="codebox">
+    <div class="path"><span>app/controllers/books_controller.rb（抜粋）</span><span class="lang">ruby</span></div>
+    <pre><code class="ruby">class BooksController < ApplicationController
+  allow_unauthenticated_access only: [ :index, :show ]  # 閲覧はゲスト可、他はログイン必須
+  before_action :set_book, only: [ :show, :edit, :update, :destroy ]
+
+  def index
+    @books = Book.search(params[:q]).includes(:authors).order(created_at: :desc)
+  end
+
+  def create
+    @book = Book.new(book_params)
+    if @book.save
+      redirect_to @book, notice: "Book was successfully created."
+    else
+      render :new, status: :unprocessable_entity   # Turbo は 422 を要求する
+    end
+  end
+
+  def destroy
+    @book.destroy
+    redirect_to books_path, notice: "Book was successfully destroyed.", status: :see_other
+  end
+
+  private
+
+  def book_params
+    params.require(:book).permit(:title, :isbn, :published_year, :publisher,
+                                 :new_author_name, author_ids: [])
+  end
+end</code></pre>
+  </div>
+
+  <div class="why">
+    <div class="cap">なぜこの設計か</div>
+    <p><strong>RESTful に7アクションへ揃える</strong>と、URL・ヘルパ名・ビューの置き場所・テストの構成が全部 Rails の規約で決まり、読む人が迷わない（「設定より規約」）。独自アクションを生やすほど、この予測可能性が失われていく。</p>
+    <p><strong>strong parameters</strong> は「許可した属性しかマスアサインメントさせない」ホワイトリスト。<code>author_ids: []</code> のように配列は明示が必要で、書き忘れると Rails は<em>エラーにせず黙って捨てる</em>ため「著者だけ保存されない」という気づきにくいバグになる。</p>
+    <p>保存失敗時の <code>status: :unprocessable_entity</code>（422）と削除後の <code>status: :see_other</code>（303）は <strong>Turbo Drive の要求仕様</strong>。Turbo はフォーム送信への 200 応答を正しく処理できないので、Rails 7 以降は「失敗 = 422 で再描画、成功 = リダイレクト」が規約になっている。</p>
+  </div>
+
+  <h3>活用した Rails の機能</h3>
+  <ul class="feats">
+    <li><div class="fname"><code>resources :books</code></div><div class="fdesc">7アクションの RESTful ルーティング。<code>root "books#index"</code> で一覧をトップに。</div></li>
+    <li><div class="fname"><code>form_with model:</code></div><div class="fdesc">new / edit で同じ <code>_form</code> パーシャルを共有。モデルの状態から POST / PATCH を自動判別。</div></li>
+    <li><div class="fname"><code>includes(:authors)</code></div><div class="fdesc">一覧で各書籍の著者を表示するため eager load して N+1 を回避（bullet gem で検知体制も）。</div></li>
+    <li><div class="fname"><code>turbo_confirm</code></div><div class="fdesc">削除ボタンに <code>data: { turbo_confirm: ... }</code> で確認ダイアログ。JS を書かずに済む。</div></li>
+  </ul>
+
+  <h3>差分を見る（実装の時系列）</h3>
+  <ul class="difflist">
+    <li><a href="https://github.com/junhat6/book-management-system-speee/commit/d0f90ef" target="_blank" rel="noopener"><span class="sha">d0f90ef</span>Book モデル + マイグレーション<span class="arrow">↗</span></a></li>
+    <li><a href="https://github.com/junhat6/book-management-system-speee/commit/14a4273" target="_blank" rel="noopener"><span class="sha">14a4273</span>コントローラー + 一覧ビュー<span class="arrow">↗</span></a></li>
+    <li><a href="https://github.com/junhat6/book-management-system-speee/commit/b94524e" target="_blank" rel="noopener"><span class="sha">b94524e</span>詳細画面（show）<span class="arrow">↗</span></a></li>
+    <li><a href="https://github.com/junhat6/book-management-system-speee/commit/6ab9703" target="_blank" rel="noopener"><span class="sha">6ab9703</span>作成機能（new / create）<span class="arrow">↗</span></a></li>
+    <li><a href="https://github.com/junhat6/book-management-system-speee/commit/79b5c4a" target="_blank" rel="noopener"><span class="sha">79b5c4a</span>更新・削除（edit / update / destroy）<span class="arrow">↗</span></a></li>
+    <li><a href="https://github.com/junhat6/book-management-system-speee/commit/001df1b" target="_blank" rel="noopener"><span class="sha">001df1b</span>コントローラーテスト<span class="arrow">↗</span></a></li>
+    <li><a href="https://github.com/junhat6/book-management-system-speee/commit/c0cb681" target="_blank" rel="noopener"><span class="sha">c0cb681</span>モデルテスト<span class="arrow">↗</span></a></li>
+  </ul>
+
+  <div class="sources">
+    <div class="cap">情報源</div>
+    <ul>
+      <li><a href="https://railsguides.jp/routing.html" target="_blank" rel="noopener">Rails のルーティング</a> — <code>resources</code> が生成する7アクションと URL 設計の原典。</li>
+      <li><a href="https://railsguides.jp/action_controller_overview.html" target="_blank" rel="noopener">Action Controller の概要</a> — strong parameters の仕様（配列の許可方法・黙って捨てる挙動）はここ。</li>
+      <li class="kw">検索キーワード: <code>Rails strong parameters permit array</code> / <code>Turbo 422 unprocessable_entity form</code></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================================================================ -->
+<section id="m2m">
+  <div class="sec-head"><span class="sec-no">03</span><h2 class="serif">多対多リレーション（書籍 ↔ 著者）</h2></div>
+  <p class="sec-req">必須要件 3（多対多）。設計判断は <code>docs/design-decisions-authors.md</code> に ADR として文書化</p>
+
+  <p class="lead">中間モデル <code>BookAuthor</code> を明示的に作る <strong><code>has_many :through</code></strong> 方式。中間モデルを持たない <code>has_and_belongs_to_many</code> ではなくこちらを選んだ理由まで含めて ADR に記録してある（レビューで最も説明しやすい部分）。</p>
+
+  <div class="codebox">
+    <div class="path"><span>app/models/book.rb ・ author.rb ・ book_author.rb（関連部分）</span><span class="lang">ruby</span></div>
+    <pre><code class="ruby">class Book < ApplicationRecord
+  has_many :book_authors, dependent: :destroy            # 本を消せば紐付けも道連れ
+  has_many :authors, through: :book_authors
+end
+
+class Author < ApplicationRecord
+  has_many :book_authors, dependent: :restrict_with_error # 本が紐付く著者は消せない
+  has_many :books, through: :book_authors
+  validates :name, presence: true, uniqueness: true
+end
+
+class BookAuthor < ApplicationRecord
+  belongs_to :book
+  belongs_to :author
+  validates :author_id, uniqueness: { scope: :book_id }   # アプリ層の重複防止
+  # + DB 層にも (book_id, author_id) の複合ユニーク index（二層防御）
+end</code></pre>
+  </div>
+
+  <h3>フォームからの著者指定：既存選択 + 新規追加の両対応</h3>
+  <p>フォームには「既存著者の複数選択（<code>author_ids: []</code>）」と「新しい著者名のテキスト入力」を併設。新規著者名は DB カラムではない<strong>仮想属性</strong>として受ける。</p>
+  <div class="codebox">
+    <div class="path"><span>app/models/book.rb（仮想属性と取り込み）</span><span class="lang">ruby</span></div>
+    <pre><code class="ruby">attr_reader :new_author_name
+before_save :attach_new_author
+
+def new_author_name=(value)
+  @new_author_name = value.to_s.strip.presence  # 空白だけの入力は nil に潰す
+end
+
+def attach_new_author
+  return if new_author_name.blank?
+
+  author = Author.find_or_create_by!(name: new_author_name)
+  authors << author unless authors.exists?(author.id)
+end</code></pre>
+  </div>
+
+  <div class="why">
+    <div class="cap">なぜこの設計か</div>
+    <p><strong>habtm ではなく has_many :through</strong>：中間テーブルがモデルとして存在するので、将来「著 / 訳 / 監修」のような役割カラムを足したくなってもテーブルを作り直さずに済む。habtm は中間に属性を持てないため、必要になった時点で移行作業が発生する。</p>
+    <p><strong>ユニーク制約の二層防御</strong>：アプリ層の <code>uniqueness</code> は分かりやすいエラーメッセージ用、DB 層の複合ユニーク index は並行リクエストでも重複を通さない最終防衛線。アプリ層だけだと同時送信で重複が入り得る（04 の貸出と同じ理屈）。</p>
+    <p><strong>dependent の非対称</strong>：Book 側は <code>:destroy</code>（本を消したら紐付けは無意味なので道連れ）、Author 側は <code>:restrict_with_error</code>（著者削除画面が無いので、誤削除からデータを守る保守的な選択）。「同じ関連でも向きによって削除ポリシーは変わる」の実例。</p>
+    <p><strong><code>find_or_create_by!</code></strong>：同名著者の重複作成を防ぐ（authors.name にもユニーク index）。同姓同名の別人はこの課題ではスコープ外、と割り切りも ADR に明記。</p>
+  </div>
+
+  <h3>差分を見る（実装の時系列）</h3>
+  <ul class="difflist">
+    <li><a href="https://github.com/junhat6/book-management-system-speee/commit/611bff4" target="_blank" rel="noopener"><span class="sha">611bff4</span>設計判断記録（ADR）を先に作成<span class="arrow">↗</span></a></li>
+    <li><a href="https://github.com/junhat6/book-management-system-speee/commit/92ab11d" target="_blank" rel="noopener"><span class="sha">92ab11d</span>著者機能 + 書籍との多対多を実装<span class="arrow">↗</span></a></li>
+    <li><a href="https://github.com/junhat6/book-management-system-speee/commit/3b08c74" target="_blank" rel="noopener"><span class="sha">3b08c74</span>new_author_name を attr_reader + カスタム setter に整理<span class="arrow">↗</span></a></li>
+    <li><a href="https://github.com/junhat6/book-management-system-speee/commit/1c85563" target="_blank" rel="noopener"><span class="sha">1c85563</span>Book モデルテストの改善<span class="arrow">↗</span></a></li>
+  </ul>
+
+  <div class="sources">
+    <div class="cap">情報源</div>
+    <ul>
+      <li><a href="https://railsguides.jp/association_basics.html" target="_blank" rel="noopener">Active Record の関連付け</a> — 「has_many :through と habtm のどちらを選ぶか」という判断基準の節がそのままこの設計の根拠。</li>
+      <li class="kw">検索キーワード: <code>Rails has_many through vs has_and_belongs_to_many</code> / <code>Rails virtual attribute form</code></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================================================================ -->
+<section id="rental">
+  <div class="sec-head"><span class="sec-no">04</span><h2 class="serif">貸出と三層防御</h2></div>
+  <p class="sec-req">必須要件 4（貸出。貸出中の書籍は他ユーザーが借りられない）— この課題の技術的ハイライト</p>
+
+  <p class="lead">「貸出中の本は借りられない」を<strong>モデル・DB・コントローラの三層</strong>で守る。単なるバリデーション1個ではなく、同時リクエスト（レースコンディション）まで考慮した構成。</p>
+
+  <div class="layers">
+    <div class="layer">
+      <div class="lhead"><span class="lno">第1層</span><span class="lname">モデルのバリデーション</span><span class="lrole">役割：UX（丁寧なエラー文）</span></div>
+      <p><code>validate :book_must_be_available, on: :create</code> — 通常ケースの二重貸出を「貸出中のため借りられません」という分かりやすいメッセージで弾く。</p>
+    </div>
+    <div class="layer-gap">同時に2リクエストが来ると両方「貸出中なし」と判定してすり抜ける（check-then-act の隙間）</div>
+    <div class="layer">
+      <div class="lhead"><span class="lno">第2層</span><span class="lname">DB の部分ユニーク index</span><span class="lrole">役割：整合性の最終防衛線</span></div>
+      <p><code>returned_at IS NULL</code> の行に限って <code>book_id</code> を一意にする。片方の INSERT は物理的に失敗し、DB が二重貸出を構造的に禁止する。</p>
+    </div>
+    <div class="layer-gap">制約違反は <code>ActiveRecord::RecordNotUnique</code> 例外として上がってくる</div>
+    <div class="layer">
+      <div class="lhead"><span class="lno">第3層</span><span class="lname">コントローラの rescue_from</span><span class="lrole">役割：例外を UX に変換</span></div>
+      <p>500 エラー画面ではなく「ちょうど貸出中になったため借りられませんでした。」というフラッシュに変換して書籍詳細へ戻す。</p>
+    </div>
+  </div>
+
+  <div class="codebox">
+    <div class="path"><span>db/migrate/20260702151447_create_rentals.rb（第2層）</span><span class="lang">ruby</span></div>
+    <pre><code class="ruby"># returned_at が NULL（貸出中）の行に限り book_id を一意にする
+add_index :rentals, :book_id, unique: true,
+  where: "returned_at IS NULL",
+  name: "index_rentals_on_book_id_when_active"</code></pre>
+  </div>
+  <div class="codebox">
+    <div class="path"><span>app/models/rental.rb（第1層・全文）</span><span class="lang">ruby</span></div>
+    <pre><code class="ruby">class Rental < ApplicationRecord
+  belongs_to :user
+  belongs_to :book
+
+  scope :active, -> { where(returned_at: nil) }
+
+  validate :book_must_be_available, on: :create
+
+  private
+
+  def book_must_be_available
+    return if book.blank?
+    return unless Rental.active.exists?(book_id: book_id)
+
+    errors.add(:book, "は貸出中のため借りられません")
+  end
+end</code></pre>
+  </div>
+  <div class="codebox">
+    <div class="path"><span>app/controllers/rentals_controller.rb（第3層・抜粋）</span><span class="lang">ruby</span></div>
+    <pre><code class="ruby">class RentalsController < ApplicationController
+  rescue_from ActiveRecord::RecordNotUnique, with: :book_already_rented
+
+  def create
+    @rental = @book.rentals.new(user: Current.user)
+    if @rental.save
+      redirect_to @book, notice: "「#{@book.title}」を借りました。"
+    else
+      redirect_to @book, alert: @rental.errors.full_messages.to_sentence
+    end
+  end
+
+  private
+
+  def book_already_rented
+    redirect_to @book, alert: "ちょうど貸出中になったため借りられませんでした。"
+  end
+end</code></pre>
+  </div>
+
+  <div class="why">
+    <div class="cap">なぜ三層必要か（そうしないとどうなるか）</div>
+    <p>バリデーションの実体は「SELECT で存在確認 → OK なら INSERT」という2ステップで、<strong>この間には必ず時間の隙間がある</strong>。2人が同時に「借りる」を押すと、両方の SELECT が「貸出中なし」を返し、両方 INSERT されてしまう。Rails ガイド自身が「uniqueness 検証は競合状態を防げないので DB 制約を併用せよ」と明記している問題。</p>
+    <p>逆に DB 制約だけにすると、通常ケースでもユーザーに見えるのは例外由来の無骨なエラーになる。<strong>各層の役割が違う</strong>（モデル=UX、DB=整合性、コントローラ=例外の翻訳）から三層とも要る、と説明できるのが強い。</p>
+    <p>「部分」index である点も重要：単なる <code>book_id</code> ユニークだと返却済み履歴が2行目から入らなくなる。<code>WHERE returned_at IS NULL</code> で「現役の貸出だけ」に制約を絞ることで、履歴の蓄積と排他制御を両立している。</p>
+  </div>
+
+  <div class="note">
+    <div class="cap">テストの見どころ</div>
+    <code>test/models/rental_test.rb</code> では <code>save!(validate: false)</code> でわざと第1層を迂回し、<code>assert_raises(ActiveRecord::RecordNotUnique)</code> で<strong>第2層が単体で機能すること</strong>を検証している。「バリデーションを通らない経路でも DB が守る」ことをテストで証明済み、と言える。
+  </div>
+
+  <h3>差分を見る</h3>
+  <ul class="difflist">
+    <li><a href="https://github.com/junhat6/book-management-system-speee/pull/6/files" target="_blank" rel="noopener"><span class="pr">PR #6</span>貸出機能を実装（feature/rental-create → Files changed）<span class="arrow">↗</span></a></li>
+    <li><a href="https://github.com/junhat6/book-management-system-speee/commit/726835d" target="_blank" rel="noopener"><span class="sha">726835d</span>同内容の単一コミット diff<span class="arrow">↗</span></a></li>
+  </ul>
+
+  <div class="sources">
+    <div class="cap">情報源</div>
+    <ul>
+      <li><a href="https://railsguides.jp/active_record_validations.html" target="_blank" rel="noopener">Active Record バリデーション</a> — uniqueness 検証が競合状態を防げず DB 制約が必要、という注意書きの原典。</li>
+      <li><a href="https://railsguides.jp/active_record_migrations.html" target="_blank" rel="noopener">Active Record マイグレーション</a> — <code>add_index</code> のオプション（unique / where）。</li>
+      <li class="kw">検索キーワード: <code>Rails uniqueness validation race condition</code> / <code>partial unique index where clause</code> / <code>rescue_from RecordNotUnique</code></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================================================================ -->
+<section id="return">
+  <div class="sec-head"><span class="sec-no">05</span><h2 class="serif">返却</h2></div>
+  <p class="sec-req">必須要件 4（返却ができる）</p>
+
+  <p class="lead">返却は「レコードの削除」ではなく <strong><code>returned_at</code> に時刻を入れる状態遷移</strong>として実装。貸出の記録がそのまま履歴として残る。</p>
+
+  <div class="codebox">
+    <div class="path"><span>app/controllers/rentals_controller.rb（返却部分）</span><span class="lang">ruby</span></div>
+    <pre><code class="ruby">before_action :set_own_active_rental, only: :update
+
+def update
+  @rental.update!(returned_at: Time.current)
+  redirect_to @rental.book, notice: "「#{@rental.book.title}」を返却しました。"
+end
+
+private
+
+def set_own_active_rental
+  @rental = Current.user.rentals.active.find(params[:id])  # 本人の貸出中レコードだけ対象
+end</code></pre>
+  </div>
+
+  <div class="why">
+    <div class="cap">なぜこの設計か</div>
+    <p><strong><code>Current.user.rentals.active.find(...)</code> が認可そのもの</strong>になっている。「全体から find して所有者かどうか if 文で比較」する書き方だと、比較を書き忘れた瞬間に他人の貸出を返却できてしまう。ログインユーザーの関連からたどれば、他人のレコードはそもそも検索範囲に入らず <code>RecordNotFound</code>（= 404）になる。存在の有無すら漏らさない、Rails の定番認可イディオム。</p>
+    <p><strong>削除ではなく更新</strong>にしたことで、発展要件の「貸出履歴の閲覧」にテーブル設計変更なしでそのまま進める。DELETE だと履歴要件が出た時点で設計やり直しになる。</p>
+    <p><code>update!</code>（bang 付き）なのは、<code>set_own_active_rental</code> を通過した時点で失敗する正当な理由がないから。ここで失敗するならバグなので、握り潰さず例外にして気づけるようにしている。</p>
+  </div>
+
+  <h3>差分を見る</h3>
+  <ul class="difflist">
+    <li><a href="https://github.com/junhat6/book-management-system-speee/pull/7/files" target="_blank" rel="noopener"><span class="pr">PR #7</span>返却機能を実装（feature/rental-return → Files changed）<span class="arrow">↗</span></a></li>
+    <li><a href="https://github.com/junhat6/book-management-system-speee/commit/d8348f4" target="_blank" rel="noopener"><span class="sha">d8348f4</span>同内容の単一コミット diff<span class="arrow">↗</span></a></li>
+  </ul>
+
+  <div class="sources">
+    <div class="cap">情報源</div>
+    <ul>
+      <li><a href="https://railsguides.jp/active_record_querying.html" target="_blank" rel="noopener">Active Record クエリインターフェイス</a> — 関連経由の find・スコープの合成はこの章。</li>
+      <li class="kw">検索キーワード: <code>Rails scope association authorization current_user find</code> / <code>soft state transition returned_at</code></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================================================================ -->
+<section id="search">
+  <div class="sec-head"><span class="sec-no">06</span><h2 class="serif">書籍検索</h2></div>
+  <p class="sec-req">必須要件 5（一覧表示・タイトル / 著者名での検索）</p>
+
+  <p class="lead">検索ロジックはコントローラではなく <strong>モデルの <code>scope</code></strong> に置き、1つの LIKE クエリでタイトルと著者名を横断検索する。短いコードに検索実装の定番の罠への対策が3つ詰まっている。</p>
+
+  <div class="codebox">
+    <div class="path"><span>app/models/book.rb（scope :search）</span><span class="lang">ruby</span></div>
+    <pre><code class="ruby">scope :search, ->(query) {
+  return all if query.blank?
+
+  q = "%#{sanitize_sql_like(query)}%"
+  left_joins(:authors)
+    .where("books.title LIKE :q OR authors.name LIKE :q", q: q)
+    .distinct
+}</code></pre>
+  </div>
+  <div class="codebox">
+    <div class="path"><span>app/controllers/books_controller.rb（利用側）</span><span class="lang">ruby</span></div>
+    <pre><code class="ruby">def index
+  @books = Book.search(params[:q]).includes(:authors).order(created_at: :desc)
+end</code></pre>
+  </div>
+
+  <div class="why">
+    <div class="cap">なぜこの書き方か（3つの罠と対策）</div>
+    <p><strong>① <code>sanitize_sql_like</code></strong> — プレースホルダ（<code>:q</code>）は SQL インジェクションを防ぐが、<code>%</code> や <code>_</code> は「値として安全」なままワイルドカードとして解釈される。ユーザーが <code>%</code> を検索したら文字通りの <code>%</code> にマッチしてほしいので、別途エスケープが要る。</p>
+    <p><strong>② <code>left_joins</code></strong> — INNER JOIN（<code>joins</code>）だと著者が紐付いていない本が結果から消え、タイトル検索でもヒットしなくなる。LEFT OUTER JOIN なら著者ゼロの本も検索対象に残る。</p>
+    <p><strong>③ <code>distinct</code></strong> — 共著（1冊に著者2人）を JOIN すると行が2行に複製され、一覧に同じ本が2回出る。<code>distinct</code> で畳む。テストにも「共著でも重複しない」ケースがある。</p>
+    <p>スコープをモデルに置くのは、<code>Book.search(q).includes(...)</code> のように<strong>他のクエリと合成できる</strong>ため。コントローラに where を直書きすると再利用も単体テストもできなくなる。</p>
+  </div>
+
+  <h3>差分を見る</h3>
+  <ul class="difflist">
+    <li><a href="https://github.com/junhat6/book-management-system-speee/pull/8/files" target="_blank" rel="noopener"><span class="pr">PR #8</span>書籍検索機能を実装（feature/book-search → Files changed）<span class="arrow">↗</span></a></li>
+    <li><a href="https://github.com/junhat6/book-management-system-speee/commit/231ca9c" target="_blank" rel="noopener"><span class="sha">231ca9c</span>同内容の単一コミット diff<span class="arrow">↗</span></a></li>
+  </ul>
+
+  <div class="sources">
+    <div class="cap">情報源</div>
+    <ul>
+      <li><a href="https://railsguides.jp/active_record_querying.html" target="_blank" rel="noopener">Active Record クエリインターフェイス</a> — 条件・joins / left_joins・eager loading（N+1）の使い分けがすべてこの章にある。</li>
+      <li class="kw">検索キーワード: <code>Rails sanitize_sql_like</code> / <code>left_joins distinct duplicate rows</code> / <code>Rails includes N+1</code></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================================================================ -->
+<section id="infra">
+  <div class="sec-head"><span class="sec-no">07</span><h2 class="serif">デプロイと開発基盤</h2></div>
+  <p class="sec-req">開発条件（デプロイ公開）＋ 開発体験まわり</p>
+
+  <h3>Fly.io + SQLite（Rails 8 の「gem レス」構成）</h3>
+  <p>本番は Fly.io（東京リージョン）で、<strong>DB は本番も SQLite</strong>。永続ボリューム <code>/data</code> に DB ファイルを置き、primary / cache / queue / cable の<strong>4つの SQLite ファイル</strong>に分けている。キャッシュは Solid Cache、ジョブは Solid Queue、Action Cable は Solid Cable が担い、<strong>Redis も PostgreSQL も不要</strong>という Rails 8 が推す最小構成。</p>
+  <ul>
+    <li>当初は Render + PostgreSQL → Render 無料枠の SMTP ブロック（→ Resend 導入）と Postgres 30日期限問題を受けて移行（経緯は <code>docs/deployment-fly-io.md</code>）</li>
+    <li><code>SOLID_QUEUE_IN_PUMA=true</code> でジョブワーカーを Puma プロセス内に同居（1マシン運用）</li>
+    <li>HTTP は Thruster 経由（<code>bin/thrust bin/rails server</code>）、アイドル時はマシン自動停止でコスト最小化、ヘルスチェックは <code>GET /up</code></li>
+  </ul>
+
+  <h3>テスト・開発体験</h3>
+  <ul>
+    <li><strong>TDD</strong>：テストを先に書き、意図した理由で Red になることを確認してから実装（CLAUDE.md のルール）。テストは Minitest + fixtures</li>
+    <li><code>simplecov</code>（カバレッジ測定）/ <code>minitest-reporters</code>（テスト名一覧出力）/ <code>faker</code>（テストデータ）</li>
+    <li><code>annotaterb</code>：モデル冒頭にスキーマ情報を自動コメント（コードを読むだけでテーブル構造が分かる）</li>
+    <li><code>bullet</code>：開発中の N+1 をログ・ブラウザで即検知</li>
+    <li><code>db/seeds.rb</code>：<code>Faker::Config.random = Random.new(42)</code> で乱数固定 + <code>find_or_create_by!</code> により<strong>何度実行しても同じ結果になる冪等シード</strong>（ユーザー22名・著者40名・書籍150冊）</li>
+  </ul>
+
+  <h3>差分を見る</h3>
+  <ul class="difflist">
+    <li><a href="https://github.com/junhat6/book-management-system-speee/commit/4442035" target="_blank" rel="noopener"><span class="sha">4442035</span>ローカルを SQLite に変更<span class="arrow">↗</span></a></li>
+    <li><a href="https://github.com/junhat6/book-management-system-speee/commit/1b2889f" target="_blank" rel="noopener"><span class="sha">1b2889f</span>Render(Postgres) → Fly.io(SQLite) 移行<span class="arrow">↗</span></a></li>
+    <li><a href="https://github.com/junhat6/book-management-system-speee/commit/10c89ef" target="_blank" rel="noopener"><span class="sha">10c89ef</span>デプロイ構成ドキュメント<span class="arrow">↗</span></a></li>
+    <li><a href="https://github.com/junhat6/book-management-system-speee/commit/d0f6c25" target="_blank" rel="noopener"><span class="sha">d0f6c25</span>冪等シードデータ（乱数固定）<span class="arrow">↗</span></a></li>
+    <li><a href="https://github.com/junhat6/book-management-system-speee/commit/25bec02" target="_blank" rel="noopener"><span class="sha">25bec02</span>faker / annotaterb / bullet 導入<span class="arrow">↗</span></a></li>
+    <li><a href="https://github.com/junhat6/book-management-system-speee/commit/a0cdd20" target="_blank" rel="noopener"><span class="sha">a0cdd20</span>simplecov 導入<span class="arrow">↗</span></a></li>
+    <li><a href="https://github.com/junhat6/book-management-system-speee/commit/9f94c2c" target="_blank" rel="noopener"><span class="sha">9f94c2c</span>Tailwind + daisyUI へ変更<span class="arrow">↗</span></a></li>
+  </ul>
+
+  <div class="sources">
+    <div class="cap">情報源</div>
+    <ul>
+      <li><a href="https://railsguides.jp/8_0_release_notes.html" target="_blank" rel="noopener">Rails 8.0 リリースノート</a> — Solid 三兄弟・SQLite 本番運用・認証ジェネレータが Rails 8 の目玉であることの原典。</li>
+      <li class="kw">検索キーワード: <code>Rails 8 Solid Queue SQLite production</code> / <code>Fly.io Rails SQLite volume</code></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================================================================ -->
+<section id="qa">
+  <div class="sec-head"><span class="sec-no">08</span><h2 class="serif">想定問答 — 強みと、正直な弱点</h2></div>
+  <p class="sec-req">レビュー会で聞かれそうな質問と回答の準備。<span class="verdict ok" style="position:static">強み</span>は胸を張って、<span class="verdict gap" style="position:static">未実装</span>は正直に + 「やるならこうする」をセットで</p>
+
+  <h3>まず押さえる3つの強み</h3>
+  <ul class="strengths">
+    <li><b>三層の競合対策</b><span>部分ユニーク index + バリデーション + rescue_from。レースコンディションまで考えた設計で、DB 層単体のテストもある（→ 04）</span></li>
+    <li><b>設計判断の文書化</b><span>多対多の設計は ADR（docs/design-decisions-authors.md）として「決定・代替案・理由」を記録。「なぜ」を聞かれても原典がある（→ 03）</span></li>
+    <li><b>Rails 8 標準のフル活用</b><span>認証 gem なし・Redis なし・Node なし。has_secure_password / Solid 三兄弟 / importmap / rate_limit とフレームワークの標準に乗り切った（→ 01, 07）</span></li>
+  </ul>
+
+  <h3>想定問答（クリックで回答を開く）</h3>
+
+  <details class="qa">
+    <summary><span class="q">Q1</span>同時に2人が「借りる」ボタンを押したらどうなりますか？</summary>
+    <div class="a">
+      <p><span class="verdict ok">強み</span>片方だけが借りられます。バリデーションは両者をすり抜け得ますが（SELECT と INSERT の間に隙間があるため）、<code>returned_at IS NULL</code> の行だけ <code>book_id</code> を一意にする部分ユニーク index が後着の INSERT を弾き、<code>RecordNotUnique</code> を <code>rescue_from</code> で捕まえて「ちょうど貸出中になったため借りられませんでした」と案内します。<code>save!(validate: false)</code> でバリデーションを迂回して DB 層単体を検証するテストも書いてあります。</p>
+    </div>
+  </details>
+
+  <details class="qa">
+    <summary><span class="q">Q2</span>管理者だけが書籍を登録・削除できるようになっていますか？</summary>
+    <div class="a">
+      <p><span class="verdict gap">未実装</span>正直に言うと、<code>users.admin</code> カラム（boolean）は DB に用意しましたが、<strong>認可ロジックは未実装</strong>です。現状はログインさえすれば誰でも書籍を CRUD でき、編集・削除ボタンも全ユーザーに表示されます。<code>docs/crud-matrix-and-screens.md</code> の CRUD マトリクスには「書籍管理=管理者」と書いており、ドキュメントと実装が乖離している状態です。</p>
+      <p><strong>やるなら</strong>：Authentication concern と同じパターンで <code>require_admin</code> を作り、<code>BooksController</code> の書き込み系アクションに <code>before_action</code> で掛け、ビューのボタンも <code>Current.user&.admin?</code> で出し分けます。認証（誰であるか）と認可（何ができるか)を別レイヤーにする、という整理まで話せると良いです。</p>
+    </div>
+  </details>
+
+  <details class="qa">
+    <summary><span class="q">Q3</span>書籍が150冊あると一覧が全件表示されますが、重くないですか？</summary>
+    <div class="a">
+      <p><span class="verdict gap">未実装</span>ページネーションは未実装です（発展要件 5）。<code>includes(:authors)</code> で N+1 は防いでいるのでクエリ数は一定ですが、行数はデータ量に比例して増えます。<strong>やるなら</strong> pagy か kaminari を導入し、<code>Book.search(params[:q]).includes(:authors).page(params[:page])</code> のようにスコープの合成に1メソッド足すだけで済む設計にはなっています。</p>
+    </div>
+  </details>
+
+  <details class="qa">
+    <summary><span class="q">Q4</span>貸出履歴はどこで見られますか？</summary>
+    <div class="a">
+      <p><span class="verdict gap">未実装</span>履歴閲覧画面（発展要件 4）は未実装です。ただし返却を「削除」ではなく <code>returned_at</code> の更新にしたため、<strong>データとしての履歴は既に全件残っています</strong>。<code>rentals#index</code> を追加して <code>Current.user.rentals.includes(:book).order(created_at: :desc)</code> を出すだけで実装でき、テーブル設計の変更は不要です。設計が先回りできている点はアピールポイントにできます。</p>
+    </div>
+  </details>
+
+  <details class="qa">
+    <summary><span class="q">Q5</span>books テーブルに NOT NULL 制約がないのはなぜですか？</summary>
+    <div class="a">
+      <p><span class="verdict gap">改善余地</span>books の title などの必須チェックはモデルの <code>presence</code> バリデーションのみで、DB の NOT NULL 制約を付けていません。<code>update_column</code> や SQL 直叩きなどバリデーションを通らない経路では NULL が入り得ます。rentals では「アプリ層 + DB 層の二層防御」を実践したので、<strong>同じ考え方を books にも適用して NOT NULL を後付けするのが次の改善</strong>です（users / authors / 中間テーブルには NOT NULL があります）。</p>
+    </div>
+  </details>
+
+  <details class="qa">
+    <summary><span class="q">Q6</span>同じ本を複数冊登録できますか？（在庫管理）</summary>
+    <div class="a">
+      <p><span class="verdict gap">未実装</span>発展要件 2 は未対応で、現状「1 ISBN = 1冊」です（isbn にユニーク index）。<strong>やるなら</strong>「書誌（books）」と「現物（book_items）」を分ける設計にし、貸出の外部キーを book_id から book_item_id に付け替えます。部分ユニーク index の対象も book_item_id に変わるだけで、三層防御の考え方はそのまま流用できます。requirements/er_diagram.md に発展版の ER 図として下書きがあります。</p>
+    </div>
+  </details>
+
+  <details class="qa">
+    <summary><span class="q">Q7</span>なぜ本番 DB が PostgreSQL ではなく SQLite なんですか？</summary>
+    <div class="a">
+      <p><span class="verdict ok">説明できる選択</span>Rails 8 が SQLite の本番運用を公式にサポートし（Solid Queue / Cache / Cable も SQLite で動く）、この規模のアプリでは運用部品が少ないほど堅牢だと判断しました。直接のきっかけは Render 無料枠の Postgres が30日で失効する制約で、Fly.io の永続ボリュームに SQLite を置く構成へ移行しました（経緯は docs/deployment-fly-io.md に記録）。要件の「RDBMS（PostgreSQL）」に対しては、SQLite も RDBMS であること・移行判断を文書化していることを添えて説明します。マルチマシンへスケールする場合は Postgres に戻す判断になる、という限界も把握しています。</p>
+    </div>
+  </details>
+
+  <details class="qa">
+    <summary><span class="q">Q8</span>認証を gem（Devise など）にしなかったのはなぜですか？</summary>
+    <div class="a">
+      <p><span class="verdict ok">強み</span>学習目的の課題なので、Rails 8 標準の認証ジェネレータ構成を選びました。Devise はブラックボックスになりがちですが、標準構成なら <code>has_secure_password</code> → Session モデル → 署名 cookie という流れを全行説明できます。セッション固定攻撃対策・rate_limit・authenticate_by のタイミング攻撃耐性・パスワードリセットの15分トークンまで、何がどこで守られているか把握しています（→ 01）。</p>
+    </div>
+  </details>
+</section>
+
+<footer>
+  <p>図書管理システム 実装解説ドシエ ・ 生成 2026-07-06 ・ ソース: <a href="https://github.com/junhat6/book-management-system-speee" target="_blank" rel="noopener">junhat6/book-management-system-speee</a>（main @ a4e98b0）</p>
+</footer>
+</main>
+</div>
+
+<script>
+(function () {
+  // --- Ruby ミニハイライタ（文字列→コメント→シンボル/ハッシュキー→キーワード→DSL→定数→数値の順で1パス走査）
+  var esc = function (s) {
+    return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  };
+  var re = /("(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*')|(#[^\n]*)|(:[A-Za-z_][A-Za-z0-9_]*[?!]?|\b[A-Za-z_][A-Za-z0-9_]*:(?=\s))|\b(class|module|def|end|do|if|unless|else|elsif|then|return|private|extend|include|self|true|false|nil|case|when|rescue|begin)\b|\b(validates|validate|has_many|has_one|belongs_to|has_secure_password|normalizes|scope|before_save|before_action|skip_before_action|helper_method|rescue_from|allow_unauthenticated_access|rate_limit|add_index|create_table|resources|resource|root|get|mount|attr_reader|delegate|redirect_to|render)\b|\b([A-Z][A-Za-z0-9_]*(?:::[A-Z][A-Za-z0-9_]*)*)\b|\b(\d+(?:\.\d+)?)\b/g;
+  var cls = ["tok-s", "tok-c", "tok-y", "tok-k", "tok-d", "tok-t", "tok-n"];
+  document.querySelectorAll("pre > code.ruby").forEach(function (block) {
+    var src = block.textContent;
+    var out = "";
+    var last = 0;
+    var m;
+    re.lastIndex = 0;
+    while ((m = re.exec(src)) !== null) {
+      out += esc(src.slice(last, m.index));
+      var i;
+      for (i = 1; i <= 7; i++) { if (m[i] !== undefined) break; }
+      out += '<span class="' + cls[i - 1] + '">' + esc(m[0]) + "</span>";
+      last = m.index + m[0].length;
+    }
+    out += esc(src.slice(last));
+    block.innerHTML = out;
+  });
+
+  // --- 目次スクロールスパイ
+  var links = Array.prototype.slice.call(document.querySelectorAll(".toc a"));
+  var map = {};
+  links.forEach(function (a) { map[a.getAttribute("href").slice(1)] = a; });
+  if ("IntersectionObserver" in window) {
+    var current = null;
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) {
+          if (current) current.classList.remove("now");
+          current = map[e.target.id];
+          if (current) current.classList.add("now");
+        }
+      });
+    }, { rootMargin: "-15% 0px -70% 0px" });
+    document.querySelectorAll("main section[id]").forEach(function (s) { io.observe(s); });
+  }
+})();
+</script>
+
+</body></html>

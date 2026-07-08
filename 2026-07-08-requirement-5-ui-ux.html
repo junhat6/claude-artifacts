@@ -1,0 +1,732 @@
+<!doctype html><html><head><!-- frame-runtime --><script>window.__FRAME_PREAMBLE={"capabilities":{"mcp":"mcp.BQqQVVN_.js"},"transforms":"_transforms.DYk1Ltlh.js"}</script><script>(function(){"use strict";const X="modulepreload",Y=function(e){return"/"+e},Z={},U=function(t,n,u){let o=Promise.resolve();function i(f){const a=new Event("vite:preloadError",{cancelable:!0});if(a.payload=f,window.dispatchEvent(a),!a.defaultPrevented)throw f}return o.then(f=>{for(const a of f||[])a.status==="rejected"&&i(a.reason);return t().catch(i)})},D=["light","dark","system"];function $(e){if(e==null||typeof e!="object")return!1;const t=e.__frame_init;return t!=null&&typeof t=="object"}function q(e){if(e==null||typeof e!="object")return!1;const t=e.__frame_theme;if(t==null||typeof t!="object")return!1;const n=t.theme;return typeof n=="string"&&D.includes(n)}function M(e){if(window===top||e.type==="auxclick"&&e.button!==1)return;const t=e.composedPath?e.composedPath():[e.target];let n=null;for(let f=0;f<t.length;f++){const a=t[f];if(a&&a.matches&&a.matches("a[href],area[href]")){n=a;break}}if(!n&&e.target&&e.target.closest&&(n=e.target.closest("a[href],area[href]")),!n)return;const u=n.getAttribute("href");if(!u)return;let o,i;try{o=new URL(u,document.baseURI),i=new URL(document.baseURI).origin}catch{return}(o.protocol==="http:"||o.protocol==="https:")&&o.origin!==i&&(e.preventDefault(),parent.postMessage({__frame_nav:!0,url:o.href},"*"))}const L={};function y(e){if(window===top)return;const t=Date.now();t-(L[e]||0)<500||(L[e]=t,parent.postMessage({__frame_engaged:!0,kind:e},"*"))}const F=2e3,T=["wheel","touchstart","touchmove","keydown","pointerdown"];let k=0;function B(e){e.isTrusted&&(k=Date.now())}function z(){addEventListener("click",M,!0),addEventListener("auxclick",M,!0)}function W(){for(let e=0;e<T.length;e++)addEventListener(T[e],B,{capture:!0,passive:!0});addEventListener("scroll",e=>{e.isTrusted&&Date.now()-k<F&&y("scroll")},{capture:!0,passive:!0}),addEventListener("pointermove",e=>{e.isTrusted&&y("pointer")},{capture:!0,passive:!0}),addEventListener("click",e=>{e.isTrusted&&y("click")},{capture:!0,passive:!0})}function x(e,t,n){const u=[...t.values()].filter(o=>o.targets.some(i=>i.startsWith(e+".")));return{wrap(o,i){const f=`${e}.${o}`,a=u.filter(s=>s.targets.includes(f));return a.length===0?(...s)=>{try{return i(...s)}catch(d){return Promise.reject(d)}}:(...s)=>{let d=s;for(const c of a){const l=c.module.parameters;if(l)try{d=l(d)}catch{return Promise.reject({code:"transform_error",id:c.id,scope:e,message:"parameters transform failed"})}}let m;try{m=i(...d)}catch(c){m=Promise.reject(c)}return m.then(c=>{for(let l=a.length-1;l>=0;l--){const h=a[l],p=h.module.returns;if(p)try{c=p(c)}catch{return n({id:h.id,scope:e,leg:"returns"}),c}}return c},c=>{for(let l=a.length-1;l>=0;l--){const h=a[l],p=h.module.throws;if(p)try{c=p(c)}catch{return n({id:h.id,scope:e,leg:"throws"}),Promise.reject(c)}}return Promise.reject(c)})}}}}function H(e,t,n,u=()=>{}){const o=new Set(e.changes??[]),i=new Map;for(const f of o){const a=t[f];a&&i.set(f,a)}return{contract:e.contract,changes:o,flags:new Set(e.flags??[]),capabilities:e.capabilities??{},transforms:i,shellOrigin:n.shellOrigin,mount:n.mount,pipe:f=>x(f,i,u)}}(function(){const e=Object.defineProperty,t=globalThis,n=["RTCPeerConnection","webkitRTCPeerConnection","RTCDataChannel","RTCIceCandidate","RTCSessionDescription","RTCRtpSender","RTCRtpReceiver"];let u=0;for(let o=0;o<n.length;o++){const i=n[o];try{e(t,i,{value:void 0,writable:!1,configurable:!1})}catch{try{delete t[i]}catch{}try{e(t,i,{value:void 0,writable:!1,configurable:!0})}catch{}}typeof t[i]=="function"&&u++}if(u&&window!==top)try{parent.postMessage({__frame_rtc_lockdown_failed:u},"*")}catch{}})();const K=1e4,G=Object.freeze([...window.__FRAME_PREAMBLE?.origins??["https://claude.ai","https://preview.claude.ai"]]);function J(e){for(const t of G)if(t.endsWith(":*"))try{const n=new URL(e);if(`${n.protocol}//${n.hostname}:*`===t)return!0}catch{}else if(e===t)return!0;return!1}const w=Object.freeze({...window.__FRAME_PREAMBLE?.capabilities??{}}),E=window.__FRAME_PREAMBLE?.transforms,C=/^[\w.-]+\.js$/,V=/^[a-z][a-z0-9_-]{0,63}$/;let A=null,g=null;function P(e,t,n){try{Object.defineProperty(e,t,{value:n,writable:!1,configurable:!1,enumerable:!0})}catch{try{Object.defineProperty(e,t,{value:n,writable:!1,configurable:!0,enumerable:!0})}catch{}}}let R=!1;function N(e){const t=document.documentElement;e==="light"||e==="dark"?(t.dataset.theme=e,t.style.colorScheme=e,R=!0):R&&(delete t.dataset.theme,t.style.colorScheme="",R=!1)}const _=new Map;function Q(e,t){const n=_.get(e);if(!n)return;Object.assign(n.impl,t),n.impl.__settled=()=>Promise.reject({code:"capability_removed",message:`${e}: method not in this runtime`});const u=n.queue;n.queue=[];for(const o of u){const i=t[o.method];i?i(...o.args).then(o.resolve,o.reject):o.reject({code:"capability_removed",message:`${e}.${o.method} is not in this runtime`})}}function O(e,t){const n=_.get(e);if(!n)return;n.impl.__settled=()=>Promise.reject(t);const u=n.queue;n.queue=[];for(const o of u)o.reject(t)}const j=Object.getOwnPropertyDescriptor(window,"claude");if(window!==top&&!(j&&j.writable===!1)){z(),W();const e=j?.value??{};P(window,"claude",e);const t=s=>{const d={impl:Object.create(null),queue:[]};_.set(s,d);const m=new Proxy(d.impl,{get:(c,l)=>{if(typeof l=="string"&&!(l==="then"||l==="toJSON"||l==="valueOf"))return l==="toString"?Object.prototype.toString:(...h)=>{const p=c[l]??c.__settled;return p?p(...h):new Promise((b,S)=>{d.queue.push({method:l,args:h,resolve:b,reject:S})})}},set:()=>!1});P(e,s,m)};for(const s of Object.keys(w)){if(e[s]!==void 0){P(e,s,e[s]);continue}t(s)}let n=null,u=null,o=0;const i=s=>{s.source!==parent||!J(s.origin)||$(s.data)&&(n=s.data.__frame_init,g=s.origin,removeEventListener("message",i),clearTimeout(o),u?.())};addEventListener("message",i),parent.postMessage({__frame_connect:!0},"*");const f=new Promise(s=>{u=s,o=setTimeout(()=>{removeEventListener("message",i),s()},K)}),a=document.readyState==="loading"?new Promise(s=>document.addEventListener("DOMContentLoaded",()=>s(),{once:!0})):Promise.resolve();f.then(async()=>{if(!n||!g){for(const r of _.keys())O(r,{code:"not_granted",message:"frame initialization did not arrive - capability unavailable"});return}N(n.theme);const s=g;addEventListener("message",r=>{r.source!==parent||r.origin!==s||q(r.data)&&N(r.data.__frame_theme.theme)});const d=r=>U(()=>import("/_runtime/"+r),void 0),m=Object.keys(n.capabilities??{});for(const r of m)Object.hasOwn(w,r)||V.test(r)&&e[r]===void 0&&(t(r),O(r,{code:"capability_disabled",message:"capability not in this runtime generation"}));const c=m.filter(r=>Object.hasOwn(w,r)).map(r=>[r,w[r]]).filter(r=>typeof r[1]=="string"&&C.test(r[1])),[l,...h]=await Promise.allSettled([E&&C.test(E)?d(E):Promise.resolve({}),...c.map(([,r])=>d(r))]),p=g;A=H(n,l.status==="fulfilled"&&l.value?.TRANSFORMS||{},{shellOrigin:p,mount:Q},r=>parent.postMessage({__frame_cap_telemetry:r},p));const b=r=>parent.postMessage({__frame_cap_telemetry:{kind:"cap-load-error",cap:r}},p),S=A;h.forEach((r,v)=>{const I=c[v][0];if(r.status!=="fulfilled"){b(I);return}try{r.value?.install?.(S)}catch{b(I)}});for(const[r,v]of _)v.queue.length===0&&Object.keys(v.impl).length>0||O(r,{code:m.includes(r)?"capability_disabled":"not_granted",message:"capability not available in this session"});await a,parent.postMessage({__frame_ready:!0},g)})}})();</script><!-- /frame-runtime --><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}</style></head><body>
+<title>発展要件5: UI/UX 改善 — 実装解説ドシエ</title>
+<style>
+  :root {
+    --bg: #FBFAF8;
+    --surface: #FFFFFF;
+    --surface2: #F4F1EC;
+    --ink: #26201D;
+    --muted: #6F655E;
+    --faint: #9C918A;
+    --accent: #A31631;
+    --accent-ink: #FFFFFF;
+    --accent-soft: #F7E8EA;
+    --line: #E5DFD8;
+    --line-strong: #CFC7BE;
+    --good: #2E6E4E;
+    --good-soft: #E5F0E9;
+    --warn: #8A5A12;
+    --warn-soft: #F7EEDD;
+    --code-bg: #221D1B;
+    --code-ink: #E9E3DC;
+    --code-line: #37302C;
+    --code-cmt: #837770;
+    --code-str: #A9C98F;
+    --code-sym: #D9A15F;
+    --code-kw: #E4728B;
+    --code-dsl: #85B7D6;
+    --code-const: #E0C185;
+    --code-num: #C79ED2;
+    --shadow: 0 1px 2px rgba(38,32,29,.05), 0 4px 16px rgba(38,32,29,.05);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #17130F;
+      --surface: #201B17;
+      --surface2: #282221;
+      --ink: #EDE7E0;
+      --muted: #A99E96;
+      --faint: #7E746D;
+      --accent: #E36A80;
+      --accent-ink: #2A0A12;
+      --accent-soft: #3A2226;
+      --line: #372F2A;
+      --line-strong: #4A413B;
+      --good: #7FC49E;
+      --good-soft: #22322A;
+      --warn: #DFAE5E;
+      --warn-soft: #362C1B;
+      --code-bg: #14100E;
+      --code-line: #2E2723;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 4px 16px rgba(0,0,0,.25);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #17130F;
+    --surface: #201B17;
+    --surface2: #282221;
+    --ink: #EDE7E0;
+    --muted: #A99E96;
+    --faint: #7E746D;
+    --accent: #E36A80;
+    --accent-ink: #2A0A12;
+    --accent-soft: #3A2226;
+    --line: #372F2A;
+    --line-strong: #4A413B;
+    --good: #7FC49E;
+    --good-soft: #22322A;
+    --warn: #DFAE5E;
+    --warn-soft: #362C1B;
+    --code-bg: #14100E;
+    --code-line: #2E2723;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 4px 16px rgba(0,0,0,.25);
+  }
+  :root[data-theme="light"] {
+    --bg: #FBFAF8;
+    --surface: #FFFFFF;
+    --surface2: #F4F1EC;
+    --ink: #26201D;
+    --muted: #6F655E;
+    --faint: #9C918A;
+    --accent: #A31631;
+    --accent-ink: #FFFFFF;
+    --accent-soft: #F7E8EA;
+    --line: #E5DFD8;
+    --line-strong: #CFC7BE;
+    --good: #2E6E4E;
+    --good-soft: #E5F0E9;
+    --warn: #8A5A12;
+    --warn-soft: #F7EEDD;
+    --code-bg: #221D1B;
+    --code-ink: #E9E3DC;
+    --code-line: #37302C;
+    --code-cmt: #837770;
+    --code-str: #A9C98F;
+    --code-sym: #D9A15F;
+    --code-kw: #E4728B;
+    --code-dsl: #85B7D6;
+    --code-const: #E0C185;
+    --code-num: #C79ED2;
+    --shadow: 0 1px 2px rgba(38,32,29,.05), 0 4px 16px rgba(38,32,29,.05);
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 24px; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", "Noto Sans JP", sans-serif;
+    font-size: 15px;
+    line-height: 1.85;
+    -webkit-font-smoothing: antialiased;
+  }
+  .serif { font-family: "Hiragino Mincho ProN", "Yu Mincho", "Noto Serif JP", serif; }
+  code, pre, .mono {
+    font-family: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+  }
+
+  .frame { display: grid; grid-template-columns: 232px minmax(0, 1fr); max-width: 1180px; margin: 0 auto; gap: 40px; padding: 0 28px; }
+  @media (max-width: 940px) { .frame { grid-template-columns: minmax(0, 1fr); gap: 0; padding: 0 18px; } }
+
+  /* ---- sidebar ---- */
+  .toc { position: sticky; top: 0; align-self: start; height: 100vh; overflow-y: auto; padding: 36px 0 24px; }
+  .toc-title { font-size: 11px; letter-spacing: .18em; color: var(--faint); text-transform: uppercase; margin: 0 0 14px 2px; }
+  .toc ol { list-style: none; margin: 0; padding: 0; border-left: 1px solid var(--line); }
+  .toc a {
+    display: flex; gap: 9px; align-items: baseline;
+    padding: 6px 10px 6px 14px; margin-left: -1px;
+    color: var(--muted); text-decoration: none; font-size: 13px; line-height: 1.5;
+    border-left: 2px solid transparent;
+  }
+  .toc a .no { font-size: 11px; color: var(--faint); font-variant-numeric: tabular-nums; }
+  .toc a:hover { color: var(--ink); }
+  .toc a.now { color: var(--accent); border-left-color: var(--accent); font-weight: 600; }
+  .toc a.now .no { color: var(--accent); }
+  .toc a:focus-visible, a:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+  @media (max-width: 940px) { .toc { display: none; } }
+
+  main { padding: 44px 0 90px; min-width: 0; }
+
+  /* ---- header ---- */
+  .doc-head { border-bottom: 3px double var(--line-strong); padding-bottom: 26px; margin-bottom: 14px; }
+  .doc-eyebrow { display: flex; align-items: center; gap: 10px; font-size: 12px; letter-spacing: .14em; color: var(--accent); font-weight: 600; }
+  .doc-eyebrow::before { content: ""; width: 26px; height: 1px; background: var(--accent); }
+  h1 { font-size: clamp(26px, 4.5vw, 38px); line-height: 1.35; margin: 10px 0 8px; font-weight: 600; letter-spacing: .02em; text-wrap: balance; }
+  .doc-sub { color: var(--muted); font-size: 14px; margin: 0 0 18px; max-width: 46em; }
+  .stack-row { display: flex; flex-wrap: wrap; gap: 7px; }
+  .chip {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 12px; line-height: 1; padding: 6px 10px;
+    border: 1px solid var(--line); border-radius: 999px;
+    background: var(--surface); color: var(--muted); white-space: nowrap;
+  }
+  .chip b { color: var(--ink); font-weight: 600; }
+  .chip.ver { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
+  .repo-line { margin-top: 16px; font-size: 13px; color: var(--muted); }
+  .repo-line a { color: var(--accent); }
+
+  /* ---- sections ---- */
+  section { padding: 40px 0 8px; border-bottom: 1px solid var(--line); }
+  section:last-of-type { border-bottom: none; }
+  .sec-head { display: flex; align-items: baseline; gap: 14px; margin-bottom: 6px; }
+  .sec-no {
+    font-size: 12px; font-weight: 700; letter-spacing: .1em;
+    color: var(--accent); border: 1px solid var(--accent);
+    padding: 3px 8px; border-radius: 3px; font-variant-numeric: tabular-nums;
+    white-space: nowrap; align-self: center;
+  }
+  h2 { font-size: 23px; margin: 0; font-weight: 600; letter-spacing: .02em; line-height: 1.4; text-wrap: balance; }
+  .sec-req { font-size: 12px; color: var(--faint); margin: 0 0 18px 0; }
+  h3 { font-size: 15px; margin: 30px 0 10px; letter-spacing: .06em; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+  h3::before { content: ""; width: 8px; height: 8px; background: var(--accent); border-radius: 1px; flex: none; }
+  p { margin: 0 0 14px; max-width: 44em; }
+  section > p:first-of-type, .lead { font-size: 15.5px; }
+  li { margin-bottom: 6px; }
+  ul, ol { padding-left: 1.4em; margin: 0 0 14px; max-width: 44em; }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  strong { font-weight: 700; }
+  .small { font-size: 13px; color: var(--muted); }
+
+  /* inline code */
+  p code, li code, td code, .qa code, h2 code, dd code {
+    background: var(--surface2); border: 1px solid var(--line);
+    padding: .5px 5px; border-radius: 4px; font-size: .88em; white-space: nowrap;
+  }
+
+  /* ---- code blocks ---- */
+  .codebox { margin: 16px 0 20px; border-radius: 8px; overflow: hidden; box-shadow: var(--shadow); }
+  .codebox .path {
+    background: var(--code-bg); color: var(--code-cmt);
+    border-bottom: 1px solid var(--code-line);
+    font-size: 11.5px; padding: 8px 14px; letter-spacing: .04em;
+    display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+    font-family: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+  }
+  .codebox .path .lang { color: var(--code-sym); }
+  .codebox pre { margin: 0; background: var(--code-bg); color: var(--code-ink); padding: 14px 16px; overflow-x: auto; font-size: 12.8px; line-height: 1.75; }
+  .tok-s { color: var(--code-str); }
+  .tok-c { color: var(--code-cmt); font-style: italic; }
+  .tok-y { color: var(--code-sym); }
+  .tok-k { color: var(--code-kw); }
+  .tok-d { color: var(--code-dsl); }
+  .tok-t { color: var(--code-const); }
+  .tok-n { color: var(--code-num); }
+
+  /* ---- callouts ---- */
+  .why { border-left: 3px solid var(--accent); background: var(--accent-soft); padding: 14px 18px; border-radius: 0 8px 8px 0; margin: 16px 0 20px; max-width: 46em; }
+  .why .cap { font-size: 12px; font-weight: 700; letter-spacing: .12em; color: var(--accent); margin-bottom: 6px; }
+  .why p { margin-bottom: 8px; max-width: none; }
+  .why p:last-child { margin-bottom: 0; }
+  .note { border-left: 3px solid var(--warn); background: var(--warn-soft); padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 16px 0 20px; max-width: 46em; font-size: 13.5px; }
+  .note .cap { font-weight: 700; color: var(--warn); font-size: 12px; letter-spacing: .1em; margin-bottom: 4px; }
+
+  /* ---- rails feature list ---- */
+  .feats { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 10px; margin: 14px 0 20px; padding: 0; list-style: none; max-width: none; }
+  .feats li { margin: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 11px 13px; font-size: 13px; line-height: 1.65; }
+  .feats .fname { display: flex; align-items: center; gap: 8px; font-weight: 700; margin-bottom: 3px; flex-wrap: wrap; }
+  .feats .fname code { background: none; border: none; padding: 0; font-size: 12.5px; color: var(--accent); white-space: normal; }
+  .vtag { font-size: 10px; font-weight: 700; letter-spacing: .06em; color: var(--accent); background: var(--accent-soft); border-radius: 3px; padding: 2px 5px; white-space: nowrap; }
+  .feats .fdesc { color: var(--muted); }
+
+  /* ---- diff links ---- */
+  .difflist { list-style: none; padding: 0; margin: 12px 0 20px; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; max-width: 46em; }
+  .difflist li { margin: 0; border-bottom: 1px solid var(--line); }
+  .difflist li:last-child { border-bottom: none; }
+  .difflist a { display: flex; align-items: baseline; gap: 12px; padding: 9px 14px; text-decoration: none; color: var(--ink); font-size: 13.5px; background: var(--surface); }
+  .difflist a:hover { background: var(--surface2); }
+  .difflist .sha { font-family: ui-monospace, Menlo, monospace; font-size: 12px; color: var(--accent); white-space: nowrap; min-width: 4.6em; }
+  .difflist .pr { font-weight: 700; color: var(--accent); white-space: nowrap; min-width: 4.6em; font-size: 12.5px; }
+  .difflist .arrow { margin-left: auto; color: var(--faint); font-size: 12px; }
+
+  /* ---- sources ---- */
+  .sources { background: var(--surface2); border: 1px solid var(--line); border-radius: 8px; padding: 14px 18px; margin: 16px 0 24px; font-size: 13.5px; max-width: 46em; }
+  .sources .cap { font-size: 11.5px; font-weight: 700; letter-spacing: .14em; color: var(--faint); margin-bottom: 8px; }
+  .sources ul { list-style: none; padding: 0; margin: 0; }
+  .sources li { margin-bottom: 7px; }
+  .sources li:last-child { margin-bottom: 0; }
+  .sources .kw { color: var(--muted); }
+  .sources .kw code { white-space: normal; }
+
+  /* ---- tables ---- */
+  .tblwrap { overflow-x: auto; margin: 14px 0 20px; border: 1px solid var(--line); border-radius: 8px; }
+  table { border-collapse: collapse; width: 100%; font-size: 13.5px; background: var(--surface); }
+  th, td { text-align: left; padding: 9px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { font-size: 12px; letter-spacing: .08em; color: var(--faint); font-weight: 600; white-space: nowrap; background: var(--surface2); }
+  tr:last-child td { border-bottom: none; }
+  td a { white-space: nowrap; }
+
+  /* ---- pipeline diagram (layers 流用) ---- */
+  .layers { display: grid; gap: 0; margin: 18px 0 20px; max-width: 46em; }
+  .layer { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 18px; box-shadow: var(--shadow); }
+  .layer .lhead { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 4px; }
+  .layer .lno { font-size: 11px; font-weight: 700; color: var(--accent-ink); background: var(--accent); border-radius: 999px; padding: 3px 9px; letter-spacing: .08em; white-space: nowrap; }
+  .layer .lname { font-weight: 700; font-size: 14.5px; font-family: ui-monospace, Menlo, monospace; }
+  .layer .lrole { font-size: 11.5px; color: var(--faint); margin-left: auto; letter-spacing: .06em; }
+  .layer p { font-size: 13.5px; color: var(--muted); margin: 0; max-width: none; }
+  .layer p code { white-space: normal; }
+  .layer-gap { display: flex; align-items: center; gap: 10px; padding: 8px 4px 8px 22px; color: var(--faint); font-size: 12.5px; }
+  .layer-gap::before { content: "↓"; color: var(--accent); font-size: 15px; }
+
+  /* ---- Q&A ---- */
+  .qa { border: 1px solid var(--line); border-radius: 10px; background: var(--surface); margin: 0 0 14px; max-width: 48em; box-shadow: var(--shadow); }
+  .qa summary { cursor: pointer; list-style: none; padding: 14px 18px; display: flex; gap: 12px; align-items: baseline; font-weight: 600; line-height: 1.6; }
+  .qa summary::-webkit-details-marker { display: none; }
+  .qa summary .q { color: var(--accent); font-weight: 800; font-size: 13px; letter-spacing: .06em; flex: none; }
+  .qa summary::after { content: "＋"; margin-left: auto; color: var(--faint); flex: none; }
+  .qa[open] summary::after { content: "−"; }
+  .qa .a { padding: 2px 18px 16px 44px; border-top: 1px dashed var(--line); }
+  .qa .a p { font-size: 14px; margin: 10px 0 8px; }
+  .qa .verdict { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .08em; border-radius: 3px; padding: 2px 8px; margin-right: 6px; vertical-align: 1px; }
+  .qa .verdict.ok { color: var(--good); background: var(--good-soft); }
+  .qa .verdict.gap { color: var(--warn); background: var(--warn-soft); }
+
+  .strengths { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin: 16px 0 26px; padding: 0; list-style: none; max-width: none; }
+  .strengths li { margin: 0; border: 1px solid var(--line); border-top: 3px solid var(--accent); border-radius: 8px; background: var(--surface); padding: 14px 16px; font-size: 13.5px; box-shadow: var(--shadow); }
+  .strengths b { display: block; font-size: 14.5px; margin-bottom: 4px; }
+  .strengths span { color: var(--muted); }
+
+  footer { margin-top: 30px; padding-top: 18px; border-top: 3px double var(--line-strong); color: var(--faint); font-size: 12.5px; }
+</style>
+
+<div class="frame">
+<nav class="toc" aria-label="目次">
+  <p class="toc-title">目次</p>
+  <ol>
+    <li><a href="#overview"><span class="no">00</span>全体像：1本のスコープチェーン</a></li>
+    <li><a href="#pagination"><span class="no">01</span>ページネーション</a></li>
+    <li><a href="#sort"><span class="no">02</span>ソート機能</a></li>
+    <li><a href="#responsive"><span class="no">03</span>レスポンシブ対応</a></li>
+    <li><a href="#qa"><span class="no">04</span>想定問答</a></li>
+  </ol>
+</nav>
+
+<main>
+<header class="doc-head">
+  <p class="doc-eyebrow">レビュー会 準備資料 · 2026-07-07</p>
+  <h1 class="serif">UI/UX 改善 — ページネーション・ソート・レスポンシブ</h1>
+  <p class="doc-sub">発展要件5「ページネーションやソート機能を導入」「レスポンシブ対応でスマートフォンでも利用可能にする」の実装解説。3つの改善がすべて books#index の1本のクエリチェーンと1枚のビューに収束する構成になっている。</p>
+  <div class="stack-row">
+    <span class="chip ver"><b>Rails 8.1.3</b></span>
+    <span class="chip">kaminari <b>1.2.2</b></span>
+    <span class="chip">Tailwind 4 + <b>daisyUI</b></span>
+    <span class="chip">PR <b>#13</b></span>
+    <span class="chip">テスト <b>131 件 / 328 assertions</b> 全通過</span>
+  </div>
+  <p class="repo-line">リポジトリ: <a href="https://github.com/junhat6/book-management-system-speee" target="_blank" rel="noopener">junhat6/book-management-system-speee</a> ・ テスト: <code>rails test</code>（TDD：Red の失敗理由を確認してから実装）</p>
+</header>
+
+<!-- ================================================================ -->
+<section id="overview">
+  <div class="sec-head"><span class="sec-no">00</span><h2 class="serif">全体像：1本のスコープチェーン</h2></div>
+  <p class="sec-req">発展要件 5（UI/UX 改善）。スキーマ変更なし — 既存テーブルのまま、クエリとビューだけで完結</p>
+
+  <p class="lead">既存の検索（<code>search</code>）・タグ絞り込み（<code>with_tag</code>）に、今回の <strong><code>sorted</code>（並べ替え）と <code>page</code>（ページ分割）をスコープチェーンの末尾に足しただけ</strong>で、4つの機能が任意の組み合わせで同時に効く。Active Record の Relation が遅延評価で合成される性質をそのまま使っている。</p>
+
+  <div class="codebox">
+    <div class="path"><span>app/controllers/books_controller.rb（index — 変更後の全文）</span><span class="lang">ruby</span></div>
+    <pre><code class="ruby">def index
+  # 存在しない tag_id は絞り込みなしとして扱う（フィルタ表示も出さない）
+  @current_tag = Tag.find_by(id: params[:tag_id])
+  @books = Book.search(params[:q]).with_tag(@current_tag&amp;.id)
+               .includes(:authors, :tags, copies: :rentals)
+               .sorted(params[:sort], params[:direction])
+               .page(params[:page])
+end</code></pre>
+  </div>
+
+  <div class="layers">
+    <div class="layer">
+      <div class="lhead"><span class="lno">1</span><span class="lname">Book.search(params[:q])</span><span class="lrole">既存：タイトル・著者名の横断検索</span></div>
+      <p>空なら <code>all</code> を返すので、チェーンのどこにあっても無害。</p>
+    </div>
+    <div class="layer-gap">WHERE 句が積み上がる（まだ SQL は発行されない）</div>
+    <div class="layer">
+      <div class="lhead"><span class="lno">2</span><span class="lname">.with_tag(...)</span><span class="lrole">既存：タグ絞り込み</span></div>
+      <p>同じく空なら <code>all</code>。「条件が無ければ素通し」の規約で統一。</p>
+    </div>
+    <div class="layer-gap">ORDER BY が決まる</div>
+    <div class="layer">
+      <div class="lhead"><span class="lno">3</span><span class="lname">.sorted(params[:sort], params[:direction])</span><span class="lrole">今回：許可リスト式の並べ替え（→ 02）</span></div>
+      <p>不正な値はデフォルト（登録日降順）に落ちる。<code>id</code> を第2キーにして全順序を確定。</p>
+    </div>
+    <div class="layer-gap">LIMIT / OFFSET が決まり、ここでようやく SQL 1回に合成される</div>
+    <div class="layer">
+      <div class="lhead"><span class="lno">4</span><span class="lname">.page(params[:page])</span><span class="lrole">今回：kaminari のページ分割（→ 01）</span></div>
+      <p>1ページ10冊。総件数は <code>total_count</code> が別クエリで数える。</p>
+    </div>
+  </div>
+
+  <div class="why">
+    <div class="cap">なぜこの形か</div>
+    <p>検索・絞り込み・並べ替え・ページ分割を<strong>それぞれ独立したスコープ</strong>にしておくと、機能の掛け算（検索×ソート×2ページ目、など）がコードの掛け算にならない。もしコントローラに <code>if params[:sort]</code> の分岐で order を直書きしていくと、条件の組み合わせごとに分岐が爆発し、テストも組み合わせの数だけ必要になる。</p>
+    <p>Relation は<strong>遅延評価</strong>（実際に要素へアクセスするまで SQL を発行しない）なので、4段チェーンでもクエリは最終的に1本の SELECT に合成される。「スコープを重ねる＝クエリが増える」ではない、はレビューで補足できると良い。</p>
+  </div>
+
+  <h3>この差分で触ったもの（クイックリファレンス）</h3>
+  <div class="tblwrap">
+    <table>
+      <thead><tr><th>機能</th><th>主要ファイル</th><th>種別</th></tr></thead>
+      <tbody>
+        <tr><td><a href="#pagination">01 ページネーション</a></td><td><code>Gemfile</code> ・ <code>config/initializers/kaminari_config.rb</code> ・ <code>app/views/kaminari/*</code></td><td>gem 導入＋ビュー上書き</td></tr>
+        <tr><td><a href="#sort">02 ソート</a></td><td><code>app/models/book.rb</code>（scope :sorted）・ <code>app/helpers/books_helper.rb</code></td><td>スコープ＋ヘルパー</td></tr>
+        <tr><td><a href="#responsive">03 レスポンシブ</a></td><td><code>app/views/books/index.html.erb</code> ・ <code>_stock_badge</code> / <code>_actions</code> パーシャル</td><td>ビューのみ</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="sources">
+    <div class="cap">情報源</div>
+    <ul>
+      <li><a href="https://railsguides.jp/active_record_querying.html" target="_blank" rel="noopener">Active Record クエリインターフェイス</a> — スコープの合成・遅延評価・limit / offset の仕組みはすべてこの章。</li>
+      <li class="kw">検索キーワード: <code>Rails scope chaining lazy evaluation</code> / <code>ActiveRecord relation composition</code></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================================================================ -->
+<section id="pagination">
+  <div class="sec-head"><span class="sec-no">01</span><h2 class="serif">ページネーション（kaminari）</h2></div>
+  <p class="sec-req">発展要件 5 前半。「150冊が全件表示される」問題への回答（必須要件版ドシエ Q3 の宿題を回収）</p>
+
+  <p class="lead">gem は <strong>kaminari</strong> を採用。<code>Book.search(...).page(params[:page])</code> と<strong>既存のスコープチェーンに1メソッド足すだけ</strong>で接続でき、ページネーション UI は <code>app/views/kaminari/</code> にパーシャルを置くと gem のデフォルトより優先される仕組みを使って daisyUI スタイルに差し替えた。</p>
+
+  <div class="codebox">
+    <div class="path"><span>config/initializers/kaminari_config.rb（全文）</span><span class="lang">ruby</span></div>
+    <pre><code class="ruby">Kaminari.configure do |config|
+  config.default_per_page = 10
+  # 先頭・末尾ページへのリンクを常に1つ出す（「1 2 3 4 5 … 16」の形にする）
+  config.outer_window = 1
+end</code></pre>
+  </div>
+
+  <div class="codebox">
+    <div class="path"><span>app/views/kaminari/_paginator.html.erb（全文）</span><span class="lang">erb</span></div>
+    <pre><code>&lt;%# kaminari のビューは app/views/kaminari/ に置くとデフォルトより優先される %&gt;
+&lt;%= paginator.render do -%&gt;
+  &lt;nav class="pagination flex justify-center mt-6" aria-label="ページネーション"&gt;
+    &lt;div class="join"&gt;
+      &lt;%= prev_page_tag unless current_page.first? %&gt;
+      &lt;% each_page do |page| -%&gt;
+        &lt;% if page.left_outer? || page.right_outer? || page.inside_window? -%&gt;
+          &lt;%= page_tag page %&gt;
+        &lt;% elsif !page.was_truncated? -%&gt;
+          &lt;%= gap_tag %&gt;
+        &lt;% end -%&gt;
+      &lt;% end -%&gt;
+      &lt;%= next_page_tag unless current_page.last? %&gt;
+    &lt;/div&gt;
+  &lt;/nav&gt;
+&lt;% end -%&gt;</code></pre>
+  </div>
+
+  <h3>活用した機能</h3>
+  <ul class="feats">
+    <li><div class="fname"><code>.page / .per</code><span class="vtag">kaminari</span></div><div class="fdesc">Relation を返すのでスコープチェーンの途中・末尾どこでも合成できる。Model.page(n) だけで動く。</div></li>
+    <li><div class="fname"><code>total_count</code><span class="vtag">kaminari</span></div><div class="fdesc">LIMIT を外した COUNT を別クエリで発行。件数バッジを <code>@books.size</code> から置き換えた（size だと当該ページの件数=10 になってしまう）。</div></li>
+    <li><div class="fname">ビューの解決順序</div><div class="fdesc"><code>app/views/kaminari/*.html.erb</code> が gem 内テンプレートより優先される。Rails のビュー探索パスの仕組みそのもの。</div></li>
+    <li><div class="fname"><code>paginate @books</code><span class="vtag">kaminari</span></div><div class="fdesc">現在のリクエストパラメータ（q / tag_id / sort / direction）を自動で引き継いだページリンクを生成。</div></li>
+  </ul>
+
+  <div class="why">
+    <div class="cap">なぜ kaminari か（pagy・自作との比較）</div>
+    <p><strong>kaminari</strong>：<code>page</code> がスコープとして生えるので既存の <code>search / with_tag / sorted</code> と同じ文法で繋がる。<strong>pagy</strong> は最速・最軽量だが <code>@pagy, @records = pagy(scope)</code> という独自のコントローラ API でスコープチェーンから外れる。<strong>自作（limit/offset）</strong>は仕組みの学習にはなるが、総ページ数計算・境界処理・リンク生成を全部自前で正しく書く必要があり、車輪の再発明になる。学習リソースの多さも含めて kaminari を選択（実装前にユーザーと合意）。</p>
+    <p>per_page はデフォルトの 25 から <strong>10 に設定</strong>。この課題のシードデータ（150冊）で16ページになり、ページャの見た目・境界の挙動を確認しやすい粒度にしている。</p>
+  </div>
+
+  <div class="note">
+    <div class="cap">検証で見つけて直したバグ：範囲外ページ</div>
+    curl での画面検証中に <code>?page=999</code> を直接叩くと、153冊あるのに<strong>「本はまだ登録されていません」と誤表示</strong>されることを発見（<code>@books.any?</code> が false になり未登録の分岐に落ちる）。テストを先に書いて Red を確認してから、<code>@books.total_count.positive?</code> の分岐を追加し「このページには本がありません＋1ページ目へ戻る」の案内に修正した。<strong>空配列には「0件」と「範囲外」の2つの意味がある</strong>、という学びが残る不具合。
+  </div>
+
+  <h3>差分を見る</h3>
+  <ul class="difflist">
+    <li><a href="https://github.com/junhat6/book-management-system-speee/pull/13/files" target="_blank" rel="noopener"><span class="pr">PR #13</span>UI/UX 改善（feature/ui-ux-improvements → Files changed）<span class="arrow">↗</span></a></li>
+    <li><a href="https://github.com/junhat6/book-management-system-speee/commit/c31297ef43bb7d4bc5d07811d1d1bbc86e180acb" target="_blank" rel="noopener"><span class="sha">c31297e</span>同内容の単一コミット diff<span class="arrow">↗</span></a></li>
+  </ul>
+
+  <div class="sources">
+    <div class="cap">情報源</div>
+    <ul>
+      <li><a href="https://railsguides.jp/active_record_querying.html#limitとoffset" target="_blank" rel="noopener">Active Record クエリインターフェイス — limit と offset</a> — kaminari が内部でやっていることの原理はこの節。</li>
+      <li><a href="https://github.com/kaminari/kaminari" target="_blank" rel="noopener">kaminari README</a> — 設定項目（default_per_page / outer_window）とビューカスタマイズの正典。</li>
+      <li class="kw">検索キーワード: <code>Rails kaminari custom views daisyUI</code> / <code>kaminari total_count vs size</code></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================================================================ -->
+<section id="sort">
+  <div class="sec-head"><span class="sec-no">02</span><h2 class="serif">ソート機能 — 許可リストと順序の決定性</h2></div>
+  <p class="sec-req">発展要件 5 前半。「スコープはモデルに置く」既存パターン（search / with_tag）に整合</p>
+
+  <p class="lead">タイトル・出版年をテーブルヘッダのクリックで昇順⇄降順にトグルできる。短いスコープだが、<strong>order インジェクション対策（許可リスト）</strong>と<strong>ページネーションと安全に共存するための第2ソートキー</strong>という2つの設計判断が詰まっている。</p>
+
+  <div class="codebox">
+    <div class="path"><span>app/models/book.rb（scope :sorted）</span><span class="lang">ruby</span></div>
+    <pre><code class="ruby"># params 由来の値を order に直接渡すと SQL インジェクションになるため、
+# 許可リスト外のカラムは完全デフォルト（登録日降順）に落とす。
+# id の第2キーは、同値キーでもページ跨ぎの重複・欠落が起きないよう全順序を確定させるため
+SORTABLE_COLUMNS = %w[title published_year].freeze
+
+scope :sorted, ->(column, direction) {
+  if SORTABLE_COLUMNS.include?(column.to_s)
+    dir = %w[asc desc].include?(direction.to_s) ? direction.to_sym : :asc
+    order(column.to_s => dir, id: :desc)
+  else
+    order(created_at: :desc, id: :desc)
+  end
+}</code></pre>
+  </div>
+
+  <div class="codebox">
+    <div class="path"><span>app/helpers/books_helper.rb（全文）</span><span class="lang">ruby</span></div>
+    <pre><code class="ruby">module BooksHelper
+  # 一覧の絞り込み・並び替え状態を URL 間で引き継ぐための共通パラメータ。
+  # page を含めないのは意図的：絞り込みや並び順が変わると同じページ番号は
+  # 別の中身を指すため、常に1ページ目からやり直す
+  def preserved_list_params(overrides = {})
+    {
+      q: params[:q].presence,
+      tag_id: params[:tag_id].presence,
+      sort: params[:sort].presence,
+      direction: params[:direction].presence
+    }.merge(overrides).compact
+  end
+
+  def sort_link(column, label)
+    active = params[:sort] == column
+    # 不正な direction はモデル側で昇順として扱うため、表示・トグルも昇順起点に揃える
+    current_direction = params[:direction] == "desc" ? "desc" : "asc"
+    next_direction = active &amp;&amp; current_direction == "asc" ? "desc" : "asc"
+    arrow = active ? (current_direction == "asc" ? " ▲" : " ▼") : ""
+
+    link_to "#{label}#{arrow}",
+            books_path(preserved_list_params(sort: column, direction: next_direction)),
+            class: "link link-hover"
+  end
+end</code></pre>
+  </div>
+
+  <div class="why">
+    <div class="cap">なぜこの設計か（2つの罠と対策）</div>
+    <p><strong>① 許可リスト（ホワイトリスト）方式</strong> — <code>order(params[:sort])</code> と直接渡すと、<code>?sort=isbn);DROP TABLE books;--</code> のような値がそのまま SQL に埋め込まれ得る（order はプレースホルダで守れない位置）。カラム名を <code>SORTABLE_COLUMNS</code> と照合し、<strong>一致しなければユーザー入力を一切 SQL に触れさせない</strong>のが唯一確実な対策。検証には <code>Arel</code> や <code>order</code> のハッシュ形式（<code>order(title: :asc)</code>）を使い、文字列連結を避けている。</p>
+    <p><strong>② id を第2ソートキーにする</strong> — 出版年ソートでは同年の本が大量にある。ORDER BY のキーが同値の行同士は <strong>SQL 標準では順序が保証されない</strong>ため、1ページ目と2ページ目で並びが揺れ、<em>同じ本が両ページに出る／どのページにも出ない</em>という不具合がページ境界で起こる。一意な <code>id</code> を最後に足して全順序を確定させるのが、LIMIT/OFFSET 型ページネーションの定石。</p>
+    <p><strong>③ ソート変更時に page を捨てる</strong> — 並び順が変わった後の「3ページ目」は変更前とは別の中身を指す。意味を失ったページ番号を引き継ぐより、1ページ目に戻すのが正しい UX（<code>preserved_list_params</code> が page を含めない理由）。</p>
+  </div>
+
+  <div class="note">
+    <div class="cap">テストの見どころ</div>
+    <code>test/models/book_test.rb</code> では <code>Book.sorted("isbn); DROP TABLE books;--", "asc")</code> と<strong>攻撃文字列そのものを渡して</strong>デフォルト順にフォールバックすることを検証。さらに <code>created_at</code> を同時刻に固定した2冊を作り、<strong>同値キーでも順序が安定する（id 降順になる）</strong>ことを別テストで固定している。正常系は「作った2冊の相対位置」で検証し、実装の order をなぞるだけの偽陽性テストを避けた。
+  </div>
+
+  <h3>差分を見る</h3>
+  <ul class="difflist">
+    <li><a href="https://github.com/junhat6/book-management-system-speee/pull/13/files" target="_blank" rel="noopener"><span class="pr">PR #13</span>UI/UX 改善（Files changed の book.rb / books_helper.rb）<span class="arrow">↗</span></a></li>
+  </ul>
+
+  <div class="sources">
+    <div class="cap">情報源</div>
+    <ul>
+      <li><a href="https://railsguides.jp/security.html#sqlインジェクション" target="_blank" rel="noopener">Rails セキュリティガイド — SQL インジェクション</a> — order など「プレースホルダが使えない位置」で許可リストが必要になる理由の原典。</li>
+      <li><a href="https://railsguides.jp/active_record_querying.html#並び順" target="_blank" rel="noopener">Active Record クエリインターフェイス — 並び順</a> — order のハッシュ形式・複数キー指定の仕様。</li>
+      <li class="kw">検索キーワード: <code>Rails order params injection allowlist</code> / <code>pagination stable sort tie breaker</code></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================================================================ -->
+<section id="responsive">
+  <div class="sec-head"><span class="sec-no">03</span><h2 class="serif">レスポンシブ対応 — テーブル⇄カードの切替</h2></div>
+  <p class="sec-req">発展要件 5 後半（スマートフォンでも利用可能にする）</p>
+
+  <p class="lead">md（768px）を境に、<strong>PC はテーブル・スマートフォンは「書籍1冊=1カード」の縦リスト</strong>に切り替える。Tailwind の <code>hidden md:block</code> / <code>md:hidden</code> による出し分けで、JavaScript は書いていない。テーブルが無いモバイル側には専用の並び替えリンク行を置く。</p>
+
+  <div class="codebox">
+    <div class="path"><span>app/views/books/index.html.erb（出し分けの骨格・抜粋）</span><span class="lang">erb</span></div>
+    <pre><code>&lt;%# md 未満はテーブルを隠してカードに切り替えるため、並び替えの入口をここに置く %&gt;
+&lt;div class="md:hidden mb-3 flex items-center gap-4 text-sm"&gt;
+  &lt;span class="text-base-content/60"&gt;並び替え:&lt;/span&gt;
+  &lt;%= sort_link "title", "タイトル" %&gt;
+  &lt;%= sort_link "published_year", "出版年" %&gt;
+&lt;/div&gt;
+
+&lt;%# スマートフォン向け: 書籍1冊 = 1カードの縦リスト %&gt;
+&lt;div class="md:hidden space-y-3"&gt;
+  &lt;% @books.each do |book| %&gt;
+    &lt;div class="book-card card bg-base-100 shadow-sm"&gt;
+      ...
+      &lt;div class="card-actions justify-end"&gt;
+        &lt;%= render "actions", book: book %&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;% end %&gt;
+&lt;/div&gt;
+
+&lt;%# md 以上: 従来のテーブル表示 %&gt;
+&lt;div class="card bg-base-100 shadow-sm hidden md:block"&gt;
+  ...
+  &lt;td&gt;&lt;%= render "stock_badge", book: book %&gt;&lt;/td&gt;</code></pre>
+  </div>
+
+  <div class="codebox">
+    <div class="path"><span>app/views/books/_actions.html.erb（全文 — テーブルとカードで共用）</span><span class="lang">erb</span></div>
+    <pre><code>&lt;%= link_to "詳細", book_path(book), class: "btn btn-xs btn-outline" %&gt;
+&lt;% if admin? %&gt;
+  &lt;%= link_to "編集", edit_book_path(book), class: "btn btn-xs btn-outline" %&gt;
+  &lt;%= button_to "削除", book_path(book), method: :delete,
+        class: "btn btn-xs btn-error btn-outline",
+        form: { data: { turbo_confirm: "「#{book.title}」を削除します。よろしいですか？" } } %&gt;
+&lt;% end %&gt;</code></pre>
+  </div>
+
+  <h3>活用した機能</h3>
+  <ul class="feats">
+    <li><div class="fname">ビューパーシャル + locals</div><div class="fdesc">在庫バッジ（<code>_stock_badge</code>）と操作ボタン（<code>_actions</code>）を抽出し、テーブル・カードの2系統から <code>render "actions", book: book</code> で共用。</div></li>
+    <li><div class="fname">Tailwind ブレークポイント</div><div class="fdesc"><code>hidden md:block</code> / <code>md:hidden</code> はモバイルファースト（無印がモバイル、md: が768px以上の上書き）。</div></li>
+    <li><div class="fname">daisyUI <code>card</code> / <code>join</code></div><div class="fdesc">カードリストとページャの見た目は daisyUI コンポーネントに乗せ、CSS を自分で書かない方針を維持。</div></li>
+    <li><div class="fname">navbar の調整</div><div class="fdesc">レイアウトのユーザー名を <code>hidden sm:inline</code> にし、狭い画面ではボタン（ログアウト・本を登録）を優先。</div></li>
+  </ul>
+
+  <div class="why">
+    <div class="cap">なぜカード切替か・なぜパーシャル化か</div>
+    <p><strong>カード切替 vs 横スクロール</strong>：8列のテーブルをスマホで横スクロールさせると、1行の情報を読むのに毎回スワイプが要り、操作ボタンも画面外に隠れる。カードなら1冊分の情報＋操作が1画面幅に収まる。代償としてマークアップが2系統になるが、これは次のパーシャル化で緩和した（実装前にユーザーと合意した選択）。</p>
+    <p><strong>パーシャル化（_stock_badge / _actions）</strong>：出し分けの最大のリスクは<em>片方だけ直して片方を忘れる</em>二重管理。在庫バッジの色分岐や管理者だけに出す削除ボタンのような「ロジックを含む断片」を共用パーシャルに寄せておけば、修正は常に1箇所で済む。そうしないと、例えば削除ボタンの権限条件を変えたときテーブル側だけ直り、<strong>カード側に古い権限のボタンが残る</strong>という事故が起こる。</p>
+    <p>コントローラは1つ・<code>@books</code> も1つで、変わるのは見せ方だけ。<strong>状態とロジックはそのまま、プレゼンテーション層だけが分岐する</strong>という関心の分離を守っている。</p>
+  </div>
+
+  <div class="note">
+    <div class="cap">テストの見どころ</div>
+    レスポンシブの見た目自体は CSS の責務なので Minitest では検証せず、<strong>「カード側も同じページ分割が効いている」</strong>ことを <code>assert_select ".book-card", count: 10</code> で担保。画面幅による切替は verify（curl での実駆動）と目視で確認した。
+  </div>
+
+  <h3>差分を見る</h3>
+  <ul class="difflist">
+    <li><a href="https://github.com/junhat6/book-management-system-speee/pull/13/files" target="_blank" rel="noopener"><span class="pr">PR #13</span>UI/UX 改善（Files changed の index.html.erb / パーシャル）<span class="arrow">↗</span></a></li>
+  </ul>
+
+  <div class="sources">
+    <div class="cap">情報源</div>
+    <ul>
+      <li><a href="https://railsguides.jp/layouts_and_rendering.html" target="_blank" rel="noopener">レイアウトとレンダリング</a> — パーシャルと locals の受け渡し（共用部品化の作法）はこの章。</li>
+      <li><a href="https://tailwindcss.com/docs/responsive-design" target="_blank" rel="noopener">Tailwind CSS — Responsive design</a> — モバイルファーストのブレークポイント設計の原典。</li>
+      <li class="kw">検索キーワード: <code>Tailwind responsive table card mobile</code> / <code>Rails render partial locals</code></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================================================================ -->
+<section id="qa">
+  <div class="sec-head"><span class="sec-no">04</span><h2 class="serif">想定問答 — 強みと、正直な弱点</h2></div>
+  <p class="sec-req">レビュー会で聞かれそうな質問と回答の準備。<span class="verdict ok" style="position:static">強み</span>は胸を張って、<span class="verdict gap" style="position:static">改善余地</span>は正直に + 「やるならこうする」をセットで</p>
+
+  <h3>まず押さえる3つの強み</h3>
+  <ul class="strengths">
+    <li><b>order インジェクション対策</b><span>params を order に直接渡さず許可リスト照合。攻撃文字列を渡すテストまである（→ 02）</span></li>
+    <li><b>順序の決定性</b><span>id を第2ソートキーにして、同値キーでのページ跨ぎ重複・欠落を構造的に防止（→ 02）</span></li>
+    <li><b>スコープ合成で機能が掛け算</b><span>検索×タグ×ソート×ページが分岐ゼロで同時に効く。既存の search / with_tag の設計に素直に乗った（→ 00）</span></li>
+  </ul>
+
+  <h3>想定問答（クリックで回答を開く）</h3>
+
+  <details class="qa">
+    <summary><span class="q">Q1</span>URL の sort パラメータに SQL を書き込まれたらどうなりますか？</summary>
+    <div class="a">
+      <p><span class="verdict ok">強み</span>何も起こりません。<code>SORTABLE_COLUMNS</code>（title / published_year）との照合に失敗した値は<strong>一切 SQL に触れずに</strong>デフォルトの登録日降順へフォールバックします。order 句はプレースホルダで守れない位置なので、「検証して使う」ではなく「一致しなければ使わない」許可リスト方式が唯一確実です。テストでは <code>"isbn); DROP TABLE books;--"</code> という攻撃文字列そのものを渡してフォールバックを検証しています。</p>
+    </div>
+  </details>
+
+  <details class="qa">
+    <summary><span class="q">Q2</span>2ページ目に1ページ目と同じ本が表示されることはありませんか？</summary>
+    <div class="a">
+      <p><span class="verdict ok">強み</span>起こらない設計です。ORDER BY のキーが同値（例：同じ出版年）の行は SQL 標準では順序が保証されず、クエリごとに並びが揺れて LIMIT/OFFSET のページ境界で重複・欠落が起こり得ます。そこで <code>sorted</code> は常に一意な <code>id</code> を第2キーに足して全順序を確定させています。<code>created_at</code> を同時刻に固定した2冊で順序が安定することを検証するテストもあります。</p>
+    </div>
+  </details>
+
+  <details class="qa">
+    <summary><span class="q">Q3</span>検索しながらソートして3ページ目、のような組み合わせは正しく動きますか？</summary>
+    <div class="a">
+      <p><span class="verdict ok">強み</span>動きます。4機能がそれぞれ独立したスコープで、コントローラは <code>search(...).with_tag(...).sorted(...).page(...)</code> と機械的に繋ぐだけです。URL 間の状態引き継ぎは <code>preserved_list_params</code> ヘルパーに集約し、ページリンクは kaminari が現在のパラメータを自動継承します。なお<strong>ソートや検索を変えたときは意図的に1ページ目へ戻します</strong>。並び順が変わった後の「3ページ目」は別の中身を指すため、ページ番号を引き継ぐ方がバグだからです。</p>
+    </div>
+  </details>
+
+  <details class="qa">
+    <summary><span class="q">Q4</span>日本語タイトルは五十音順に並びますか？</summary>
+    <div class="a">
+      <p><span class="verdict gap">改善余地</span>正直に言うと、完全な五十音順にはなりません。SQLite の既定の照合順序（バイナリ照合）では文字コード順になるため、ひらがな・カタカナ・漢字が混ざると辞書順とはずれます（英字も大文字→小文字の順）。<strong>やるなら</strong>：①読み仮名カラム（<code>title_reading</code>）を追加してそれをソートキーにする（入力コスト増だが確実）、② ICU 照合を持つ PostgreSQL へ移行し <code>COLLATE "ja-JP-x-icu"</code> を使う、の2択です。書誌データとして正確なのは①で、図書館システムの実務でも読み仮名を持つのが定石、と答えます。</p>
+    </div>
+  </details>
+
+  <details class="qa">
+    <summary><span class="q">Q5</span>ソートやページ移動のたびに全ページ再読み込みするのですか？</summary>
+    <div class="a">
+      <p><span class="verdict gap">改善余地</span>現状は通常のリンク遷移で、Turbo Drive が body を差し替えています（体感は十分速いですが、スクロール位置は先頭に戻ります）。<strong>やるなら</strong>：一覧を <code>turbo_frame_tag "books_list"</code> で包み、ソートリンクとページャに <code>data: { turbo_frame: "books_list" }</code> を付ければ、<strong>一覧のテーブル部分だけ</strong>が部分更新されます。Rails 8 なら追加 gem なし・JS 数行以下で実現でき、次のスプリント候補です。</p>
+    </div>
+  </details>
+
+  <details class="qa">
+    <summary><span class="q">Q6</span>テーブルとカードを両方描画するのは無駄ではないですか？</summary>
+    <div class="a">
+      <p><span class="verdict gap">改善余地</span>ご指摘のとおり、DOM には常に2系統が存在し、片方は CSS で隠れているだけです。1ページ10冊に絞ってあるので実害（描画コスト・転送量）は小さいものの、二重描画自体は事実です。<strong>やるなら</strong>：①マークアップは1系統にして CSS Grid で「md 未満ではセルをカード風に再配置する」スタイルだけで解決する（HTML は減るが CSS が複雑化）、② User-Agent でサーバー側から出し分ける（キャッシュと相性が悪い）。①と現状の折衷が現実的で、共通部分をパーシャルに寄せて二重管理のリスクだけ先に潰したのが今回の判断です。</p>
+    </div>
+  </details>
+
+  <details class="qa">
+    <summary><span class="q">Q7</span>データが増えたとき、このページネーションの限界はどこですか？</summary>
+    <div class="a">
+      <p><span class="verdict gap">改善余地</span>2つあります。①<strong>total_count の COUNT クエリ</strong>が毎リクエスト走る（件数バッジとページ数計算に必要）。②<strong>OFFSET 方式は深いページほど遅い</strong>（OFFSET 10000 は1万行読み捨てる）。蔵書数万冊規模なら、COUNT を省略できる pagy の countless モードや、「id より小さい次の10件」を辿る<strong>カーソル（キーセット）ページネーション</strong>に切り替えます。カーソル方式が成立するのは全順序が確定しているときだけなので、id 第2キーの設計（Q2）はその布石にもなっています。</p>
+    </div>
+  </details>
+
+  <details class="qa">
+    <summary><span class="q">Q8</span>なぜ pagy ではなく kaminari を選んだのですか？</summary>
+    <div class="a">
+      <p><span class="verdict ok">説明できる選択</span>性能ベンチマークでは pagy が優位なことは把握していますが、この規模（数百冊）で差は体感できず、選定基準を「既存設計との整合」に置きました。kaminari の <code>page</code> は Relation を返すスコープなので、このアプリの核である <code>search → with_tag → sorted</code> のスコープチェーンに同じ文法で繋がります。pagy はコントローラで <code>@pagy, @records = pagy(...)</code> と受ける独自 API で、チェーンの外に出ます。学習教材・日本語情報の豊富さも kaminari が上、という判断です（実装前に選択肢と推奨を提示して合意済み）。</p>
+    </div>
+  </details>
+</section>
+
+<footer>
+  <p>発展要件5 実装解説ドシエ ・ 生成 2026-07-07 ・ ソース: <a href="https://github.com/junhat6/book-management-system-speee/pull/13" target="_blank" rel="noopener">junhat6/book-management-system-speee PR #13</a>（feature/ui-ux-improvements @ c31297e）</p>
+</footer>
+</main>
+</div>
+
+<script>
+(function () {
+  // --- Ruby ミニハイライタ（文字列→コメント→シンボル/ハッシュキー→キーワード→DSL→定数→数値の順で1パス走査）
+  var esc = function (s) {
+    return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  };
+  var re = /("(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*')|(#[^\n]*)|(:[A-Za-z_][A-Za-z0-9_]*[?!]?|\b[A-Za-z_][A-Za-z0-9_]*:(?=\s))|\b(class|module|def|end|do|if|unless|else|elsif|then|return|private|extend|include|self|true|false|nil|case|when|rescue|begin)\b|\b(validates|validate|has_many|has_one|belongs_to|has_secure_password|normalizes|scope|before_save|before_action|skip_before_action|helper_method|rescue_from|allow_unauthenticated_access|rate_limit|add_index|create_table|resources|resource|root|get|mount|attr_reader|delegate|redirect_to|render|link_to|button_to|paginate)\b|\b([A-Z][A-Za-z0-9_]*(?:::[A-Z][A-Za-z0-9_]*)*)\b|\b(\d+(?:\.\d+)?)\b/g;
+  var cls = ["tok-s", "tok-c", "tok-y", "tok-k", "tok-d", "tok-t", "tok-n"];
+  document.querySelectorAll("pre > code.ruby").forEach(function (block) {
+    var src = block.textContent;
+    var out = "";
+    var last = 0;
+    var m;
+    re.lastIndex = 0;
+    while ((m = re.exec(src)) !== null) {
+      out += esc(src.slice(last, m.index));
+      var i;
+      for (i = 1; i <= 7; i++) { if (m[i] !== undefined) break; }
+      out += '<span class="' + cls[i - 1] + '">' + esc(m[0]) + "</span>";
+      last = m.index + m[0].length;
+    }
+    out += esc(src.slice(last));
+    block.innerHTML = out;
+  });
+
+  // --- 目次スクロールスパイ
+  var links = Array.prototype.slice.call(document.querySelectorAll(".toc a"));
+  var map = {};
+  links.forEach(function (a) { map[a.getAttribute("href").slice(1)] = a; });
+  if ("IntersectionObserver" in window) {
+    var current = null;
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) {
+          if (current) current.classList.remove("now");
+          current = map[e.target.id];
+          if (current) current.classList.add("now");
+        }
+      });
+    }, { rootMargin: "-15% 0px -70% 0px" });
+    document.querySelectorAll("main section[id]").forEach(function (s) { io.observe(s); });
+  }
+})();
+</script>
+
+</body></html>

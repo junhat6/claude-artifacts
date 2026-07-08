@@ -1,0 +1,855 @@
+<!doctype html><html><head><!-- frame-runtime --><script>window.__FRAME_PREAMBLE={"capabilities":{"mcp":"mcp.BQqQVVN_.js"},"transforms":"_transforms.DYk1Ltlh.js"}</script><script>(function(){"use strict";const X="modulepreload",Y=function(e){return"/"+e},Z={},U=function(t,n,u){let o=Promise.resolve();function i(f){const a=new Event("vite:preloadError",{cancelable:!0});if(a.payload=f,window.dispatchEvent(a),!a.defaultPrevented)throw f}return o.then(f=>{for(const a of f||[])a.status==="rejected"&&i(a.reason);return t().catch(i)})},D=["light","dark","system"];function $(e){if(e==null||typeof e!="object")return!1;const t=e.__frame_init;return t!=null&&typeof t=="object"}function q(e){if(e==null||typeof e!="object")return!1;const t=e.__frame_theme;if(t==null||typeof t!="object")return!1;const n=t.theme;return typeof n=="string"&&D.includes(n)}function M(e){if(window===top||e.type==="auxclick"&&e.button!==1)return;const t=e.composedPath?e.composedPath():[e.target];let n=null;for(let f=0;f<t.length;f++){const a=t[f];if(a&&a.matches&&a.matches("a[href],area[href]")){n=a;break}}if(!n&&e.target&&e.target.closest&&(n=e.target.closest("a[href],area[href]")),!n)return;const u=n.getAttribute("href");if(!u)return;let o,i;try{o=new URL(u,document.baseURI),i=new URL(document.baseURI).origin}catch{return}(o.protocol==="http:"||o.protocol==="https:")&&o.origin!==i&&(e.preventDefault(),parent.postMessage({__frame_nav:!0,url:o.href},"*"))}const L={};function y(e){if(window===top)return;const t=Date.now();t-(L[e]||0)<500||(L[e]=t,parent.postMessage({__frame_engaged:!0,kind:e},"*"))}const F=2e3,T=["wheel","touchstart","touchmove","keydown","pointerdown"];let k=0;function B(e){e.isTrusted&&(k=Date.now())}function z(){addEventListener("click",M,!0),addEventListener("auxclick",M,!0)}function W(){for(let e=0;e<T.length;e++)addEventListener(T[e],B,{capture:!0,passive:!0});addEventListener("scroll",e=>{e.isTrusted&&Date.now()-k<F&&y("scroll")},{capture:!0,passive:!0}),addEventListener("pointermove",e=>{e.isTrusted&&y("pointer")},{capture:!0,passive:!0}),addEventListener("click",e=>{e.isTrusted&&y("click")},{capture:!0,passive:!0})}function x(e,t,n){const u=[...t.values()].filter(o=>o.targets.some(i=>i.startsWith(e+".")));return{wrap(o,i){const f=`${e}.${o}`,a=u.filter(s=>s.targets.includes(f));return a.length===0?(...s)=>{try{return i(...s)}catch(d){return Promise.reject(d)}}:(...s)=>{let d=s;for(const c of a){const l=c.module.parameters;if(l)try{d=l(d)}catch{return Promise.reject({code:"transform_error",id:c.id,scope:e,message:"parameters transform failed"})}}let m;try{m=i(...d)}catch(c){m=Promise.reject(c)}return m.then(c=>{for(let l=a.length-1;l>=0;l--){const h=a[l],p=h.module.returns;if(p)try{c=p(c)}catch{return n({id:h.id,scope:e,leg:"returns"}),c}}return c},c=>{for(let l=a.length-1;l>=0;l--){const h=a[l],p=h.module.throws;if(p)try{c=p(c)}catch{return n({id:h.id,scope:e,leg:"throws"}),Promise.reject(c)}}return Promise.reject(c)})}}}}function H(e,t,n,u=()=>{}){const o=new Set(e.changes??[]),i=new Map;for(const f of o){const a=t[f];a&&i.set(f,a)}return{contract:e.contract,changes:o,flags:new Set(e.flags??[]),capabilities:e.capabilities??{},transforms:i,shellOrigin:n.shellOrigin,mount:n.mount,pipe:f=>x(f,i,u)}}(function(){const e=Object.defineProperty,t=globalThis,n=["RTCPeerConnection","webkitRTCPeerConnection","RTCDataChannel","RTCIceCandidate","RTCSessionDescription","RTCRtpSender","RTCRtpReceiver"];let u=0;for(let o=0;o<n.length;o++){const i=n[o];try{e(t,i,{value:void 0,writable:!1,configurable:!1})}catch{try{delete t[i]}catch{}try{e(t,i,{value:void 0,writable:!1,configurable:!0})}catch{}}typeof t[i]=="function"&&u++}if(u&&window!==top)try{parent.postMessage({__frame_rtc_lockdown_failed:u},"*")}catch{}})();const K=1e4,G=Object.freeze([...window.__FRAME_PREAMBLE?.origins??["https://claude.ai","https://preview.claude.ai"]]);function J(e){for(const t of G)if(t.endsWith(":*"))try{const n=new URL(e);if(`${n.protocol}//${n.hostname}:*`===t)return!0}catch{}else if(e===t)return!0;return!1}const w=Object.freeze({...window.__FRAME_PREAMBLE?.capabilities??{}}),E=window.__FRAME_PREAMBLE?.transforms,C=/^[\w.-]+\.js$/,V=/^[a-z][a-z0-9_-]{0,63}$/;let A=null,g=null;function P(e,t,n){try{Object.defineProperty(e,t,{value:n,writable:!1,configurable:!1,enumerable:!0})}catch{try{Object.defineProperty(e,t,{value:n,writable:!1,configurable:!0,enumerable:!0})}catch{}}}let R=!1;function N(e){const t=document.documentElement;e==="light"||e==="dark"?(t.dataset.theme=e,t.style.colorScheme=e,R=!0):R&&(delete t.dataset.theme,t.style.colorScheme="",R=!1)}const _=new Map;function Q(e,t){const n=_.get(e);if(!n)return;Object.assign(n.impl,t),n.impl.__settled=()=>Promise.reject({code:"capability_removed",message:`${e}: method not in this runtime`});const u=n.queue;n.queue=[];for(const o of u){const i=t[o.method];i?i(...o.args).then(o.resolve,o.reject):o.reject({code:"capability_removed",message:`${e}.${o.method} is not in this runtime`})}}function O(e,t){const n=_.get(e);if(!n)return;n.impl.__settled=()=>Promise.reject(t);const u=n.queue;n.queue=[];for(const o of u)o.reject(t)}const j=Object.getOwnPropertyDescriptor(window,"claude");if(window!==top&&!(j&&j.writable===!1)){z(),W();const e=j?.value??{};P(window,"claude",e);const t=s=>{const d={impl:Object.create(null),queue:[]};_.set(s,d);const m=new Proxy(d.impl,{get:(c,l)=>{if(typeof l=="string"&&!(l==="then"||l==="toJSON"||l==="valueOf"))return l==="toString"?Object.prototype.toString:(...h)=>{const p=c[l]??c.__settled;return p?p(...h):new Promise((b,S)=>{d.queue.push({method:l,args:h,resolve:b,reject:S})})}},set:()=>!1});P(e,s,m)};for(const s of Object.keys(w)){if(e[s]!==void 0){P(e,s,e[s]);continue}t(s)}let n=null,u=null,o=0;const i=s=>{s.source!==parent||!J(s.origin)||$(s.data)&&(n=s.data.__frame_init,g=s.origin,removeEventListener("message",i),clearTimeout(o),u?.())};addEventListener("message",i),parent.postMessage({__frame_connect:!0},"*");const f=new Promise(s=>{u=s,o=setTimeout(()=>{removeEventListener("message",i),s()},K)}),a=document.readyState==="loading"?new Promise(s=>document.addEventListener("DOMContentLoaded",()=>s(),{once:!0})):Promise.resolve();f.then(async()=>{if(!n||!g){for(const r of _.keys())O(r,{code:"not_granted",message:"frame initialization did not arrive - capability unavailable"});return}N(n.theme);const s=g;addEventListener("message",r=>{r.source!==parent||r.origin!==s||q(r.data)&&N(r.data.__frame_theme.theme)});const d=r=>U(()=>import("/_runtime/"+r),void 0),m=Object.keys(n.capabilities??{});for(const r of m)Object.hasOwn(w,r)||V.test(r)&&e[r]===void 0&&(t(r),O(r,{code:"capability_disabled",message:"capability not in this runtime generation"}));const c=m.filter(r=>Object.hasOwn(w,r)).map(r=>[r,w[r]]).filter(r=>typeof r[1]=="string"&&C.test(r[1])),[l,...h]=await Promise.allSettled([E&&C.test(E)?d(E):Promise.resolve({}),...c.map(([,r])=>d(r))]),p=g;A=H(n,l.status==="fulfilled"&&l.value?.TRANSFORMS||{},{shellOrigin:p,mount:Q},r=>parent.postMessage({__frame_cap_telemetry:r},p));const b=r=>parent.postMessage({__frame_cap_telemetry:{kind:"cap-load-error",cap:r}},p),S=A;h.forEach((r,v)=>{const I=c[v][0];if(r.status!=="fulfilled"){b(I);return}try{r.value?.install?.(S)}catch{b(I)}});for(const[r,v]of _)v.queue.length===0&&Object.keys(v.impl).length>0||O(r,{code:m.includes(r)?"capability_disabled":"not_granted",message:"capability not available in this session"});await a,parent.postMessage({__frame_ready:!0},g)})}})();</script><!-- /frame-runtime --><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}</style></head><body>
+<title>外部 API 連携（Google Books）実装解説 — レビュー会準備</title>
+<style>
+  :root {
+    --bg: #FBFAF8;
+    --surface: #FFFFFF;
+    --surface2: #F4F1EC;
+    --ink: #26201D;
+    --muted: #6F655E;
+    --faint: #9C918A;
+    --accent: #A31631;
+    --accent-ink: #FFFFFF;
+    --accent-soft: #F7E8EA;
+    --line: #E5DFD8;
+    --line-strong: #CFC7BE;
+    --good: #2E6E4E;
+    --good-soft: #E5F0E9;
+    --warn: #8A5A12;
+    --warn-soft: #F7EEDD;
+    --code-bg: #221D1B;
+    --code-ink: #E9E3DC;
+    --code-line: #37302C;
+    --code-cmt: #837770;
+    --code-str: #A9C98F;
+    --code-sym: #D9A15F;
+    --code-kw: #E4728B;
+    --code-dsl: #85B7D6;
+    --code-const: #E0C185;
+    --code-num: #C79ED2;
+    --shadow: 0 1px 2px rgba(38,32,29,.05), 0 4px 16px rgba(38,32,29,.05);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #17130F;
+      --surface: #201B17;
+      --surface2: #282221;
+      --ink: #EDE7E0;
+      --muted: #A99E96;
+      --faint: #7E746D;
+      --accent: #E36A80;
+      --accent-ink: #2A0A12;
+      --accent-soft: #3A2226;
+      --line: #372F2A;
+      --line-strong: #4A413B;
+      --good: #7FC49E;
+      --good-soft: #22322A;
+      --warn: #DFAE5E;
+      --warn-soft: #362C1B;
+      --code-bg: #14100E;
+      --code-line: #2E2723;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 4px 16px rgba(0,0,0,.25);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #17130F;
+    --surface: #201B17;
+    --surface2: #282221;
+    --ink: #EDE7E0;
+    --muted: #A99E96;
+    --faint: #7E746D;
+    --accent: #E36A80;
+    --accent-ink: #2A0A12;
+    --accent-soft: #3A2226;
+    --line: #372F2A;
+    --line-strong: #4A413B;
+    --good: #7FC49E;
+    --good-soft: #22322A;
+    --warn: #DFAE5E;
+    --warn-soft: #362C1B;
+    --code-bg: #14100E;
+    --code-line: #2E2723;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 4px 16px rgba(0,0,0,.25);
+  }
+  :root[data-theme="light"] {
+    --bg: #FBFAF8;
+    --surface: #FFFFFF;
+    --surface2: #F4F1EC;
+    --ink: #26201D;
+    --muted: #6F655E;
+    --faint: #9C918A;
+    --accent: #A31631;
+    --accent-ink: #FFFFFF;
+    --accent-soft: #F7E8EA;
+    --line: #E5DFD8;
+    --line-strong: #CFC7BE;
+    --good: #2E6E4E;
+    --good-soft: #E5F0E9;
+    --warn: #8A5A12;
+    --warn-soft: #F7EEDD;
+    --code-bg: #221D1B;
+    --code-ink: #E9E3DC;
+    --code-line: #37302C;
+    --code-cmt: #837770;
+    --code-str: #A9C98F;
+    --code-sym: #D9A15F;
+    --code-kw: #E4728B;
+    --code-dsl: #85B7D6;
+    --code-const: #E0C185;
+    --code-num: #C79ED2;
+    --shadow: 0 1px 2px rgba(38,32,29,.05), 0 4px 16px rgba(38,32,29,.05);
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 24px; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", "Noto Sans JP", sans-serif;
+    font-size: 15px;
+    line-height: 1.85;
+    -webkit-font-smoothing: antialiased;
+  }
+  .serif { font-family: "Hiragino Mincho ProN", "Yu Mincho", "Noto Serif JP", serif; }
+  code, pre, .mono {
+    font-family: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+  }
+
+  .frame { display: grid; grid-template-columns: 232px minmax(0, 1fr); max-width: 1180px; margin: 0 auto; gap: 40px; padding: 0 28px; }
+  @media (max-width: 940px) { .frame { grid-template-columns: minmax(0, 1fr); gap: 0; padding: 0 18px; } }
+
+  /* ---- sidebar ---- */
+  .toc { position: sticky; top: 0; align-self: start; height: 100vh; overflow-y: auto; padding: 36px 0 24px; }
+  .toc-title { font-size: 11px; letter-spacing: .18em; color: var(--faint); text-transform: uppercase; margin: 0 0 14px 2px; }
+  .toc ol { list-style: none; margin: 0; padding: 0; border-left: 1px solid var(--line); }
+  .toc a {
+    display: flex; gap: 9px; align-items: baseline;
+    padding: 6px 10px 6px 14px; margin-left: -1px;
+    color: var(--muted); text-decoration: none; font-size: 13px; line-height: 1.5;
+    border-left: 2px solid transparent;
+  }
+  .toc a .no { font-size: 11px; color: var(--faint); font-variant-numeric: tabular-nums; }
+  .toc a:hover { color: var(--ink); }
+  .toc a.now { color: var(--accent); border-left-color: var(--accent); font-weight: 600; }
+  .toc a.now .no { color: var(--accent); }
+  .toc a:focus-visible, a:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+  @media (max-width: 940px) { .toc { display: none; } }
+
+  main { padding: 44px 0 90px; min-width: 0; }
+
+  /* ---- header ---- */
+  .doc-head { border-bottom: 3px double var(--line-strong); padding-bottom: 26px; margin-bottom: 14px; }
+  .doc-eyebrow { display: flex; align-items: center; gap: 10px; font-size: 12px; letter-spacing: .14em; color: var(--accent); font-weight: 600; }
+  .doc-eyebrow::before { content: ""; width: 26px; height: 1px; background: var(--accent); }
+  h1 { font-size: clamp(26px, 4.5vw, 38px); line-height: 1.35; margin: 10px 0 8px; font-weight: 600; letter-spacing: .02em; text-wrap: balance; }
+  .doc-sub { color: var(--muted); font-size: 14px; margin: 0 0 18px; max-width: 46em; }
+  .stack-row { display: flex; flex-wrap: wrap; gap: 7px; }
+  .chip {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 12px; line-height: 1; padding: 6px 10px;
+    border: 1px solid var(--line); border-radius: 999px;
+    background: var(--surface); color: var(--muted); white-space: nowrap;
+  }
+  .chip b { color: var(--ink); font-weight: 600; }
+  .chip.ver { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
+  .repo-line { margin-top: 16px; font-size: 13px; color: var(--muted); }
+  .repo-line a { color: var(--accent); }
+
+  /* ---- sections ---- */
+  section { padding: 40px 0 8px; border-bottom: 1px solid var(--line); }
+  section:last-of-type { border-bottom: none; }
+  .sec-head { display: flex; align-items: baseline; gap: 14px; margin-bottom: 6px; }
+  .sec-no {
+    font-size: 12px; font-weight: 700; letter-spacing: .1em;
+    color: var(--accent); border: 1px solid var(--accent);
+    padding: 3px 8px; border-radius: 3px; font-variant-numeric: tabular-nums;
+    white-space: nowrap; align-self: center;
+  }
+  h2 { font-size: 23px; margin: 0; font-weight: 600; letter-spacing: .02em; line-height: 1.4; text-wrap: balance; }
+  .sec-req { font-size: 12px; color: var(--faint); margin: 0 0 18px 0; }
+  h3 { font-size: 15px; margin: 30px 0 10px; letter-spacing: .06em; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+  h3::before { content: ""; width: 8px; height: 8px; background: var(--accent); border-radius: 1px; flex: none; }
+  p { margin: 0 0 14px; max-width: 44em; }
+  section > p:first-of-type, .lead { font-size: 15.5px; }
+  li { margin-bottom: 6px; }
+  ul, ol { padding-left: 1.4em; margin: 0 0 14px; max-width: 44em; }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  strong { font-weight: 700; }
+  .small { font-size: 13px; color: var(--muted); }
+
+  /* inline code */
+  p code, li code, td code, .qa code, h2 code, dd code {
+    background: var(--surface2); border: 1px solid var(--line);
+    padding: .5px 5px; border-radius: 4px; font-size: .88em; white-space: nowrap;
+  }
+
+  /* ---- code blocks ---- */
+  .codebox { margin: 16px 0 20px; border-radius: 8px; overflow: hidden; box-shadow: var(--shadow); }
+  .codebox .path {
+    background: var(--code-bg); color: var(--code-cmt);
+    border-bottom: 1px solid var(--code-line);
+    font-size: 11.5px; padding: 8px 14px; letter-spacing: .04em;
+    display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+    font-family: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+  }
+  .codebox .path .lang { color: var(--code-sym); }
+  .codebox pre { margin: 0; background: var(--code-bg); color: var(--code-ink); padding: 14px 16px; overflow-x: auto; font-size: 12.8px; line-height: 1.75; }
+  .tok-s { color: var(--code-str); }
+  .tok-c { color: var(--code-cmt); font-style: italic; }
+  .tok-y { color: var(--code-sym); }
+  .tok-k { color: var(--code-kw); }
+  .tok-d { color: var(--code-dsl); }
+  .tok-t { color: var(--code-const); }
+  .tok-n { color: var(--code-num); }
+
+  /* ---- callouts ---- */
+  .why { border-left: 3px solid var(--accent); background: var(--accent-soft); padding: 14px 18px; border-radius: 0 8px 8px 0; margin: 16px 0 20px; max-width: 46em; }
+  .why .cap { font-size: 12px; font-weight: 700; letter-spacing: .12em; color: var(--accent); margin-bottom: 6px; }
+  .why p { margin-bottom: 8px; max-width: none; }
+  .why p:last-child { margin-bottom: 0; }
+  .note { border-left: 3px solid var(--warn); background: var(--warn-soft); padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 16px 0 20px; max-width: 46em; font-size: 13.5px; }
+  .note .cap { font-weight: 700; color: var(--warn); font-size: 12px; letter-spacing: .1em; margin-bottom: 4px; }
+
+  /* ---- rails feature list ---- */
+  .feats { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 10px; margin: 14px 0 20px; padding: 0; list-style: none; max-width: none; }
+  .feats li { margin: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 11px 13px; font-size: 13px; line-height: 1.65; }
+  .feats .fname { display: flex; align-items: center; gap: 8px; font-weight: 700; margin-bottom: 3px; flex-wrap: wrap; }
+  .feats .fname code { background: none; border: none; padding: 0; font-size: 12.5px; color: var(--accent); white-space: normal; }
+  .vtag { font-size: 10px; font-weight: 700; letter-spacing: .06em; color: var(--accent); background: var(--accent-soft); border-radius: 3px; padding: 2px 5px; white-space: nowrap; }
+  .feats .fdesc { color: var(--muted); }
+
+  /* ---- diff links ---- */
+  .difflist { list-style: none; padding: 0; margin: 12px 0 20px; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; max-width: 46em; }
+  .difflist li { margin: 0; border-bottom: 1px solid var(--line); }
+  .difflist li:last-child { border-bottom: none; }
+  .difflist a { display: flex; align-items: baseline; gap: 12px; padding: 9px 14px; text-decoration: none; color: var(--ink); font-size: 13.5px; background: var(--surface); }
+  .difflist a:hover { background: var(--surface2); }
+  .difflist .sha { font-family: ui-monospace, Menlo, monospace; font-size: 12px; color: var(--accent); white-space: nowrap; min-width: 4.6em; }
+  .difflist .pr { font-weight: 700; color: var(--accent); white-space: nowrap; min-width: 4.6em; font-size: 12.5px; }
+  .difflist .arrow { margin-left: auto; color: var(--faint); font-size: 12px; }
+
+  /* ---- sources ---- */
+  .sources { background: var(--surface2); border: 1px solid var(--line); border-radius: 8px; padding: 14px 18px; margin: 16px 0 24px; font-size: 13.5px; max-width: 46em; }
+  .sources .cap { font-size: 11.5px; font-weight: 700; letter-spacing: .14em; color: var(--faint); margin-bottom: 8px; }
+  .sources ul { list-style: none; padding: 0; margin: 0; }
+  .sources li { margin-bottom: 7px; }
+  .sources li:last-child { margin-bottom: 0; }
+  .sources .kw { color: var(--muted); }
+  .sources .kw code { white-space: normal; }
+
+  /* ---- tables ---- */
+  .tblwrap { overflow-x: auto; margin: 14px 0 20px; border: 1px solid var(--line); border-radius: 8px; }
+  table { border-collapse: collapse; width: 100%; font-size: 13.5px; background: var(--surface); }
+  th, td { text-align: left; padding: 9px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { font-size: 12px; letter-spacing: .08em; color: var(--faint); font-weight: 600; white-space: nowrap; background: var(--surface2); }
+  tr:last-child td { border-bottom: none; }
+
+  /* ---- flow diagram ---- */
+  .er-wrap { overflow-x: auto; margin: 18px 0 8px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); box-shadow: var(--shadow); }
+  .er-wrap svg { display: block; min-width: 900px; width: 100%; height: auto; }
+  .er-legend { display: flex; gap: 18px; flex-wrap: wrap; font-size: 12.5px; color: var(--muted); margin: 10px 2px 20px; }
+
+  /* ---- three outcome diagram ---- */
+  .layers { display: grid; gap: 0; margin: 18px 0 20px; max-width: 46em; }
+  .layer { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 18px; box-shadow: var(--shadow); }
+  .layer .lhead { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 4px; }
+  .layer .lno { font-size: 11px; font-weight: 700; color: var(--accent-ink); background: var(--accent); border-radius: 999px; padding: 3px 9px; letter-spacing: .08em; white-space: nowrap; }
+  .layer .lname { font-weight: 700; font-size: 14.5px; }
+  .layer .lrole { font-size: 11.5px; color: var(--faint); margin-left: auto; letter-spacing: .06em; }
+  .layer p { font-size: 13.5px; color: var(--muted); margin: 0; max-width: none; }
+  .layer p code { white-space: normal; }
+  .layer-gap { display: flex; align-items: center; gap: 10px; padding: 8px 4px 8px 22px; color: var(--faint); font-size: 12.5px; }
+  .layer-gap::before { content: "↓"; color: var(--accent); font-size: 15px; }
+
+  /* ---- Q&A ---- */
+  .qa { border: 1px solid var(--line); border-radius: 10px; background: var(--surface); margin: 0 0 14px; max-width: 48em; box-shadow: var(--shadow); }
+  .qa summary { cursor: pointer; list-style: none; padding: 14px 18px; display: flex; gap: 12px; align-items: baseline; font-weight: 600; line-height: 1.6; }
+  .qa summary::-webkit-details-marker { display: none; }
+  .qa summary .q { color: var(--accent); font-weight: 800; font-size: 13px; letter-spacing: .06em; flex: none; }
+  .qa summary::after { content: "＋"; margin-left: auto; color: var(--faint); flex: none; }
+  .qa[open] summary::after { content: "−"; }
+  .qa .a { padding: 2px 18px 16px 44px; border-top: 1px dashed var(--line); }
+  .qa .a p { font-size: 14px; margin: 10px 0 8px; }
+  .qa .verdict { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .08em; border-radius: 3px; padding: 2px 8px; margin-right: 6px; vertical-align: 1px; }
+  .qa .verdict.ok { color: var(--good); background: var(--good-soft); }
+  .qa .verdict.gap { color: var(--warn); background: var(--warn-soft); }
+
+  .strengths { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin: 16px 0 26px; padding: 0; list-style: none; max-width: none; }
+  .strengths li { margin: 0; border: 1px solid var(--line); border-top: 3px solid var(--accent); border-radius: 8px; background: var(--surface); padding: 14px 16px; font-size: 13.5px; box-shadow: var(--shadow); }
+  .strengths b { display: block; font-size: 14.5px; margin-bottom: 4px; }
+  .strengths span { color: var(--muted); }
+
+  footer { margin-top: 30px; padding-top: 18px; border-top: 3px double var(--line-strong); color: var(--faint); font-size: 12.5px; }
+</style>
+
+<div class="frame">
+<nav class="toc" aria-label="目次">
+  <p class="toc-title">目次</p>
+  <ol>
+    <li><a href="#overview"><span class="no">00</span>全体像とデータの流れ</a></li>
+    <li><a href="#client"><span class="no">01</span>GoogleBooks クライアント</a></li>
+    <li><a href="#prefill"><span class="no">02</span>サーバーサイド反映</a></li>
+    <li><a href="#authors"><span class="no">03</span>複数著者への対応</a></li>
+    <li><a href="#testing"><span class="no">04</span>テスト戦略（WebMock）</a></li>
+    <li><a href="#qa"><span class="no">05</span>想定問答</a></li>
+  </ol>
+</nav>
+
+<main>
+<header class="doc-head">
+  <p class="doc-eyebrow">レビュー会 準備資料 · 2026-07-07</p>
+  <h1 class="serif">外部 API 連携 — 実装解説ドシエ</h1>
+  <p class="doc-sub">発展要件6「ISBN から Google Books API などを使って書籍情報を自動取得する」の実装解説。書籍登録画面に ISBN 検索を追加し、タイトル・著者・出版社・出版年をフォーム初期値へ反映する。ランタイム gem 追加ゼロ・JavaScript ゼロの構成。</p>
+  <div class="stack-row">
+    <span class="chip ver"><b>Rails 8.1.3</b></span>
+    <span class="chip">Ruby <b>3.3.11</b></span>
+    <span class="chip">HTTP <b>Net::HTTP</b>（標準ライブラリ）</span>
+    <span class="chip">API <b>Google Books v1</b>（キー不要）</span>
+    <span class="chip">テスト <b>WebMock</b>（test group のみ）</span>
+    <span class="chip"><b>JavaScript ゼロ</b>（GET フォーム）</span>
+  </div>
+  <p class="repo-line">リポジトリ: <a href="https://github.com/junhat6/book-management-system-speee" target="_blank" rel="noopener">junhat6/book-management-system-speee</a> ・ テスト: <code>rails test</code>（146 tests / 380 assertions, TDD で作成）</p>
+</header>
+
+<!-- ================================================================ -->
+<section id="overview">
+  <div class="sec-head"><span class="sec-no">00</span><h2 class="serif">全体像とデータの流れ</h2></div>
+  <p class="sec-req">発展要件 6（外部 API 連携）に対応 ・ スキーマ変更なし（既存テーブルのまま）</p>
+
+  <p class="lead">書籍登録画面に「ISBN から自動入力」フォームを追加した。ISBN を送信すると <strong>GET パラメータ <code>lookup_isbn</code> 付きで <code>books#new</code> に戻り</strong>、サーバー側で Google Books API を呼んで結果をフォーム初期値に反映する。管理者は内容を確認・修正してから登録するので、<strong>外部データがノーチェックで DB に入ることはない</strong>。</p>
+
+  <div class="er-wrap">
+  <svg viewBox="0 0 1000 240" role="img" aria-label="リクエストフロー図：ブラウザから BooksController、GoogleBooks クライアント、Google Books API への往復">
+    <style>
+      .fb { fill: var(--surface2); stroke: var(--line-strong); rx: 8; }
+      .fb-ext { fill: var(--surface); stroke: var(--faint); stroke-dasharray: 5 4; }
+      .fh { fill: var(--ink); font-size: 13.5px; font-weight: 700; }
+      .fs { fill: var(--muted); font-size: 11px; font-family: ui-monospace, Menlo, monospace; }
+      .fl { fill: var(--accent); font-size: 11px; font-weight: 600; font-family: ui-monospace, Menlo, monospace; }
+      .fl2 { fill: var(--muted); font-size: 11px; }
+      .fe { stroke: var(--accent); stroke-width: 1.8; fill: none; }
+      .fe2 { stroke: var(--faint); stroke-width: 1.6; fill: none; }
+      .fa { fill: var(--accent); }
+      .fa2 { fill: var(--faint); }
+    </style>
+
+    <!-- boxes -->
+    <rect class="fb" x="20"  y="80" width="200" height="72" rx="8"/>
+    <text class="fh" x="40" y="110">管理者のブラウザ</text>
+    <text class="fs" x="40" y="132">books/new 登録画面</text>
+
+    <rect class="fb" x="300" y="80" width="220" height="72" rx="8"/>
+    <text class="fh" x="320" y="110">BooksController#new</text>
+    <text class="fs" x="320" y="132">prefill_from_google_books</text>
+
+    <rect class="fb" x="600" y="80" width="180" height="72" rx="8"/>
+    <text class="fh" x="620" y="110">GoogleBooks</text>
+    <text class="fs" x="620" y="132">app/services</text>
+
+    <rect class="fb fb-ext" x="850" y="80" width="130" height="72" rx="8"/>
+    <text class="fh" x="866" y="110">Google Books</text>
+    <text class="fs" x="866" y="132">外部 API</text>
+
+    <!-- forward arrows (top) -->
+    <line class="fe" x1="220" y1="96" x2="292" y2="96"/><path class="fa" d="M292 96 l-8 -4 v8 z"/>
+    <text class="fl" x="224" y="86">GET ?lookup_isbn=</text>
+
+    <line class="fe" x1="520" y1="96" x2="592" y2="96"/><path class="fa" d="M592 96 l-8 -4 v8 z"/>
+    <text class="fl" x="528" y="86">lookup(isbn)</text>
+
+    <line class="fe" x1="780" y1="96" x2="842" y2="96"/><path class="fa" d="M842 96 l-8 -4 v8 z"/>
+    <text class="fl" x="782" y="86">HTTPS 5s</text>
+
+    <!-- return arrows (bottom) -->
+    <line class="fe2" x1="850" y1="140" x2="788" y2="140"/><path class="fa2" d="M788 140 l8 -4 v8 z"/>
+    <text class="fl2" x="796" y="160">JSON</text>
+
+    <line class="fe2" x1="600" y1="140" x2="528" y2="140"/><path class="fa2" d="M528 140 l8 -4 v8 z"/>
+    <text class="fl2" x="536" y="160">Volume / nil / Error</text>
+
+    <line class="fe2" x1="300" y1="140" x2="228" y2="140"/><path class="fa2" d="M228 140 l8 -4 v8 z"/>
+    <text class="fl2" x="234" y="160">初期値入りフォーム＋結果メッセージ</text>
+
+    <!-- bottom note -->
+    <text class="fl2" x="20" y="205">画面遷移は1回だけ（GET → 200 OK）。JavaScript・Ajax・Turbo Stream は使っていない。</text>
+    <text class="fl2" x="20" y="226">確認・修正して「登録する」を押した後は、従来どおりの POST /books（books#create）に合流する。</text>
+  </svg>
+  </div>
+  <div class="er-legend">
+    <span>実線＝行き（赤）</span>
+    <span>破線囲み＝アプリ外（ネットワーク越し・信頼しない境界）</span>
+  </div>
+
+  <h3>設計判断のサマリ（着手前に決めた2点＋実装中の1点）</h3>
+  <div class="tblwrap">
+    <table>
+      <thead><tr><th>論点</th><th>採用</th><th>見送った案</th><th>決め手</th></tr></thead>
+      <tbody>
+        <tr><td>取得先 API</td><td><strong>Google Books</strong></td><td>openBD / 両方フォールバック</td><td>要件の例示どおり・キー不要・実装とテストが最小</td></tr>
+        <tr><td>フォームへの反映</td><td><strong>サーバーサイド</strong>（GET パラメータ）</td><td>Stimulus + JSON fetch</td><td>JS ゼロで統合テストだけで完結。Rails の基本機能のみ（→ 02）</td></tr>
+        <tr><td>著者の受け皿</td><td><strong><code>new_author_names</code></strong>（複数対応に拡張）</td><td>著者配列を1文字列として登録</td><td>「Boswell, Foucher」という架空の1人著者を作らない（→ 03）</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>差分を見る</h3>
+  <ul class="difflist">
+    <li><a href="https://github.com/junhat6/book-management-system-speee/pull/14/files" target="_blank" rel="noopener"><span class="pr">PR #14</span>外部 API 連携を実装（feature/google-books-lookup → Files changed）<span class="arrow">↗</span></a></li>
+  </ul>
+</section>
+
+<!-- ================================================================ -->
+<section id="client">
+  <div class="sec-head"><span class="sec-no">01</span><h2 class="serif">GoogleBooks クライアント（app/services）</h2></div>
+  <p class="sec-req">新規ファイル <code>app/services/google_books.rb</code> ・ ランタイム gem 追加なし</p>
+
+  <p class="lead">外部 API との通信を <strong>1ファイルのサービスクラスに隔離</strong>した。HTTP クライアントは Ruby 標準の <code>Net::HTTP</code> で、httparty や faraday のような gem は入れていない。呼び出し側（コントローラ）から見た結果は<strong>きっかり三値</strong>：ヒット＝<code>Volume</code>、ヒットなし＝<code>nil</code>、通信・API 異常＝<code>GoogleBooks::Error</code>。</p>
+
+  <div class="layers">
+    <div class="layer">
+      <div class="lhead"><span class="lno">ヒット</span><span class="lname">Volume（値オブジェクト）</span><span class="lrole">正常系 → フォームに反映</span></div>
+      <p><code>Data.define(:title, :authors, :publisher, :published_year)</code>。API の生 JSON をコントローラに漏らさず、必要な4項目だけに整形して返す。</p>
+    </div>
+    <div class="layer-gap">「見つからない」は失敗ではない — 洋書や新刊は普通にヒットしない</div>
+    <div class="layer">
+      <div class="lhead"><span class="lno">ヒットなし</span><span class="lname">nil</span><span class="lrole">正常系 → 手入力を促す</span></div>
+      <p>API は 200 を返したが該当書籍がなかった。呼び出し側は「見つかりませんでした」と案内する。例外にしない。</p>
+    </div>
+    <div class="layer-gap">「壊れている」は別物 — タイムアウト・5xx・不正 JSON はここ</div>
+    <div class="layer">
+      <div class="lhead"><span class="lno">異常</span><span class="lname">GoogleBooks::Error</span><span class="lrole">異常系 → rescue して案内</span></div>
+      <p>ネットワーク断・タイムアウト・HTTP エラー・JSON 破損をすべてこの1例外に集約。呼び出し側は rescue 1個で済む。</p>
+    </div>
+  </div>
+
+  <div class="codebox">
+    <div class="path"><span>app/services/google_books.rb（公開 API 部分）</span><span class="lang">ruby</span></div>
+    <pre><code class="ruby">class GoogleBooks
+  Error = Class.new(StandardError)
+  Volume = Data.define(:title, :authors, :publisher, :published_year)
+
+  API_URL = "https://www.googleapis.com/books/v1/volumes".freeze
+  TIMEOUT_SECONDS = 5
+
+  class << self
+    def lookup(isbn)
+      normalized = normalize(isbn)
+      return nil if normalized.empty?
+
+      parse(request(normalized))
+    end
+
+    # ハイフン・空白の揺れを吸収する（"978-4-..." と "9784..." を同一視するため）
+    def normalize(isbn)
+      isbn.to_s.gsub(/[\s-]/, "")
+    end</code></pre>
+  </div>
+
+  <div class="codebox">
+    <div class="path"><span>app/services/google_books.rb（HTTP と解析：private）</span><span class="lang">ruby</span></div>
+    <pre><code class="ruby">def request(isbn)
+  uri = URI(API_URL)
+  uri.query = URI.encode_www_form(q: "isbn:#{isbn}")
+
+  response = Net::HTTP.start(uri.host, uri.port, use_ssl: true,
+                             open_timeout: TIMEOUT_SECONDS, read_timeout: TIMEOUT_SECONDS) do |http|
+    http.get(uri.request_uri)
+  end
+  raise Error, "Google Books API がエラーを返しました（HTTP #{response.code}）" unless response.is_a?(Net::HTTPSuccess)
+
+  JSON.parse(response.body)
+rescue Timeout::Error, SystemCallError, SocketError, IOError, OpenSSL::SSL::SSLError => e
+  raise Error, "Google Books API に接続できませんでした: #{e.message}"
+rescue JSON::ParserError => e
+  raise Error, "Google Books API の応答を解析できませんでした: #{e.message}"
+end
+
+def parse(json)
+  info = json.dig("items", 0, "volumeInfo")
+  return nil if info.nil? || info["title"].blank?
+
+  Volume.new(
+    title: info["title"],
+    authors: Array(info["authors"]),
+    publisher: info["publisher"],
+    # "2012-06" や "1914" のような形式差があるため、先頭の4桁だけを年として使う
+    published_year: info["publishedDate"]&.slice(/\d{4}/)&.to_i
+  )
+end</code></pre>
+  </div>
+
+  <h3>活用した Rails / Ruby の機能</h3>
+  <ul class="feats">
+    <li><div class="fname"><code>Net::HTTP</code>（標準ライブラリ）</div><div class="fdesc">gem 追加なしで HTTPS + タイムアウト設定まで完結。依存が増えない＝アップデートで壊れる場所が増えない。</div></li>
+    <li><div class="fname"><code>Data.define</code><span class="vtag">Ruby 3.2+</span></div><div class="fdesc">イミュータブルな値オブジェクト。Struct と違い後から書き換えられないので「API の取得結果」の性質に合う。</div></li>
+    <li><div class="fname"><code>Hash#dig</code></div><div class="fdesc"><code>json.dig("items", 0, "volumeInfo")</code>。深いネストの途中が欠けていても例外にならず nil が返る。</div></li>
+    <li><div class="fname">Zeitwerk オートロード</div><div class="fdesc"><code>app/</code> 直下に置いたディレクトリは自動でオートロード対象になる。<code>app/services</code> の追加に設定変更は不要。</div></li>
+  </ul>
+
+  <div class="why">
+    <div class="cap">なぜこの設計か</div>
+    <p><strong>三値を区別する理由</strong>：「見つからない」（nil）はユーザーの入力次第で普通に起こる正常系、「壊れている」（Error）はこちらの都合と無関係に起こる異常系。これを1つに潰すと、API 障害のときにも「見つかりませんでした」と<em>嘘の案内</em>をしてしまい、ユーザーは正しい ISBN を疑い始める。原因が違うものには違う出口を用意する。</p>
+    <p><strong>タイムアウト5秒</strong>：Net::HTTP の既定は open/read 各60秒。設定しないと、Google が沈黙した場合にリクエストが Puma のスレッドを最大60秒占有し、<em>外部 API の障害がアプリ全体の障害に転移する</em>。外部依存には必ず時間の上限を切る。</p>
+    <p><strong>例外の集約</strong>：ネットワーク系の例外は <code>Timeout::Error</code> / <code>SocketError</code> / <code>SystemCallError</code>…と多岐にわたる。呼び出し側にこの一覧を知らせるのは漏れのもとなので、境界（このクラス）で1つの <code>GoogleBooks::Error</code> に翻訳する。rescue 漏れ＝500 画面、を構造的に防ぐ。</p>
+    <p><strong>ISBN 正規化を公開メソッドにした理由</strong>：問い合わせと <code>@book.isbn</code> への代入の両方で同じ正規化が要る。private にすると呼び出し側が正規表現を重複実装し、いずれ2つの正規化がズレる。</p>
+  </div>
+
+  <div class="sources">
+    <div class="cap">情報源</div>
+    <ul>
+      <li><a href="https://railsguides.jp/autoloading_and_reloading_constants.html" target="_blank" rel="noopener">定数の自動読み込みと再読み込み</a> — <code>app/services</code> が設定なしでロードされる仕組み（Zeitwerk）の原典。</li>
+      <li><a href="https://docs.ruby-lang.org/ja/latest/library/net=2fhttp.html" target="_blank" rel="noopener">Ruby リファレンス: net/http</a> — タイムアウトの既定値と <code>Net::HTTP.start</code> の仕様。</li>
+      <li class="kw">検索キーワード: <code>Ruby Net::HTTP open_timeout read_timeout default</code> / <code>Ruby Data.define value object</code> / <code>Rails service object pattern</code></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================================================================ -->
+<section id="prefill">
+  <div class="sec-head"><span class="sec-no">02</span><h2 class="serif">サーバーサイド反映（books#new + GET フォーム）</h2></div>
+  <p class="sec-req">変更ファイル <code>app/controllers/books_controller.rb</code> ・ <code>app/views/books/new.html.erb</code></p>
+
+  <p class="lead">「自動取得」の実体は<strong>ただの GET フォーム</strong>。送信すると <code>lookup_isbn</code> パラメータ付きで登録画面自身に戻ってきて、<code>new</code> アクションが API を呼び、<code>@book</code> の初期値に詰めて描画する。新しいルーティングも、Stimulus コントローラも、JSON エンドポイントも作っていない。</p>
+
+  <div class="codebox">
+    <div class="path"><span>app/controllers/books_controller.rb（抜粋）</span><span class="lang">ruby</span></div>
+    <pre><code class="ruby">def new
+  @book = Book.new
+  prefill_from_google_books if params[:lookup_isbn].present?
+end
+
+private
+
+# 発展要件6: ISBN から Google Books API で書誌情報を取得し、フォーム初期値に反映する。
+# コントローラは結果の「状態」（@lookup_result）だけを決め、表示文言は view に置く。
+# 取得失敗は登録を妨げない（メッセージを出して手入力にフォールバック）
+def prefill_from_google_books
+  @book.isbn = GoogleBooks.normalize(params[:lookup_isbn])
+  volume = GoogleBooks.lookup(params[:lookup_isbn])
+
+  if volume
+    @book.title = volume.title
+    @book.publisher = volume.publisher
+    @book.published_year = volume.published_year
+    @book.new_author_names = volume.authors.join("、")
+    @lookup_result = :found
+  else
+    @lookup_result = :not_found
+  end
+rescue GoogleBooks::Error => e
+  Rails.logger.warn("Google Books lookup failed: #{e.message}")
+  @lookup_result = :error
+end</code></pre>
+  </div>
+
+  <div class="codebox">
+    <div class="path"><span>app/views/books/new.html.erb（抜粋）</span><span class="lang">erb</span></div>
+    <pre><code>&lt;%# GET フォームなので books#new に戻ってきて、lookup_isbn パラメータで API 検索が走る %&gt;
+&lt;%= form_with url: new_book_path, method: :get, class: "flex gap-2" do |form| %&gt;
+  &lt;%= form.text_field :lookup_isbn, value: params[:lookup_isbn],
+        placeholder: "例: 978-4-87311-565-8", class: "input input-bordered flex-1" %&gt;
+  &lt;%= form.submit "自動取得", class: "btn btn-secondary" %&gt;
+&lt;% end %&gt;
+
+&lt;% case @lookup_result %&gt;
+&lt;% when :found %&gt;
+  &lt;div role="alert" class="alert alert-success"&gt;
+    &lt;span&gt;書籍情報を取得しました。内容を確認・修正して登録してください。&lt;/span&gt;
+  &lt;/div&gt;
+&lt;% when :not_found %&gt;
+  &lt;div role="alert" class="alert alert-warning"&gt;
+    &lt;span&gt;この ISBN の書籍情報は見つかりませんでした。お手数ですが手入力で登録してください。&lt;/span&gt;
+  &lt;/div&gt;
+&lt;%# :error も同じ構造（alert-error「取得に失敗しました。時間をおいて再試行するか、手入力で…」） %&gt;</code></pre>
+  </div>
+
+  <h3>活用した Rails の機能</h3>
+  <ul class="feats">
+    <li><div class="fname"><code>form_with url: / method: :get</code></div><div class="fdesc">モデルに紐づかない検索フォームの定番。パラメータが <code>book[...]</code> にネストされず素の <code>lookup_isbn</code> で届く。</div></li>
+    <li><div class="fname">フォームビルダーの初期値解決</div><div class="fdesc"><code>form.text_field :title</code> は <code>@book.title</code> を初期値に使う。コントローラで詰めるだけでビュー側の変更が不要だった理由。</div></li>
+    <li><div class="fname"><code>before_action :require_admin</code></div><div class="fdesc">既存の認可がそのまま効く。<code>new</code> の中で呼ぶ設計にしたので、lookup だけ認可を掛け忘れる余地がない。</div></li>
+    <li><div class="fname"><code>Rails.logger.warn</code></div><div class="fdesc">API 障害は握り潰さずログに残す。ユーザーには優しく、運用者には正確に。</div></li>
+  </ul>
+
+  <div class="why">
+    <div class="cap">なぜサーバーサイド反映か（Stimulus + JSON 案との比較）</div>
+    <p><strong>部品が最少</strong>：Stimulus 案は「JSON エンドポイント＋Stimulus コントローラ＋fetch のエラーハンドリング＋JS 有効なシステムテスト」が必要になる。GET フォーム案は既存の <code>new</code> アクション1本で済み、<strong>通常の統合テストだけで HTML の value 属性まで検証できる</strong>。</p>
+    <p><strong>状態と文言の分離</strong>：コントローラは <code>@lookup_result</code>（:found / :not_found / :error）という状態だけを決め、ユーザー向けの文言は view が持つ。文言をコントローラに書くと、コピー修正のたびにロジック層を触ることになり、テストも文字列比較に引きずられる。</p>
+    <p><strong>そうしないとどうなるか</strong>：もし取得失敗を例外のまま上げると 500 画面で登録作業ごと中断する。もし <code>rescue => e</code> で何でも握り潰すと、コードのバグ（NoMethodError など）まで「取得に失敗しました」に化けて発見が遅れる。<code>GoogleBooks::Error</code> <em>だけ</em>を rescue しているのはそのため。</p>
+    <p><strong>新規ルーティングを作らなかった理由</strong>：<code>new</code> は既に「登録フォームを描く」責務を持つ。「初期値をどう用意するか」はその内側の変種であり、別アクションに切ると認可・レイアウト・エラーハンドリングを二重管理することになる。</p>
+  </div>
+
+  <div class="sources">
+    <div class="cap">情報源</div>
+    <ul>
+      <li><a href="https://railsguides.jp/form_helpers.html" target="_blank" rel="noopener">Action View フォームヘルパー</a> — 「検索フォームは GET で作る」という冒頭の一般原則と <code>form_with url:</code> の使い方。</li>
+      <li><a href="https://railsguides.jp/action_controller_overview.html" target="_blank" rel="noopener">Action Controller の概要</a> — params の扱いと rescue_from / rescue の設計指針。</li>
+      <li class="kw">検索キーワード: <code>Rails form_with method get search form</code> / <code>Rails rescue specific exception controller</code></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================================================================ -->
+<section id="authors">
+  <div class="sec-head"><span class="sec-no">03</span><h2 class="serif">複数著者への対応（new_author_names）</h2></div>
+  <p class="sec-req">変更ファイル <code>app/models/book.rb</code>（仮想属性のリネームと拡張）・フォーム・seeds・既存テスト追随</p>
+
+  <p class="lead">Google Books は著者を <strong><code>authors: ["Dustin Boswell", "Trevor Foucher"]</code> という配列</strong>で返す。ところが従来の仮想属性 <code>new_author_name</code> は1人分しか受け取れなかった。そこで <code>new_tag_names</code>（発展要件3）と同じ<strong>読点・カンマ区切りの複数対応</strong>へ拡張し、名前も複数形にリネームした。</p>
+
+  <div class="codebox">
+    <div class="path"><span>app/models/book.rb（仮想属性と取り込み）</span><span class="lang">ruby</span></div>
+    <pre><code class="ruby">attr_reader :new_author_names, :new_tag_names, :initial_stock_count
+before_save :attach_new_authors
+
+def new_author_names=(value)
+  @new_author_names = value.to_s.strip.presence
+end
+
+# タグと同じく読点・カンマ区切りで複数登録できるようにする
+# （Google Books API が著者を配列で返すため、複数著者を個別レコードとして扱う）
+def attach_new_authors
+  new_author_names.to_s.split(/[、,]/).map(&:strip).reject(&:blank?).uniq.each do |name|
+    author = Author.find_or_create_by!(name: name)
+    authors << author unless authors.exists?(author.id)
+  end
+end</code></pre>
+  </div>
+
+  <p>コントローラ側は <code>volume.authors.join("、")</code> で配列を1つの入力欄用の文字列に畳み、保存時に <code>attach_new_authors</code> が再び個別の <code>Author</code> レコードへ分解する。<strong>画面上は1つのテキスト欄のまま</strong>なので、手入力ユーザーの操作感は変わらない。</p>
+
+  <div class="why">
+    <div class="cap">なぜリネームまでしたか（そうしないとどうなるか）</div>
+    <p>配列を単数フィールドに <code>join</code> して流し込むだけでも「動く」。しかしその場合 <code>Author.find_or_create_by!(name: "Dustin Boswell、Trevor Foucher")</code> が走り、<strong>2人の共著者が「読点入りの名前を持つ架空の1人」として DB に入る</strong>。著者名検索（必須要件5）はこの本を「Boswell」でヒットさせられなくなり、書籍↔著者の多対多（必須要件3）も事実上壊れる。外部 API の形状と自分のデータモデルの不一致は、境界でちゃんと変換するしかない。</p>
+    <p>名前を <code>new_author_names</code>（複数形）にしたのは、単数形のまま複数を受けると<em>名前が仕様を偽る</em>ため。仮想属性は DB カラムではないのでマイグレーション不要、影響はフォーム・strong parameters・seeds・テストの呼び出し箇所のみで、すべて同一 PR 内で追随させた。</p>
+    <p>区切り文字を「、」と「,」の両対応にしたのは <code>new_tag_names</code> と同じ理由（日本語入力では読点が自然）。既存機能と同じルールに揃えることで、利用者が覚えることを増やさない。</p>
+  </div>
+
+  <div class="note">
+    <div class="cap">テストの見どころ</div>
+    <code>test/models/book_test.rb</code> に「読点・カンマ混在で3人登録できる」テストを追加（<code>"Dustin Boswell、Trevor Foucher, 村上春樹"</code> → <code>Author.count</code> が +3）。既存の5テストは属性名を追随させただけで、単一著者の挙動（strip・既存著者の再利用・重複紐付け防止）が<strong>後方互換で保たれている</strong>ことの証明として残っている。
+  </div>
+
+  <div class="sources">
+    <div class="cap">情報源</div>
+    <ul>
+      <li><a href="https://railsguides.jp/active_record_callbacks.html" target="_blank" rel="noopener">Active Record コールバック</a> — <code>before_save</code> のタイミングと、コールバックで関連を触る際の注意の原典。</li>
+      <li><a href="https://railsguides.jp/association_basics.html" target="_blank" rel="noopener">Active Record の関連付け</a> — <code>has_many :through</code> のコレクション操作（<code>authors <<</code> / <code>exists?</code>）。</li>
+      <li class="kw">検索キーワード: <code>Rails virtual attribute multiple values form</code> / <code>find_or_create_by race condition</code></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================================================================ -->
+<section id="testing">
+  <div class="sec-head"><span class="sec-no">04</span><h2 class="serif">テスト戦略 — WebMock で実ネットワークを遮断</h2></div>
+  <p class="sec-req">追加 gem <code>webmock</code>（test group のみ）・ サービス層9テスト＋コントローラ層5テスト</p>
+
+  <p class="lead">外部 API を含むテストの原則は「<strong>テストは絶対にインターネットに出ない</strong>」。WebMock の <code>disable_net_connect!</code> を test_helper に置き、スタブし忘れた HTTP リクエストは<strong>即例外</strong>になるようにした。プロンプトや注意書きではなく、仕組みでルール化している。</p>
+
+  <div class="codebox">
+    <div class="path"><span>test/test_helper.rb（追記部分）</span><span class="lang">ruby</span></div>
+    <pre><code class="ruby">require "webmock/minitest"
+# テストから実ネットワークへのアクセスを禁止する（外部 API はスタブ必須にする）。
+# localhost は Capybara/Selenium がブラウザと通信するために許可が必要
+WebMock.disable_net_connect!(allow_localhost: true)</code></pre>
+  </div>
+
+  <h3>サービス層：HTTP の失敗パターンを機械的に再現する</h3>
+  <div class="codebox">
+    <div class="path"><span>test/services/google_books_test.rb（抜粋）</span><span class="lang">ruby</span></div>
+    <pre><code class="ruby">test "API がサーバーエラーを返したら GoogleBooks::Error を投げる" do
+  stub_google_books(isbn: "9784873115658", body: "error", status: 500)
+
+  assert_raises(GoogleBooks::Error) { GoogleBooks.lookup("9784873115658") }
+end
+
+test "接続がタイムアウトしたら GoogleBooks::Error を投げる" do
+  stub_request(:get, API_URL).with(query: { q: "isbn:9784873115658" }).to_timeout
+
+  assert_raises(GoogleBooks::Error) { GoogleBooks.lookup("9784873115658") }
+end
+
+test "ハイフンや空白付きの ISBN は正規化して問い合わせる" do
+  stub = stub_google_books(isbn: "9784873115658", body: full_response_body)
+
+  volume = GoogleBooks.lookup(" 978-4-87311-565-8 ")
+
+  assert_requested stub           # ← 正規化後の URL で実際にリクエストされたか
+  assert_equal "リーダブルコード", volume.title
+end</code></pre>
+  </div>
+
+  <h3>コントローラ層：HTML の value 属性まで検証する</h3>
+  <div class="codebox">
+    <div class="path"><span>test/controllers/books_controller_test.rb（抜粋）</span><span class="lang">ruby</span></div>
+    <pre><code class="ruby">test "ISBN 検索がヒットすると登録フォームに書誌情報が反映される" do
+  sign_in_as users(:one)
+  stub_google_books_hit("9784873115658")
+
+  get new_book_url(lookup_isbn: "978-4-87311-565-8")
+
+  assert_response :success
+  assert_select "input[name='book[isbn]'][value='9784873115658']"
+  assert_select "input[name='book[title]'][value='リーダブルコード']"
+  assert_select "input[name='book[publisher]'][value='オライリージャパン']"
+  assert_select "input[name='book[published_year]'][value='2012']"
+  assert_select "input[name='book[new_author_names]'][value='Dustin Boswell、Trevor Foucher']"
+  assert_match "書籍情報を取得しました", response.body
+end</code></pre>
+  </div>
+
+  <h3>テストの全体マップ</h3>
+  <div class="tblwrap">
+    <table>
+      <thead><tr><th>層</th><th>件数</th><th>何を保証するか</th></tr></thead>
+      <tbody>
+        <tr><td>サービス（<code>google_books_test.rb</code>）</td><td>9</td><td>ヒット／正規化／日付形式差（"2012-06" と "1914"）／任意項目の欠損／ヒットなし／空 ISBN は問い合わせない／500／タイムアウト／壊れた JSON</td></tr>
+        <tr><td>コントローラ（<code>books_controller_test.rb</code> 追加分）</td><td>5</td><td>検索フォームの存在／フォームへの反映（value 属性）／ヒットなしメッセージ＋ISBN 保持／障害時フォールバック／<code>lookup_isbn</code> なしでは API を呼ばない</td></tr>
+        <tr><td>モデル（<code>book_test.rb</code>）</td><td>6</td><td>複数著者の分割登録（新規1件）＋単一著者の後方互換（既存5件を属性名だけ追随）</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="why">
+    <div class="cap">なぜこの構成か</div>
+    <p><strong>スタブは HTTP 層に置く</strong>：<code>GoogleBooks.lookup</code> をメソッドごとモック化する手もあるが、それだと URL の組み立て・タイムアウト・JSON 解析という「本当に壊れやすい部分」が一度も実行されない。WebMock は Net::HTTP のソケット層で横取りするので、<strong>自分のコードは1行残らず本物が動く</strong>。</p>
+    <p><strong><code>disable_net_connect!</code> がないとどうなるか</strong>：スタブし忘れたテストが本物の Google に届き、「手元では通るが CI では落ちる」「Google のレート制限でランダムに落ちる」flaky テストが生まれる。実際、手動検証では本物の API が 429 を返した（→ 05 Q1）。テストがネットワーク非依存であることの価値をその場で実感することになった。</p>
+    <p><strong>TDD の Red 確認</strong>：CLAUDE.md のルールどおり、サービス9件は「<code>uninitialized constant GoogleBooks</code>」、コントローラ・モデル分は「<code>undefined method 'new_author_names='</code>」と、<em>意図した理由で</em>失敗することを実装前に目視確認している。実装がなくても通るテスト（偽陽性）を仕込んでいない証拠になる。</p>
+  </div>
+
+  <div class="sources">
+    <div class="cap">情報源</div>
+    <ul>
+      <li><a href="https://railsguides.jp/testing.html" target="_blank" rel="noopener">Rails テスティングガイド</a> — 統合テストでの <code>assert_select</code> と fixtures の使い方の原典。</li>
+      <li><a href="https://github.com/bblimke/webmock" target="_blank" rel="noopener">WebMock README</a> — <code>disable_net_connect!</code> / <code>to_timeout</code> / <code>assert_requested</code> の正確な仕様。</li>
+      <li class="kw">検索キーワード: <code>WebMock disable_net_connect allow_localhost</code> / <code>Rails minitest stub external API</code> / <code>assert_select input value attribute</code></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================================================================ -->
+<section id="qa">
+  <div class="sec-head"><span class="sec-no">05</span><h2 class="serif">想定問答 — 強みと、正直な弱点</h2></div>
+  <p class="sec-req">レビュー会で聞かれそうな質問と回答の準備。<span class="verdict ok" style="position:static">強み</span>は胸を張って、<span class="verdict gap" style="position:static">未実装</span>は正直に + 「やるならこうする」をセットで</p>
+
+  <h3>まず押さえる3つの強み</h3>
+  <ul class="strengths">
+    <li><b>三値の戻り値設計</b><span>「見つからない」(nil) と「壊れている」(Error) を区別し、ユーザーへの案内が原因に対して正確（→ 01）</span></li>
+    <li><b>実ネットワーク遮断のテスト</b><span>disable_net_connect! でスタブ必須を仕組み化。500・タイムアウト・壊れた JSON まで機械的に再現（→ 04）</span></li>
+    <li><b>依存ゼロ・JS ゼロ</b><span>ランタイム gem 追加なし（Net::HTTP）・Stimulus なし（GET フォーム）。部品が少ないほど壊れる場所も少ない（→ 01, 02）</span></li>
+  </ul>
+
+  <h3>想定問答（クリックで回答を開く）</h3>
+
+  <details class="qa">
+    <summary><span class="q">Q1</span>Google Books API が落ちていたら登録作業はどうなりますか？</summary>
+    <div class="a">
+      <p><span class="verdict ok">強み</span>登録は止まりません。<code>GoogleBooks::Error</code> をコントローラで rescue して「取得に失敗しました。時間をおいて再試行するか、手入力で登録してください」と案内し、入力済みの ISBN はフォームに保持されます。実は手動検証の最中に本物の API が HTTP 429（レート制限）を返す場面に遭遇し、このフォールバックが設計どおり動くことを<strong>実機で確認済み</strong>です。外部 API は「いつでも落ちるもの」として設計しました。</p>
+    </div>
+  </details>
+
+  <details class="qa">
+    <summary><span class="q">Q2</span>レート制限（429）に恒常的に当たるようになったら？</summary>
+    <div class="a">
+      <p><span class="verdict gap">未実装</span>キャッシュ・API キー・リトライは未実装です。現状は毎回素の匿名リクエストを投げるため、Google の IP 単位クォータに依存しています。<strong>やるなら</strong>：① <code>Rails.cache.fetch(["google_books", isbn], expires_in: 1.week)</code> で同一 ISBN の再問い合わせを止める（書誌情報はほぼ不変なのでキャッシュ向き。Solid Cache が導入済みなので追加部品も不要）、② Google Cloud Console で API キーを発行し credentials で管理、③ 429 のときだけ指数バックオフで1回リトライ。この順で効果が大きいです。</p>
+    </div>
+  </details>
+
+  <details class="qa">
+    <summary><span class="q">Q3</span>なぜ Stimulus で画面遷移なしに反映しなかったのですか？</summary>
+    <div class="a">
+      <p><span class="verdict ok">説明できる選択</span>着手前に「Stimulus + JSON エンドポイント」案と比較して決めました。サーバーサイド案は JSON API・Stimulus コントローラ・fetch のエラー処理・JS 有効なシステムテストが全部不要になり、<strong>通常の統合テストで HTML の value 属性まで検証できる</strong>のが決め手です。登録前の新規フォームなので「再描画で入力が消える」デメリットも実質ありません。UX 要求が上がったら、<code>new</code> の検索処理を JSON でも返すようにして Stimulus を足す移行パスも見えています。</p>
+    </div>
+  </details>
+
+  <details class="qa">
+    <summary><span class="q">Q4</span>編集画面でも ISBN から再取得できますか？</summary>
+    <div class="a">
+      <p><span class="verdict gap">未実装</span>登録（new）画面だけです。編集は「既に人間が確認したデータ」を外部データで上書きする操作になるため、意図しない上書き事故を避けて対象外にしました。<strong>やるなら</strong>：検索フォームと結果メッセージをパーシャルに切り出して edit にも置き、<code>edit</code> アクションに同じ <code>prefill_from_google_books</code> を通します。ただし「どの項目を上書きするか」のチェックボックスを付けるなど、上書きの合意を取る UI が先だと考えています。</p>
+    </div>
+  </details>
+
+  <details class="qa">
+    <summary><span class="q">Q5</span>同じ ISBN で複数の候補が返ってきたらどうなりますか？</summary>
+    <div class="a">
+      <p><span class="verdict gap">割り切り</span><code>items[0]</code>（先頭の1件）だけを使います。ISBN は理論上1冊を特定するコードなので複数候補は例外的ですが、Google Books は版違いなどで複数返すことがあります。<strong>やるなら</strong>：<code>parse</code> を複数 Volume 返却に変え、候補をラジオボタンで一覧表示して管理者に選ばせます。今回は「自動取得後に人間が確認・修正してから保存する」フローなので、先頭1件＋手修正で実用上足りると判断しました。</p>
+    </div>
+  </details>
+
+  <details class="qa">
+    <summary><span class="q">Q6</span>表紙画像や書籍説明は取得しないのですか？</summary>
+    <div class="a">
+      <p><span class="verdict gap">未実装</span>Google Books のレスポンスには <code>imageLinks</code>（書影 URL）や <code>description</code> もありますが、books テーブルに対応カラムがないため取得対象外にしました。要件の書籍属性（タイトル・ISBN・出版年・出版社・著者）に合わせています。<strong>やるなら</strong>：<code>Volume</code> に項目を足し、書影は URL をそのまま保存するか（手軽・ただし外部リンク切れリスク）、Active Storage でダウンロード保存するか（堅牢・ストレージ費用）の選択から入ります。</p>
+    </div>
+  </details>
+
+  <details class="qa">
+    <summary><span class="q">Q7</span>API 呼び出し中、ユーザーの画面は固まりませんか？</summary>
+    <div class="a">
+      <p><span class="verdict ok">説明できる選択</span>同期呼び出しですが、open/read 各5秒のタイムアウトを設定してあり、最悪でも約10秒で必ず応答が返ります（通常は1秒未満）。限界も把握しています：待っている間は Puma のスレッドを1本占有するので、利用者が多いサービスなら Turbo Frame の遅延読み込みや Active Job 化で非同期にすべきです。今回は「管理者だけが使う登録補助機能」で同時実行がほぼないため、複雑さを増やさない同期型を選びました。</p>
+    </div>
+  </details>
+
+  <details class="qa">
+    <summary><span class="q">Q8</span>ISBN 自体の形式チェック（桁数・チェックディジット）はありますか？</summary>
+    <div class="a">
+      <p><span class="verdict gap">改善余地</span>ハイフン・空白の正規化のみで、「13桁か」「チェックディジットが正しいか」の検証はありません。誤った ISBN は「見つかりませんでした」という API の結果として間接的に伝わるだけです。<strong>やるなら</strong>：<code>Book</code> に <code>validates :isbn, format: { with: /\A\d{10}(\d{3})?\z/ }</code> を足し、さらにチェックディジット計算をカスタムバリデータにします。既存データに旧形式（ハイフン付き）が残っているため、正規化の一括マイグレーションとセットで入れる必要がある、というところまで見えています。</p>
+    </div>
+  </details>
+</section>
+
+<footer>
+  <p>外部 API 連携 実装解説ドシエ ・ 生成 2026-07-07 ・ ソース: <a href="https://github.com/junhat6/book-management-system-speee/pull/14" target="_blank" rel="noopener">junhat6/book-management-system-speee PR #14</a>（feature/google-books-lookup）</p>
+</footer>
+</main>
+</div>
+
+<script>
+(function () {
+  // --- Ruby ミニハイライタ（文字列→コメント→シンボル/ハッシュキー→キーワード→DSL→定数→数値の順で1パス走査）
+  var esc = function (s) {
+    return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  };
+  var re = /("(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*')|(#[^\n]*)|(:[A-Za-z_][A-Za-z0-9_]*[?!]?|\b[A-Za-z_][A-Za-z0-9_]*:(?=\s))|\b(class|module|def|end|do|if|unless|else|elsif|then|return|raise|private|extend|include|self|true|false|nil|case|when|rescue|begin)\b|\b(validates|validate|has_many|has_one|belongs_to|has_secure_password|normalizes|scope|before_save|before_action|skip_before_action|helper_method|rescue_from|allow_unauthenticated_access|rate_limit|add_index|create_table|resources|resource|root|get|mount|attr_reader|delegate|redirect_to|render|assert_equal|assert_select|assert_match|assert_raises|assert_requested|assert_response|assert_nil|stub_request|sign_in_as|test)\b|\b([A-Z][A-Za-z0-9_]*(?:::[A-Z][A-Za-z0-9_]*)*)\b|\b(\d+(?:\.\d+)?)\b/g;
+  var cls = ["tok-s", "tok-c", "tok-y", "tok-k", "tok-d", "tok-t", "tok-n"];
+  document.querySelectorAll("pre > code.ruby").forEach(function (block) {
+    var src = block.textContent;
+    var out = "";
+    var last = 0;
+    var m;
+    re.lastIndex = 0;
+    while ((m = re.exec(src)) !== null) {
+      out += esc(src.slice(last, m.index));
+      var i;
+      for (i = 1; i <= 7; i++) { if (m[i] !== undefined) break; }
+      out += '<span class="' + cls[i - 1] + '">' + esc(m[0]) + "</span>";
+      last = m.index + m[0].length;
+    }
+    out += esc(src.slice(last));
+    block.innerHTML = out;
+  });
+
+  // --- 目次スクロールスパイ
+  var links = Array.prototype.slice.call(document.querySelectorAll(".toc a"));
+  var map = {};
+  links.forEach(function (a) { map[a.getAttribute("href").slice(1)] = a; });
+  if ("IntersectionObserver" in window) {
+    var current = null;
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) {
+          if (current) current.classList.remove("now");
+          current = map[e.target.id];
+          if (current) current.classList.add("now");
+        }
+      });
+    }, { rootMargin: "-15% 0px -70% 0px" });
+    document.querySelectorAll("main section[id]").forEach(function (s) { io.observe(s); });
+  }
+})();
+</script>
+
+</body></html>

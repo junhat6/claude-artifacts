@@ -1,0 +1,673 @@
+<!doctype html><html><head><!-- frame-runtime --><script>window.__FRAME_PREAMBLE={"capabilities":{"mcp":"mcp.BQqQVVN_.js"},"transforms":"_transforms.DYk1Ltlh.js"}</script><script>(function(){"use strict";const X="modulepreload",Y=function(e){return"/"+e},Z={},U=function(t,n,u){let o=Promise.resolve();function i(f){const a=new Event("vite:preloadError",{cancelable:!0});if(a.payload=f,window.dispatchEvent(a),!a.defaultPrevented)throw f}return o.then(f=>{for(const a of f||[])a.status==="rejected"&&i(a.reason);return t().catch(i)})},D=["light","dark","system"];function $(e){if(e==null||typeof e!="object")return!1;const t=e.__frame_init;return t!=null&&typeof t=="object"}function q(e){if(e==null||typeof e!="object")return!1;const t=e.__frame_theme;if(t==null||typeof t!="object")return!1;const n=t.theme;return typeof n=="string"&&D.includes(n)}function M(e){if(window===top||e.type==="auxclick"&&e.button!==1)return;const t=e.composedPath?e.composedPath():[e.target];let n=null;for(let f=0;f<t.length;f++){const a=t[f];if(a&&a.matches&&a.matches("a[href],area[href]")){n=a;break}}if(!n&&e.target&&e.target.closest&&(n=e.target.closest("a[href],area[href]")),!n)return;const u=n.getAttribute("href");if(!u)return;let o,i;try{o=new URL(u,document.baseURI),i=new URL(document.baseURI).origin}catch{return}(o.protocol==="http:"||o.protocol==="https:")&&o.origin!==i&&(e.preventDefault(),parent.postMessage({__frame_nav:!0,url:o.href},"*"))}const L={};function y(e){if(window===top)return;const t=Date.now();t-(L[e]||0)<500||(L[e]=t,parent.postMessage({__frame_engaged:!0,kind:e},"*"))}const F=2e3,T=["wheel","touchstart","touchmove","keydown","pointerdown"];let k=0;function B(e){e.isTrusted&&(k=Date.now())}function z(){addEventListener("click",M,!0),addEventListener("auxclick",M,!0)}function W(){for(let e=0;e<T.length;e++)addEventListener(T[e],B,{capture:!0,passive:!0});addEventListener("scroll",e=>{e.isTrusted&&Date.now()-k<F&&y("scroll")},{capture:!0,passive:!0}),addEventListener("pointermove",e=>{e.isTrusted&&y("pointer")},{capture:!0,passive:!0}),addEventListener("click",e=>{e.isTrusted&&y("click")},{capture:!0,passive:!0})}function x(e,t,n){const u=[...t.values()].filter(o=>o.targets.some(i=>i.startsWith(e+".")));return{wrap(o,i){const f=`${e}.${o}`,a=u.filter(s=>s.targets.includes(f));return a.length===0?(...s)=>{try{return i(...s)}catch(d){return Promise.reject(d)}}:(...s)=>{let d=s;for(const c of a){const l=c.module.parameters;if(l)try{d=l(d)}catch{return Promise.reject({code:"transform_error",id:c.id,scope:e,message:"parameters transform failed"})}}let m;try{m=i(...d)}catch(c){m=Promise.reject(c)}return m.then(c=>{for(let l=a.length-1;l>=0;l--){const h=a[l],p=h.module.returns;if(p)try{c=p(c)}catch{return n({id:h.id,scope:e,leg:"returns"}),c}}return c},c=>{for(let l=a.length-1;l>=0;l--){const h=a[l],p=h.module.throws;if(p)try{c=p(c)}catch{return n({id:h.id,scope:e,leg:"throws"}),Promise.reject(c)}}return Promise.reject(c)})}}}}function H(e,t,n,u=()=>{}){const o=new Set(e.changes??[]),i=new Map;for(const f of o){const a=t[f];a&&i.set(f,a)}return{contract:e.contract,changes:o,flags:new Set(e.flags??[]),capabilities:e.capabilities??{},transforms:i,shellOrigin:n.shellOrigin,mount:n.mount,pipe:f=>x(f,i,u)}}(function(){const e=Object.defineProperty,t=globalThis,n=["RTCPeerConnection","webkitRTCPeerConnection","RTCDataChannel","RTCIceCandidate","RTCSessionDescription","RTCRtpSender","RTCRtpReceiver"];let u=0;for(let o=0;o<n.length;o++){const i=n[o];try{e(t,i,{value:void 0,writable:!1,configurable:!1})}catch{try{delete t[i]}catch{}try{e(t,i,{value:void 0,writable:!1,configurable:!0})}catch{}}typeof t[i]=="function"&&u++}if(u&&window!==top)try{parent.postMessage({__frame_rtc_lockdown_failed:u},"*")}catch{}})();const K=1e4,G=Object.freeze([...window.__FRAME_PREAMBLE?.origins??["https://claude.ai","https://preview.claude.ai"]]);function J(e){for(const t of G)if(t.endsWith(":*"))try{const n=new URL(e);if(`${n.protocol}//${n.hostname}:*`===t)return!0}catch{}else if(e===t)return!0;return!1}const w=Object.freeze({...window.__FRAME_PREAMBLE?.capabilities??{}}),E=window.__FRAME_PREAMBLE?.transforms,C=/^[\w.-]+\.js$/,V=/^[a-z][a-z0-9_-]{0,63}$/;let A=null,g=null;function P(e,t,n){try{Object.defineProperty(e,t,{value:n,writable:!1,configurable:!1,enumerable:!0})}catch{try{Object.defineProperty(e,t,{value:n,writable:!1,configurable:!0,enumerable:!0})}catch{}}}let R=!1;function N(e){const t=document.documentElement;e==="light"||e==="dark"?(t.dataset.theme=e,t.style.colorScheme=e,R=!0):R&&(delete t.dataset.theme,t.style.colorScheme="",R=!1)}const _=new Map;function Q(e,t){const n=_.get(e);if(!n)return;Object.assign(n.impl,t),n.impl.__settled=()=>Promise.reject({code:"capability_removed",message:`${e}: method not in this runtime`});const u=n.queue;n.queue=[];for(const o of u){const i=t[o.method];i?i(...o.args).then(o.resolve,o.reject):o.reject({code:"capability_removed",message:`${e}.${o.method} is not in this runtime`})}}function O(e,t){const n=_.get(e);if(!n)return;n.impl.__settled=()=>Promise.reject(t);const u=n.queue;n.queue=[];for(const o of u)o.reject(t)}const j=Object.getOwnPropertyDescriptor(window,"claude");if(window!==top&&!(j&&j.writable===!1)){z(),W();const e=j?.value??{};P(window,"claude",e);const t=s=>{const d={impl:Object.create(null),queue:[]};_.set(s,d);const m=new Proxy(d.impl,{get:(c,l)=>{if(typeof l=="string"&&!(l==="then"||l==="toJSON"||l==="valueOf"))return l==="toString"?Object.prototype.toString:(...h)=>{const p=c[l]??c.__settled;return p?p(...h):new Promise((b,S)=>{d.queue.push({method:l,args:h,resolve:b,reject:S})})}},set:()=>!1});P(e,s,m)};for(const s of Object.keys(w)){if(e[s]!==void 0){P(e,s,e[s]);continue}t(s)}let n=null,u=null,o=0;const i=s=>{s.source!==parent||!J(s.origin)||$(s.data)&&(n=s.data.__frame_init,g=s.origin,removeEventListener("message",i),clearTimeout(o),u?.())};addEventListener("message",i),parent.postMessage({__frame_connect:!0},"*");const f=new Promise(s=>{u=s,o=setTimeout(()=>{removeEventListener("message",i),s()},K)}),a=document.readyState==="loading"?new Promise(s=>document.addEventListener("DOMContentLoaded",()=>s(),{once:!0})):Promise.resolve();f.then(async()=>{if(!n||!g){for(const r of _.keys())O(r,{code:"not_granted",message:"frame initialization did not arrive - capability unavailable"});return}N(n.theme);const s=g;addEventListener("message",r=>{r.source!==parent||r.origin!==s||q(r.data)&&N(r.data.__frame_theme.theme)});const d=r=>U(()=>import("/_runtime/"+r),void 0),m=Object.keys(n.capabilities??{});for(const r of m)Object.hasOwn(w,r)||V.test(r)&&e[r]===void 0&&(t(r),O(r,{code:"capability_disabled",message:"capability not in this runtime generation"}));const c=m.filter(r=>Object.hasOwn(w,r)).map(r=>[r,w[r]]).filter(r=>typeof r[1]=="string"&&C.test(r[1])),[l,...h]=await Promise.allSettled([E&&C.test(E)?d(E):Promise.resolve({}),...c.map(([,r])=>d(r))]),p=g;A=H(n,l.status==="fulfilled"&&l.value?.TRANSFORMS||{},{shellOrigin:p,mount:Q},r=>parent.postMessage({__frame_cap_telemetry:r},p));const b=r=>parent.postMessage({__frame_cap_telemetry:{kind:"cap-load-error",cap:r}},p),S=A;h.forEach((r,v)=>{const I=c[v][0];if(r.status!=="fulfilled"){b(I);return}try{r.value?.install?.(S)}catch{b(I)}});for(const[r,v]of _)v.queue.length===0&&Object.keys(v.impl).length>0||O(r,{code:m.includes(r)?"capability_disabled":"not_granted",message:"capability not available in this session"});await a,parent.postMessage({__frame_ready:!0},g)})}})();</script><!-- /frame-runtime --><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}</style></head><body>
+<title>ユーザー権限 実装解説 — レビュー会準備</title>
+<style>
+  :root {
+    --bg: #FBFAF8;
+    --surface: #FFFFFF;
+    --surface2: #F4F1EC;
+    --ink: #26201D;
+    --muted: #6F655E;
+    --faint: #9C918A;
+    --accent: #A31631;
+    --accent-ink: #FFFFFF;
+    --accent-soft: #F7E8EA;
+    --line: #E5DFD8;
+    --line-strong: #CFC7BE;
+    --good: #2E6E4E;
+    --good-soft: #E5F0E9;
+    --warn: #8A5A12;
+    --warn-soft: #F7EEDD;
+    --code-bg: #221D1B;
+    --code-ink: #E9E3DC;
+    --code-line: #37302C;
+    --code-cmt: #837770;
+    --code-str: #A9C98F;
+    --code-sym: #D9A15F;
+    --code-kw: #E4728B;
+    --code-dsl: #85B7D6;
+    --code-const: #E0C185;
+    --code-num: #C79ED2;
+    --shadow: 0 1px 2px rgba(38,32,29,.05), 0 4px 16px rgba(38,32,29,.05);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #17130F;
+      --surface: #201B17;
+      --surface2: #282221;
+      --ink: #EDE7E0;
+      --muted: #A99E96;
+      --faint: #7E746D;
+      --accent: #E36A80;
+      --accent-ink: #2A0A12;
+      --accent-soft: #3A2226;
+      --line: #372F2A;
+      --line-strong: #4A413B;
+      --good: #7FC49E;
+      --good-soft: #22322A;
+      --warn: #DFAE5E;
+      --warn-soft: #362C1B;
+      --code-bg: #14100E;
+      --code-line: #2E2723;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 4px 16px rgba(0,0,0,.25);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #17130F;
+    --surface: #201B17;
+    --surface2: #282221;
+    --ink: #EDE7E0;
+    --muted: #A99E96;
+    --faint: #7E746D;
+    --accent: #E36A80;
+    --accent-ink: #2A0A12;
+    --accent-soft: #3A2226;
+    --line: #372F2A;
+    --line-strong: #4A413B;
+    --good: #7FC49E;
+    --good-soft: #22322A;
+    --warn: #DFAE5E;
+    --warn-soft: #362C1B;
+    --code-bg: #14100E;
+    --code-line: #2E2723;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 4px 16px rgba(0,0,0,.25);
+  }
+  :root[data-theme="light"] {
+    --bg: #FBFAF8;
+    --surface: #FFFFFF;
+    --surface2: #F4F1EC;
+    --ink: #26201D;
+    --muted: #6F655E;
+    --faint: #9C918A;
+    --accent: #A31631;
+    --accent-ink: #FFFFFF;
+    --accent-soft: #F7E8EA;
+    --line: #E5DFD8;
+    --line-strong: #CFC7BE;
+    --good: #2E6E4E;
+    --good-soft: #E5F0E9;
+    --warn: #8A5A12;
+    --warn-soft: #F7EEDD;
+    --code-bg: #221D1B;
+    --code-ink: #E9E3DC;
+    --code-line: #37302C;
+    --code-cmt: #837770;
+    --code-str: #A9C98F;
+    --code-sym: #D9A15F;
+    --code-kw: #E4728B;
+    --code-dsl: #85B7D6;
+    --code-const: #E0C185;
+    --code-num: #C79ED2;
+    --shadow: 0 1px 2px rgba(38,32,29,.05), 0 4px 16px rgba(38,32,29,.05);
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 24px; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", "Noto Sans JP", sans-serif;
+    font-size: 15px;
+    line-height: 1.85;
+    -webkit-font-smoothing: antialiased;
+  }
+  .serif { font-family: "Hiragino Mincho ProN", "Yu Mincho", "Noto Serif JP", serif; }
+  code, pre, .mono {
+    font-family: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+  }
+
+  .frame { display: grid; grid-template-columns: 232px minmax(0, 1fr); max-width: 1180px; margin: 0 auto; gap: 40px; padding: 0 28px; }
+  @media (max-width: 940px) { .frame { grid-template-columns: minmax(0, 1fr); gap: 0; padding: 0 18px; } }
+
+  /* ---- sidebar ---- */
+  .toc { position: sticky; top: 0; align-self: start; height: 100vh; overflow-y: auto; padding: 36px 0 24px; }
+  .toc-title { font-size: 11px; letter-spacing: .18em; color: var(--faint); text-transform: uppercase; margin: 0 0 14px 2px; }
+  .toc ol { list-style: none; margin: 0; padding: 0; border-left: 1px solid var(--line); }
+  .toc a {
+    display: flex; gap: 9px; align-items: baseline;
+    padding: 6px 10px 6px 14px; margin-left: -1px;
+    color: var(--muted); text-decoration: none; font-size: 13px; line-height: 1.5;
+    border-left: 2px solid transparent;
+  }
+  .toc a .no { font-size: 11px; color: var(--faint); font-variant-numeric: tabular-nums; }
+  .toc a:hover { color: var(--ink); }
+  .toc a.now { color: var(--accent); border-left-color: var(--accent); font-weight: 600; }
+  .toc a.now .no { color: var(--accent); }
+  .toc a:focus-visible, a:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+  @media (max-width: 940px) { .toc { display: none; } }
+
+  main { padding: 44px 0 90px; min-width: 0; }
+
+  /* ---- header ---- */
+  .doc-head { border-bottom: 3px double var(--line-strong); padding-bottom: 26px; margin-bottom: 14px; }
+  .doc-eyebrow { display: flex; align-items: center; gap: 10px; font-size: 12px; letter-spacing: .14em; color: var(--accent); font-weight: 600; }
+  .doc-eyebrow::before { content: ""; width: 26px; height: 1px; background: var(--accent); }
+  h1 { font-size: clamp(26px, 4.5vw, 38px); line-height: 1.35; margin: 10px 0 8px; font-weight: 600; letter-spacing: .02em; text-wrap: balance; }
+  .doc-sub { color: var(--muted); font-size: 14px; margin: 0 0 18px; max-width: 46em; }
+  .stack-row { display: flex; flex-wrap: wrap; gap: 7px; }
+  .chip {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 12px; line-height: 1; padding: 6px 10px;
+    border: 1px solid var(--line); border-radius: 999px;
+    background: var(--surface); color: var(--muted); white-space: nowrap;
+  }
+  .chip b { color: var(--ink); font-weight: 600; }
+  .chip.ver { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
+  .repo-line { margin-top: 16px; font-size: 13px; color: var(--muted); }
+  .repo-line a { color: var(--accent); }
+
+  /* ---- sections ---- */
+  section { padding: 40px 0 8px; border-bottom: 1px solid var(--line); }
+  section:last-of-type { border-bottom: none; }
+  .sec-head { display: flex; align-items: baseline; gap: 14px; margin-bottom: 6px; }
+  .sec-no {
+    font-size: 12px; font-weight: 700; letter-spacing: .1em;
+    color: var(--accent); border: 1px solid var(--accent);
+    padding: 3px 8px; border-radius: 3px; font-variant-numeric: tabular-nums;
+    white-space: nowrap; align-self: center;
+  }
+  h2 { font-size: 23px; margin: 0; font-weight: 600; letter-spacing: .02em; line-height: 1.4; text-wrap: balance; }
+  .sec-req { font-size: 12px; color: var(--faint); margin: 0 0 18px 0; }
+  h3 { font-size: 15px; margin: 30px 0 10px; letter-spacing: .06em; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+  h3::before { content: ""; width: 8px; height: 8px; background: var(--accent); border-radius: 1px; flex: none; }
+  p { margin: 0 0 14px; max-width: 44em; }
+  section > p:first-of-type, .lead { font-size: 15.5px; }
+  li { margin-bottom: 6px; }
+  ul, ol { padding-left: 1.4em; margin: 0 0 14px; max-width: 44em; }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  strong { font-weight: 700; }
+  .small { font-size: 13px; color: var(--muted); }
+
+  /* inline code */
+  p code, li code, td code, .qa code, h2 code, dd code {
+    background: var(--surface2); border: 1px solid var(--line);
+    padding: .5px 5px; border-radius: 4px; font-size: .88em; white-space: nowrap;
+  }
+
+  /* ---- code blocks ---- */
+  .codebox { margin: 16px 0 20px; border-radius: 8px; overflow: hidden; box-shadow: var(--shadow); }
+  .codebox .path {
+    background: var(--code-bg); color: var(--code-cmt);
+    border-bottom: 1px solid var(--code-line);
+    font-size: 11.5px; padding: 8px 14px; letter-spacing: .04em;
+    display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+    font-family: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+  }
+  .codebox .path .lang { color: var(--code-sym); }
+  .codebox pre { margin: 0; background: var(--code-bg); color: var(--code-ink); padding: 14px 16px; overflow-x: auto; font-size: 12.8px; line-height: 1.75; }
+  .tok-s { color: var(--code-str); }
+  .tok-c { color: var(--code-cmt); font-style: italic; }
+  .tok-y { color: var(--code-sym); }
+  .tok-k { color: var(--code-kw); }
+  .tok-d { color: var(--code-dsl); }
+  .tok-t { color: var(--code-const); }
+  .tok-n { color: var(--code-num); }
+
+  /* ---- callouts ---- */
+  .why { border-left: 3px solid var(--accent); background: var(--accent-soft); padding: 14px 18px; border-radius: 0 8px 8px 0; margin: 16px 0 20px; max-width: 46em; }
+  .why .cap { font-size: 12px; font-weight: 700; letter-spacing: .12em; color: var(--accent); margin-bottom: 6px; }
+  .why p { margin-bottom: 8px; max-width: none; }
+  .why p:last-child { margin-bottom: 0; }
+  .note { border-left: 3px solid var(--warn); background: var(--warn-soft); padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 16px 0 20px; max-width: 46em; font-size: 13.5px; }
+  .note .cap { font-weight: 700; color: var(--warn); font-size: 12px; letter-spacing: .1em; margin-bottom: 4px; }
+
+  /* ---- rails feature list ---- */
+  .feats { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 10px; margin: 14px 0 20px; padding: 0; list-style: none; max-width: none; }
+  .feats li { margin: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 11px 13px; font-size: 13px; line-height: 1.65; }
+  .feats .fname { display: flex; align-items: center; gap: 8px; font-weight: 700; margin-bottom: 3px; flex-wrap: wrap; }
+  .feats .fname code { background: none; border: none; padding: 0; font-size: 12.5px; color: var(--accent); white-space: normal; }
+  .vtag { font-size: 10px; font-weight: 700; letter-spacing: .06em; color: var(--accent); background: var(--accent-soft); border-radius: 3px; padding: 2px 5px; white-space: nowrap; }
+  .feats .fdesc { color: var(--muted); }
+
+  /* ---- diff links ---- */
+  .difflist { list-style: none; padding: 0; margin: 12px 0 20px; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; max-width: 46em; }
+  .difflist li { margin: 0; border-bottom: 1px solid var(--line); }
+  .difflist li:last-child { border-bottom: none; }
+  .difflist a { display: flex; align-items: baseline; gap: 12px; padding: 9px 14px; text-decoration: none; color: var(--ink); font-size: 13.5px; background: var(--surface); }
+  .difflist a:hover { background: var(--surface2); }
+  .difflist .sha { font-family: ui-monospace, Menlo, monospace; font-size: 12px; color: var(--accent); white-space: nowrap; min-width: 4.6em; }
+  .difflist .pr { font-weight: 700; color: var(--accent); white-space: nowrap; min-width: 4.6em; font-size: 12.5px; }
+  .difflist .arrow { margin-left: auto; color: var(--faint); font-size: 12px; }
+
+  /* ---- sources ---- */
+  .sources { background: var(--surface2); border: 1px solid var(--line); border-radius: 8px; padding: 14px 18px; margin: 16px 0 24px; font-size: 13.5px; max-width: 46em; }
+  .sources .cap { font-size: 11.5px; font-weight: 700; letter-spacing: .14em; color: var(--faint); margin-bottom: 8px; }
+  .sources ul { list-style: none; padding: 0; margin: 0; }
+  .sources li { margin-bottom: 7px; }
+  .sources li:last-child { margin-bottom: 0; }
+  .sources .kw { color: var(--muted); }
+  .sources .kw code { white-space: normal; }
+
+  /* ---- tables ---- */
+  .tblwrap { overflow-x: auto; margin: 14px 0 20px; border: 1px solid var(--line); border-radius: 8px; }
+  table { border-collapse: collapse; width: 100%; font-size: 13.5px; background: var(--surface); }
+  th, td { text-align: left; padding: 9px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { font-size: 12px; letter-spacing: .08em; color: var(--faint); font-weight: 600; white-space: nowrap; background: var(--surface2); }
+  tr:last-child td { border-bottom: none; }
+  td .ok-mark { color: var(--good); font-weight: 700; }
+  td .ng-mark { color: var(--accent); font-weight: 700; }
+
+  /* ---- gate diagram (layers) ---- */
+  .layers { display: grid; gap: 0; margin: 18px 0 20px; max-width: 46em; }
+  .layer { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 18px; box-shadow: var(--shadow); }
+  .layer .lhead { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 4px; }
+  .layer .lno { font-size: 11px; font-weight: 700; color: var(--accent-ink); background: var(--accent); border-radius: 999px; padding: 3px 9px; letter-spacing: .08em; white-space: nowrap; }
+  .layer .lname { font-weight: 700; font-size: 14.5px; }
+  .layer .lrole { font-size: 11.5px; color: var(--faint); margin-left: auto; letter-spacing: .06em; }
+  .layer p { font-size: 13.5px; color: var(--muted); margin: 0; max-width: none; }
+  .layer p code { white-space: normal; }
+  .layer-gap { display: flex; align-items: center; gap: 10px; padding: 8px 4px 8px 22px; color: var(--faint); font-size: 12.5px; }
+  .layer-gap::before { content: "↓"; color: var(--accent); font-size: 15px; }
+
+  /* ---- Q&A ---- */
+  .qa { border: 1px solid var(--line); border-radius: 10px; background: var(--surface); margin: 0 0 14px; max-width: 48em; box-shadow: var(--shadow); }
+  .qa summary { cursor: pointer; list-style: none; padding: 14px 18px; display: flex; gap: 12px; align-items: baseline; font-weight: 600; line-height: 1.6; }
+  .qa summary::-webkit-details-marker { display: none; }
+  .qa summary .q { color: var(--accent); font-weight: 800; font-size: 13px; letter-spacing: .06em; flex: none; }
+  .qa summary::after { content: "＋"; margin-left: auto; color: var(--faint); flex: none; }
+  .qa[open] summary::after { content: "−"; }
+  .qa .a { padding: 2px 18px 16px 44px; border-top: 1px dashed var(--line); }
+  .qa .a p { font-size: 14px; margin: 10px 0 8px; }
+  .qa .verdict { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .08em; border-radius: 3px; padding: 2px 8px; margin-right: 6px; vertical-align: 1px; }
+  .qa .verdict.ok { color: var(--good); background: var(--good-soft); }
+  .qa .verdict.gap { color: var(--warn); background: var(--warn-soft); }
+
+  .strengths { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin: 16px 0 26px; padding: 0; list-style: none; max-width: none; }
+  .strengths li { margin: 0; border: 1px solid var(--line); border-top: 3px solid var(--accent); border-radius: 8px; background: var(--surface); padding: 14px 16px; font-size: 13.5px; box-shadow: var(--shadow); }
+  .strengths b { display: block; font-size: 14.5px; margin-bottom: 4px; }
+  .strengths span { color: var(--muted); }
+
+  footer { margin-top: 30px; padding-top: 18px; border-top: 3px double var(--line-strong); color: var(--faint); font-size: 12.5px; }
+</style>
+
+<div class="frame">
+<nav class="toc" aria-label="目次">
+  <p class="toc-title">目次</p>
+  <ol>
+    <li><a href="#overview"><span class="no">00</span>全体像 — 二段ゲート</a></li>
+    <li><a href="#concern"><span class="no">01</span>Authorization concern</a></li>
+    <li><a href="#controller"><span class="no">02</span>クローズ既定の適用</a></li>
+    <li><a href="#views"><span class="no">03</span>ビューの出し分け</a></li>
+    <li><a href="#tests"><span class="no">04</span>テストと画面検証</a></li>
+    <li><a href="#qa"><span class="no">05</span>想定問答</a></li>
+  </ol>
+</nav>
+
+<main>
+<header class="doc-head">
+  <p class="doc-eyebrow">レビュー会 準備資料 · 2026-07-07</p>
+  <h1 class="serif">発展要件1 ユーザー権限 — 実装解説ドシエ</h1>
+  <p class="doc-sub">「管理者は本の登録・削除ができる／一般ユーザーは貸出・返却のみ可能」を、認可 gem を使わず Rails 標準部品だけの Authorization concern として実装した。コード抜粋・設計判断・TDD の記録・curl による直叩き検証まで併記する。</p>
+  <div class="stack-row">
+    <span class="chip ver"><b>PR #10</b></span>
+    <span class="chip">Rails <b>8.1.3</b></span>
+    <span class="chip">認可 gem <b>なし</b>（自前 concern）</span>
+    <span class="chip">差分 <b>8 files</b> +109 −12</span>
+    <span class="chip">テスト <b>79 / 0 failures</b>（9件追加）</span>
+    <span class="chip">スキーマ変更 <b>なし</b>（admin カラム既存）</span>
+  </div>
+  <p class="repo-line">リポジトリ: <a href="https://github.com/junhat6/book-management-system-speee" target="_blank" rel="noopener">junhat6/book-management-system-speee</a> ・ 差分: <a href="https://github.com/junhat6/book-management-system-speee/pull/10/files" target="_blank" rel="noopener">PR #10 Files changed</a> ・ テスト: <code>rails test</code></p>
+</header>
+
+<!-- ================================================================ -->
+<section id="overview">
+  <div class="sec-head"><span class="sec-no">00</span><h2 class="serif">全体像 — 認証と認可の二段ゲート</h2></div>
+  <p class="sec-req">発展要件 1（ユーザー権限）に対応。画面遷移図の「書籍登録（管理者のみ）」「書籍編集/削除（管理者のみ）」を実装で回収</p>
+
+  <p class="lead">書き込み系アクションへのリクエストは<strong>2つの before_action ゲートを順に通過</strong>する。ゲート1が認証（誰なのか）、ゲート2が認可（何をしてよいか）。<code>users.admin</code> カラム（boolean・NOT NULL・default false）は前スプリントで DB に用意済みだったため、本 PR は<strong>マイグレーションなしの純粋な認可層の追加</strong>になっている。</p>
+
+  <div class="layers">
+    <div class="layer">
+      <div class="lhead"><span class="lno">ゲート1</span><span class="lname">require_authentication</span><span class="lrole">認証：誰なのか（既存）</span></div>
+      <p><code>Authentication</code> concern が全アクションを既定で保護。未ログインは <code>/session/new</code> へリダイレクトされ、ここで止まる。通過すると <code>Current.user</code> が確定する。</p>
+    </div>
+    <div class="layer-gap">ログイン済みユーザーだけが通過（Current.user が使える状態になる）</div>
+    <div class="layer">
+      <div class="lhead"><span class="lno">ゲート2</span><span class="lname">require_admin</span><span class="lrole">認可：何をしてよいか（本PRで追加）</span></div>
+      <p><code>Authorization</code> concern が提供。<code>admin?</code> が false（一般ユーザー）なら root へリダイレクトし、alert「この操作は管理者のみ行えます。」を表示する。</p>
+    </div>
+    <div class="layer-gap">admin? == true だけが通過</div>
+    <div class="layer">
+      <div class="lhead"><span class="lno">到達</span><span class="lname">アクション実行</span><span class="lrole">new / create / edit / update / destroy</span></div>
+      <p>書籍の登録・編集・削除に到達できるのは管理者のみ。閲覧系（index / show）と貸出・返却はこのゲートの対象外。</p>
+    </div>
+  </div>
+
+  <h3>実装後の権限マトリクス</h3>
+  <div class="tblwrap">
+    <table>
+      <thead><tr><th>操作</th><th>ゲスト（未ログイン）</th><th>一般ユーザー</th><th>管理者</th></tr></thead>
+      <tbody>
+        <tr><td>一覧・詳細・検索</td><td><span class="ok-mark">○</span></td><td><span class="ok-mark">○</span></td><td><span class="ok-mark">○</span></td></tr>
+        <tr><td>貸出・返却</td><td><span class="ng-mark">×</span> ログイン画面へ</td><td><span class="ok-mark">○</span></td><td><span class="ok-mark">○</span></td></tr>
+        <tr><td>書籍の登録・編集・削除</td><td><span class="ng-mark">×</span> ログイン画面へ</td><td><span class="ng-mark">×</span> root へ + alert</td><td><span class="ok-mark">○</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="small">要件の文言は「登録・削除」だが、「一般ユーザーは貸出・返却<strong>のみ</strong>可能」と画面遷移図の「書籍編集/削除（管理者のみ）」から、編集（edit / update）も管理者限定と解釈した（→ 想定問答 Q3）。</p>
+</section>
+
+<!-- ================================================================ -->
+<section id="concern">
+  <div class="sec-head"><span class="sec-no">01</span><h2 class="serif">Authorization concern — 認可の置き場所</h2></div>
+  <p class="sec-req">新規ファイル app/controllers/concerns/authorization.rb（全16行）</p>
+
+  <p class="lead">既存の <code>Authentication</code> concern と<strong>同じ流儀（concern + private メソッド + helper_method）</strong>で認可を実装した。Pundit / CanCanCan のような認可 gem は使っていない。以下が新規ファイルの全文。</p>
+
+  <div class="codebox">
+    <div class="path"><span>app/controllers/concerns/authorization.rb（全文）</span><span class="lang">ruby</span></div>
+    <pre><code class="ruby">module Authorization
+  extend ActiveSupport::Concern
+
+  included do
+    helper_method :admin?   # ビューからも admin? を呼べるようにする
+  end
+
+  private
+    def admin?
+      authenticated? &amp;&amp; Current.user.admin?
+    end
+
+    def require_admin
+      redirect_to root_path, alert: "この操作は管理者のみ行えます。" unless admin?
+    end
+end</code></pre>
+  </div>
+
+  <div class="codebox">
+    <div class="path"><span>app/controllers/application_controller.rb</span><span class="lang">ruby</span></div>
+    <pre><code class="ruby">class ApplicationController &lt; ActionController::Base
+  include Authentication
+  include Authorization   # 全コントローラ・全ビューで admin? / require_admin が使える</code></pre>
+  </div>
+
+  <h3>活用した Rails の機能</h3>
+  <ul class="feats">
+    <li><div class="fname"><code>ActiveSupport::Concern</code></div><div class="fdesc">include 時のフック（<code>included do</code>）を宣言的に書ける。認証と同じ構造で「関心ごとに1ファイル」を保つ。</div></li>
+    <li><div class="fname"><code>helper_method</code></div><div class="fdesc">コントローラの private メソッドをビューにも公開。同じ <code>admin?</code> が「ガード」と「ボタン出し分け」の両方の判定源になる。</div></li>
+    <li><div class="fname"><code>ActiveSupport::CurrentAttributes</code></div><div class="fdesc"><code>Current.user.admin?</code> で現在ユーザーの権限をどこからでも参照。リクエスト毎に自動リセットされる。</div></li>
+    <li><div class="fname">属性の述語メソッド</div><div class="fdesc">boolean カラム <code>admin</code> には <code>admin?</code> が自動生成される。モデルに1行も足さずに済んでいる。</div></li>
+  </ul>
+
+  <div class="why">
+    <div class="cap">なぜこの設計か</div>
+    <p><strong>認証と認可を別 concern に分けた</strong>：「誰であるか（Authentication）」と「何をしてよいか（Authorization）」は変更理由が異なる関心事。1つの concern に混ぜると、将来ロールが増えたときに認証のコードまで触ることになり、変更の影響範囲が読めなくなる。</p>
+    <p><strong>認可 gem を使わなかった</strong>：権限が admin boolean 1つで、リソース別のポリシークラス（Pundit の <code>BookPolicy</code> など）を張るほどの複雑さがない。既存の認証も gem なしの Rails 8 標準構成なので、認可だけ gem に頼ると<em>コードベース内に2つの流儀が混在</em>する。学習課題として「全行説明できる」ことも優先した。</p>
+    <p><strong><code>admin?</code> が <code>authenticated?</code> を先に評価する</strong>：未ログイン時は <code>Current.user</code> が nil なので、直接 <code>Current.user.admin?</code> と書くと公開ページ（一覧・詳細）のビューで NoMethodError になる。短絡評価で「未ログイン = 管理者ではない」に安全に倒している。</p>
+  </div>
+
+  <div class="sources">
+    <div class="cap">情報源</div>
+    <ul>
+      <li><a href="https://railsguides.jp/action_controller_overview.html" target="_blank" rel="noopener">Action Controller の概要</a> — フィルタ（before_action）と helper_method の仕様の原典。</li>
+      <li><a href="https://railsguides.jp/active_support_core_extensions.html" target="_blank" rel="noopener">Active Support コア拡張機能</a> — Concern の仕組み（included フック）の背景。</li>
+      <li class="kw">検索キーワード: <code>Rails authorization without gem before_action</code> / <code>ActiveSupport Concern included do</code> / <code>Rails helper_method controller view</code></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================================================================ -->
+<section id="controller">
+  <div class="sec-head"><span class="sec-no">02</span><h2 class="serif">クローズ既定の適用 — except で閉じる</h2></div>
+  <p class="sec-req">app/controllers/books_controller.rb への追加は1行</p>
+
+  <p class="lead">BooksController への適用は <code>before_action</code> 1行。ただし <strong><code>only:</code> ではなく <code>except:</code> を選んだ</strong>ところに設計判断がある。公開アクションを列挙して「それ以外は全部ロック」という向き＝クローズ既定（closed by default）。</p>
+
+  <div class="codebox">
+    <div class="path"><span>app/controllers/books_controller.rb（冒頭）</span><span class="lang">ruby</span></div>
+    <pre><code class="ruby">class BooksController &lt; ApplicationController
+  allow_unauthenticated_access only: [ :index, :show ]      # 認証ゲートの opt-out（既存）
+  before_action :require_admin, except: [ :index, :show ]   # 認可ゲート（本PRで追加）
+  before_action :set_book, only: [ :show, :edit, :update, :destroy ]</code></pre>
+  </div>
+
+  <div class="why">
+    <div class="cap">なぜこの設計か（そうしないとどうなるか）</div>
+    <p><strong>2行が鏡像になっている</strong>：「index / show は未ログインでも見られる」×「index / show 以外は管理者のみ」。公開範囲の定義が同じリスト <code>[ :index, :show ]</code> で2回現れるので、公開面がどこかはこの2行を読むだけで分かる。</p>
+    <p><strong><code>only: [ :new, :create, ... ]</code> と書かない理由</strong>：only 方式（許可リストの逆＝保護対象を列挙）だと、将来このコントローラにアクションを足したとき<em>リストへの追記を忘れた瞬間、そのアクションは誰でも実行できる</em>。except 方式なら追記を忘れても新アクションは管理者限定に倒れる。ミスしたときに安全側に落ちる設計は、既存の認証 concern の「既定で全部ロック、公開ページだけ opt-out」と同じ思想。</p>
+    <p><strong>ゲートの実行順序</strong>：before_action は登録順に走る。<code>require_authentication</code> は ApplicationController（の include）で登録済みなので、BooksController で足した <code>require_admin</code> より必ず先に実行される。だから <code>require_admin</code> の中では「ログイン済み」を前提にでき、未ログインユーザーの挙動（ログイン画面へ誘導）は従来と1ミリも変わらない。</p>
+  </div>
+
+  <div class="sources">
+    <div class="cap">情報源</div>
+    <ul>
+      <li><a href="https://railsguides.jp/action_controller_overview.html" target="_blank" rel="noopener">Action Controller の概要 — フィルタ</a> — before_action の only / except オプションと実行順序（親クラスのフィルタが先）の原典。</li>
+      <li class="kw">検索キーワード: <code>Rails before_action except only difference</code> / <code>Rails filter chain execution order inheritance</code> / <code>secure by default fail closed</code></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================================================================ -->
+<section id="views">
+  <div class="sec-head"><span class="sec-no">03</span><h2 class="serif">ビューの出し分け — UXであってセキュリティではない</h2></div>
+  <p class="sec-req">layouts/application・books/index・books/show の3ファイル。押せないボタンを見せない</p>
+
+  <p class="lead">ヘッダーの「本を登録」、一覧と詳細の「編集」「削除」を <code>admin?</code>（helper_method 経由）で出し分けた。<strong>これは「押しても拒否されるボタンを見せない」という UX 施策であって、防御の実体は 02 のコントローラガード</strong>。ここを混同しないのがこの機能の説明の核になる。</p>
+
+  <div class="codebox">
+    <div class="path"><span>app/views/books/show.html.erb（操作ボタン部分）</span><span class="lang">erb</span></div>
+    <pre><code class="ruby">&lt;div class="card-actions justify-between mt-6"&gt;
+  &lt;%= link_to "一覧へ戻る", books_path, class: "btn btn-ghost" %&gt;
+  &lt;% if admin? %&gt;
+    &lt;div class="flex gap-2"&gt;
+      &lt;%= link_to "編集", edit_book_path(@book), class: "btn btn-outline" %&gt;
+      &lt;%= button_to "削除", book_path(@book), method: :delete,
+            class: "btn btn-error btn-outline",
+            form: { data: { turbo_confirm: "「#{@book.title}」を削除します。よろしいですか？" } } %&gt;
+    &lt;/div&gt;
+  &lt;% end %&gt;
+&lt;/div&gt;</code></pre>
+  </div>
+
+  <div class="codebox">
+    <div class="path"><span>app/views/layouts/application.html.erb（ヘッダー）</span><span class="lang">erb</span></div>
+    <pre><code class="ruby">&lt;%= link_to "ログアウト", session_path, data: { turbo_method: :delete }, class: "btn btn-ghost btn-sm" %&gt;
+&lt;% if admin? %&gt;
+  &lt;%= link_to "本を登録", new_book_path, class: "btn btn-primary btn-sm" %&gt;
+&lt;% end %&gt;</code></pre>
+  </div>
+
+  <div class="why">
+    <div class="cap">なぜこの設計か（そうしないとどうなるか）</div>
+    <p><strong>ビューの出し分けだけでは守れない</strong>：HTML にボタンが無くても、HTTP リクエストは curl や開発者ツールで誰でも作れる。実際に一般ユーザーのセッションで <code>POST /books</code> と <code>DELETE /books/:id</code> を直接叩く検証を行い、コントローラ側で拒否されることを確認済み（→ 04）。逆に<strong>コントローラガードだけでビューを出し分けないと</strong>、一般ユーザーに「押すと必ず拒否されるボタン」が見え続け、システムへの信頼を削る。両方やって初めて完成で、役割は「ビュー = UX、コントローラ = セキュリティ」と明確に分かれる。</p>
+    <p><strong>判定源をコントローラの <code>admin?</code> に一本化</strong>：ビュー側に <code>Current.user&amp;.admin?</code> を直書きする書き方もあるが、helper_method で公開した同じメソッドを使えば、判定ロジックを変えるとき（例：ロール制へ移行）に触る場所が concern の1メソッドだけで済む。</p>
+  </div>
+
+  <div class="sources">
+    <div class="cap">情報源</div>
+    <ul>
+      <li><a href="https://railsguides.jp/security.html" target="_blank" rel="noopener">Rails セキュリティガイド</a> — 「ビューの制御はアクセス制御の代わりにならない」という認可の基本原則の原典。</li>
+      <li class="kw">検索キーワード: <code>Rails view authorization hide buttons security</code> / <code>defense in depth web application</code></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================================================================ -->
+<section id="tests">
+  <div class="sec-head"><span class="sec-no">04</span><h2 class="serif">テストと画面検証 — 拒否・非表示・従来動作の三点を担保</h2></div>
+  <p class="sec-req">テスト9件追加（books 8件・rentals 1件）。TDD：実装前に7件が意図した理由で Red になることを確認</p>
+
+  <p class="lead">テストは<strong>「一般ユーザーが拒否される」「ボタンが見えない」「貸出・返却は今までどおりできる」の3系統</strong>。fixture に管理者（<code>users(:one)</code>）と一般ユーザー（<code>users(:two)</code>）が最初から居るので、sign_in するユーザーを替えるだけで両面をテストできる。</p>
+
+  <div class="codebox">
+    <div class="path"><span>test/controllers/books_controller_test.rb（抜粋）</span><span class="lang">ruby</span></div>
+    <pre><code class="ruby">test "一般ユーザーは書籍を削除できない" do
+  sign_in_as users(:two)
+  assert_no_difference("Book.count") do
+    delete book_url(books(:one))
+  end
+  assert_redirected_to root_url
+end
+
+test "一般ユーザーの一覧には登録・編集・削除ボタンが表示されない" do
+  sign_in_as users(:two)
+  get books_url
+  assert_select "a", text: "本を登録", count: 0
+  assert_select "a", text: "編集", count: 0
+  assert_select "button", text: "削除", count: 0
+end
+
+test "管理者の一覧には登録・編集・削除ボタンが表示される" do
+  sign_in_as users(:one)   # 過剰制限（管理者まで締め出す）への回帰ガード
+  get books_url
+  assert_select "a", text: "本を登録"
+  assert_select "a", text: "編集"
+  assert_select "button", text: "削除"
+end</code></pre>
+  </div>
+
+  <div class="note">
+    <div class="cap">TDD の記録 — Red の中身まで確認した</div>
+    実装前にテストを流し、<strong>7件が「認可が存在しない」ことをそのまま示す理由で失敗</strong>することを目視確認してから実装に入った。例：登録画面アクセスは「Expected response to be a &lt;3XX: redirect&gt;, but was a &lt;200: OK&gt;」、削除は「<code>Book.count</code> didn't change by 0, but by -1」。「Red になった」だけでなく<em>失敗理由が期待どおりか</em>まで見るのは、実装が無くても通ってしまう偽陽性テストを排除するため（CLAUDE.md のルール）。
+  </div>
+
+  <h3>テストの外側 — 開発サーバーへの直叩き検証</h3>
+  <p>マージ前に開発サーバーを起動し、curl で CSRF トークンを取りながら実際のフォーム送信を再現して確認した：</p>
+  <ul>
+    <li>一般ユーザーのセッションで <code>POST /books</code>（フォーム偽造）→ 302 で root へ、<code>Book.count</code> 不変</li>
+    <li>一般ユーザーのセッションで <code>DELETE /books/154</code> → 302 で root へ、レコード残存</li>
+    <li>同じセッションで貸出 → 「借りました。」、返却 → 「返却しました。」（従来機能の無事を確認）</li>
+    <li>未ログインで <code>GET /books/new</code> → <code>/session/new</code> へ（ゲート1の挙動が不変）</li>
+  </ul>
+  <p class="small">この検証の副産物として、貸出履歴のある本の削除が silent fail する既存バグを発見した（→ 想定問答 Q5）。</p>
+
+  <h3>差分を見る</h3>
+  <ul class="difflist">
+    <li><a href="https://github.com/junhat6/book-management-system-speee/pull/10/files" target="_blank" rel="noopener"><span class="pr">PR #10</span>ユーザー権限を実装（feature/user-authorization → Files changed）<span class="arrow">↗</span></a></li>
+    <li><a href="https://github.com/junhat6/book-management-system-speee/commit/b8cface" target="_blank" rel="noopener"><span class="sha">b8cface</span>同内容の単一コミット diff<span class="arrow">↗</span></a></li>
+  </ul>
+
+  <div class="sources">
+    <div class="cap">情報源</div>
+    <ul>
+      <li><a href="https://railsguides.jp/testing.html" target="_blank" rel="noopener">Rails テスティングガイド</a> — 結合テスト（ActionDispatch::IntegrationTest）と assert_select の使い方の原典。</li>
+      <li class="kw">検索キーワード: <code>Rails integration test sign in session</code> / <code>assert_select count 0 element absence</code> / <code>assert_no_difference</code></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================================================================ -->
+<section id="qa">
+  <div class="sec-head"><span class="sec-no">05</span><h2 class="serif">想定問答 — 強みと、正直な弱点</h2></div>
+  <p class="sec-req">レビュー会で聞かれそうな質問と回答の準備。<span class="verdict ok" style="position:static">強み</span>は胸を張って、<span class="verdict gap" style="position:static">未実装</span>は正直に + 「やるならこうする」をセットで</p>
+
+  <h3>まず押さえる3つの強み</h3>
+  <ul class="strengths">
+    <li><b>クローズ既定の認可</b><span>except 方式なので、新アクションを足し忘れても管理者限定側に倒れる。認証 concern と同じ「安全側に落ちる」思想（→ 02）</span></li>
+    <li><b>認証と認可の分離</b><span>Authentication / Authorization を別 concern に。「誰なのか」と「何をしてよいか」を独立に変更・テストできる（→ 01）</span></li>
+    <li><b>直叩きまで検証済み</b><span>ビューのボタン非表示だけでなく、curl による POST / DELETE 偽造がサーバー側で拒否されることを実機で確認（→ 04）</span></li>
+  </ul>
+
+  <h3>想定問答（クリックで回答を開く）</h3>
+
+  <details class="qa">
+    <summary><span class="q">Q1</span>ボタンを隠しているだけで、URL を直接叩かれたら操作できてしまうのでは？</summary>
+    <div class="a">
+      <p><span class="verdict ok">強み</span>できません。防御の実体はビューではなく <code>before_action :require_admin</code> で、一般ユーザーのセッションを使って <code>POST /books</code>（フォーム偽造）と <code>DELETE /books/:id</code> を curl で直接叩く検証を行い、どちらも root へリダイレクトされてレコードが変化しないことを確認済みです。ビューの出し分けは「押しても拒否されるボタンを見せない」UX 施策で、セキュリティはコントローラ層が担う、という役割分担で説明できます。</p>
+    </div>
+  </details>
+
+  <details class="qa">
+    <summary><span class="q">Q2</span>Pundit や CanCanCan を使わなかったのはなぜですか？</summary>
+    <div class="a">
+      <p><span class="verdict ok">説明できる選択</span>権限が「admin か否か」の boolean 1つで、Pundit が本領を発揮する「リソース×アクション毎のポリシー」を張るほどの複雑さがないためです。このアプリは認証も gem なし（Rails 8 標準構成）なので、認可だけ gem にすると流儀が2つ混在します。ただし限界も把握していて、「所有者は自分の投稿だけ編集できる」のようなレコード単位の認可が増えたら Pundit 導入を検討する、という判断基準まで話せるようにしています。</p>
+    </div>
+  </details>
+
+  <details class="qa">
+    <summary><span class="q">Q3</span>要件は「登録・削除」なのに、編集まで管理者限定にした理由は？</summary>
+    <div class="a">
+      <p><span class="verdict ok">説明できる選択</span>要件本文の「一般ユーザーは貸出・返却<strong>のみ</strong>可能」と、要件定義に含まれる画面遷移図の「書籍編集/削除（管理者のみ）」という記述を根拠に、書き込み系5アクション（new / create / edit / update / destroy）をまとめて管理者限定と解釈しました。仮に編集を一般ユーザーに開けると「削除はできないがタイトルを全部書き換えることはできる」という穴になり、「のみ可能」の趣旨に反すると判断しました。</p>
+    </div>
+  </details>
+
+  <details class="qa">
+    <summary><span class="q">Q4</span>管理者ユーザーはどうやって作るんですか？</summary>
+    <div class="a">
+      <p><span class="verdict gap">未実装</span>管理者を昇格・降格する管理画面はありません。現状はシード（<code>db/seeds.rb</code> の admin@example.com）か <code>rails console</code> での <code>user.update!(admin: true)</code> のみです。会員登録フォームから admin を渡されても、strong parameters（<code>permit(:name, :email_address, :password, :password_confirmation)</code>）の対象外なのでマスアサインメントでの自己昇格はできません。<strong>やるなら</strong>：管理者専用の <code>Admin::UsersController</code> を作り、同じ <code>require_admin</code> ゲートを掛けた上でトグル操作を提供します。「最後の管理者を降格させない」ガードもセットで必要です。</p>
+    </div>
+  </details>
+
+  <details class="qa">
+    <summary><span class="q">Q5</span>貸出履歴が残っている本を管理者が削除するとどうなりますか？</summary>
+    <div class="a">
+      <p><span class="verdict gap">既存バグを発見</span>削除されないのに「successfully destroyed」と表示されます。<code>Book</code> は <code>has_many :rentals, dependent: :restrict_with_error</code> なので履歴のある本の <code>destroy</code> は false を返しますが、<code>BooksController#destroy</code> が戻り値を確認せず常に成功メッセージを出すためです（本 PR の画面検証中に発見。認可とは独立した既存の問題なのでスコープを分け、PR 本文に記録しました）。<strong>やるなら</strong>：<code>if @book.destroy</code> で分岐し、失敗時は <code>@book.errors.full_messages</code> を alert で返します。「destroy は例外を投げず false を返す」ことを知っているか、が論点です。</p>
+    </div>
+  </details>
+
+  <details class="qa">
+    <summary><span class="q">Q6</span>権限がないとき、403 Forbidden ではなくリダイレクトなのはなぜ？</summary>
+    <div class="a">
+      <p><span class="verdict ok">説明できる選択</span>このアプリの利用者はブラウザの人間だけなので、403 のエラー画面を見せて行き止まりにするより、トップへ戻して alert で理由を伝えるほうが次の行動につながると判断しました。API を提供するなら話が変わり、JSON リクエストには <code>head :forbidden</code> を返す format 分岐を <code>require_admin</code> に足すことになります。「誰がこのレスポンスを受け取るか」でステータスコードの正解が変わる、という整理です。</p>
+    </div>
+  </details>
+
+  <details class="qa">
+    <summary><span class="q">Q7</span>「司書」のような中間ロールが増えたらどうしますか？</summary>
+    <div class="a">
+      <p><span class="verdict gap">boolean の限界</span>admin boolean は2値なので3ロール以上は表現できません。<strong>やるなら</strong>：<code>role</code> カラム（integer）＋ <code>enum :role, { member: 0, librarian: 1, admin: 2 }</code> へマイグレーションします。enum が <code>admin?</code> / <code>librarian?</code> を自動生成するので、concern の <code>admin?</code> 呼び出し面はそのまま生き、ビューとコントローラの変更は最小で済みます。判定源を <code>admin?</code> 1メソッドに一本化してあるのは、この移行を見越した作りです。</p>
+    </div>
+  </details>
+
+  <details class="qa">
+    <summary><span class="q">Q8</span>require_admin の時点でログイン済みという保証はどこにありますか？</summary>
+    <div class="a">
+      <p><span class="verdict ok">強み</span>before_action の実行順序です。<code>require_authentication</code> は ApplicationController が include する Authentication concern で登録され、BooksController で足した <code>require_admin</code> より必ず先に走ります。そして認証をスキップする <code>allow_unauthenticated_access only: [ :index, :show ]</code> の対象は、<code>require_admin</code> の <code>except: [ :index, :show ]</code> と同じリスト。つまり「認証なしで require_admin に到達する経路」は構造的に存在しません。さらに <code>admin?</code> 自体も <code>authenticated? &amp;&amp;</code> で始まるので、仮に前提が崩れても nil エラーではなく「権限なし」に安全に倒れます。</p>
+    </div>
+  </details>
+</section>
+
+<footer>
+  <p>発展要件1 ユーザー権限 実装解説ドシエ ・ 生成 2026-07-07 ・ ソース: <a href="https://github.com/junhat6/book-management-system-speee" target="_blank" rel="noopener">junhat6/book-management-system-speee</a>（PR #10 / main @ 4e094e3）</p>
+</footer>
+</main>
+</div>
+
+<script>
+(function () {
+  // --- Ruby ミニハイライタ（文字列→コメント→シンボル/ハッシュキー→キーワード→DSL→定数→数値の順で1パス走査）
+  var esc = function (s) {
+    return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  };
+  var re = /("(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*')|(#[^\n]*)|(:[A-Za-z_][A-Za-z0-9_]*[?!]?|\b[A-Za-z_][A-Za-z0-9_]*:(?=\s))|\b(class|module|def|end|do|if|unless|else|elsif|then|return|private|extend|include|self|true|false|nil|case|when|rescue|begin)\b|\b(validates|validate|has_many|has_one|belongs_to|has_secure_password|normalizes|scope|before_save|before_action|skip_before_action|helper_method|rescue_from|allow_unauthenticated_access|rate_limit|add_index|create_table|resources|resource|root|get|mount|attr_reader|delegate|redirect_to|render|link_to|button_to|sign_in_as|assert_select|assert_redirected_to|assert_no_difference|delete|post|patch)\b|\b([A-Z][A-Za-z0-9_]*(?:::[A-Z][A-Za-z0-9_]*)*)\b|\b(\d+(?:\.\d+)?)\b/g;
+  var cls = ["tok-s", "tok-c", "tok-y", "tok-k", "tok-d", "tok-t", "tok-n"];
+  document.querySelectorAll("pre > code.ruby").forEach(function (block) {
+    var src = block.textContent;
+    var out = "";
+    var last = 0;
+    var m;
+    re.lastIndex = 0;
+    while ((m = re.exec(src)) !== null) {
+      out += esc(src.slice(last, m.index));
+      var i;
+      for (i = 1; i <= 7; i++) { if (m[i] !== undefined) break; }
+      out += '<span class="' + cls[i - 1] + '">' + esc(m[0]) + "</span>";
+      last = m.index + m[0].length;
+    }
+    out += esc(src.slice(last));
+    block.innerHTML = out;
+  });
+
+  // --- 目次スクロールスパイ
+  var links = Array.prototype.slice.call(document.querySelectorAll(".toc a"));
+  var map = {};
+  links.forEach(function (a) { map[a.getAttribute("href").slice(1)] = a; });
+  if ("IntersectionObserver" in window) {
+    var current = null;
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) {
+          if (current) current.classList.remove("now");
+          current = map[e.target.id];
+          if (current) current.classList.add("now");
+        }
+      });
+    }, { rootMargin: "-15% 0px -70% 0px" });
+    document.querySelectorAll("main section[id]").forEach(function (s) { io.observe(s); });
+  }
+})();
+</script>
+
+</body></html>

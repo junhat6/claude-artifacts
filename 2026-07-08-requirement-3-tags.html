@@ -1,0 +1,843 @@
+<!doctype html><html><head><!-- frame-runtime --><script>window.__FRAME_PREAMBLE={"capabilities":{"mcp":"mcp.BQqQVVN_.js"},"transforms":"_transforms.DYk1Ltlh.js"}</script><script>(function(){"use strict";const X="modulepreload",Y=function(e){return"/"+e},Z={},U=function(t,n,u){let o=Promise.resolve();function i(f){const a=new Event("vite:preloadError",{cancelable:!0});if(a.payload=f,window.dispatchEvent(a),!a.defaultPrevented)throw f}return o.then(f=>{for(const a of f||[])a.status==="rejected"&&i(a.reason);return t().catch(i)})},D=["light","dark","system"];function $(e){if(e==null||typeof e!="object")return!1;const t=e.__frame_init;return t!=null&&typeof t=="object"}function q(e){if(e==null||typeof e!="object")return!1;const t=e.__frame_theme;if(t==null||typeof t!="object")return!1;const n=t.theme;return typeof n=="string"&&D.includes(n)}function M(e){if(window===top||e.type==="auxclick"&&e.button!==1)return;const t=e.composedPath?e.composedPath():[e.target];let n=null;for(let f=0;f<t.length;f++){const a=t[f];if(a&&a.matches&&a.matches("a[href],area[href]")){n=a;break}}if(!n&&e.target&&e.target.closest&&(n=e.target.closest("a[href],area[href]")),!n)return;const u=n.getAttribute("href");if(!u)return;let o,i;try{o=new URL(u,document.baseURI),i=new URL(document.baseURI).origin}catch{return}(o.protocol==="http:"||o.protocol==="https:")&&o.origin!==i&&(e.preventDefault(),parent.postMessage({__frame_nav:!0,url:o.href},"*"))}const L={};function y(e){if(window===top)return;const t=Date.now();t-(L[e]||0)<500||(L[e]=t,parent.postMessage({__frame_engaged:!0,kind:e},"*"))}const F=2e3,T=["wheel","touchstart","touchmove","keydown","pointerdown"];let k=0;function B(e){e.isTrusted&&(k=Date.now())}function z(){addEventListener("click",M,!0),addEventListener("auxclick",M,!0)}function W(){for(let e=0;e<T.length;e++)addEventListener(T[e],B,{capture:!0,passive:!0});addEventListener("scroll",e=>{e.isTrusted&&Date.now()-k<F&&y("scroll")},{capture:!0,passive:!0}),addEventListener("pointermove",e=>{e.isTrusted&&y("pointer")},{capture:!0,passive:!0}),addEventListener("click",e=>{e.isTrusted&&y("click")},{capture:!0,passive:!0})}function x(e,t,n){const u=[...t.values()].filter(o=>o.targets.some(i=>i.startsWith(e+".")));return{wrap(o,i){const f=`${e}.${o}`,a=u.filter(s=>s.targets.includes(f));return a.length===0?(...s)=>{try{return i(...s)}catch(d){return Promise.reject(d)}}:(...s)=>{let d=s;for(const c of a){const l=c.module.parameters;if(l)try{d=l(d)}catch{return Promise.reject({code:"transform_error",id:c.id,scope:e,message:"parameters transform failed"})}}let m;try{m=i(...d)}catch(c){m=Promise.reject(c)}return m.then(c=>{for(let l=a.length-1;l>=0;l--){const h=a[l],p=h.module.returns;if(p)try{c=p(c)}catch{return n({id:h.id,scope:e,leg:"returns"}),c}}return c},c=>{for(let l=a.length-1;l>=0;l--){const h=a[l],p=h.module.throws;if(p)try{c=p(c)}catch{return n({id:h.id,scope:e,leg:"throws"}),Promise.reject(c)}}return Promise.reject(c)})}}}}function H(e,t,n,u=()=>{}){const o=new Set(e.changes??[]),i=new Map;for(const f of o){const a=t[f];a&&i.set(f,a)}return{contract:e.contract,changes:o,flags:new Set(e.flags??[]),capabilities:e.capabilities??{},transforms:i,shellOrigin:n.shellOrigin,mount:n.mount,pipe:f=>x(f,i,u)}}(function(){const e=Object.defineProperty,t=globalThis,n=["RTCPeerConnection","webkitRTCPeerConnection","RTCDataChannel","RTCIceCandidate","RTCSessionDescription","RTCRtpSender","RTCRtpReceiver"];let u=0;for(let o=0;o<n.length;o++){const i=n[o];try{e(t,i,{value:void 0,writable:!1,configurable:!1})}catch{try{delete t[i]}catch{}try{e(t,i,{value:void 0,writable:!1,configurable:!0})}catch{}}typeof t[i]=="function"&&u++}if(u&&window!==top)try{parent.postMessage({__frame_rtc_lockdown_failed:u},"*")}catch{}})();const K=1e4,G=Object.freeze([...window.__FRAME_PREAMBLE?.origins??["https://claude.ai","https://preview.claude.ai"]]);function J(e){for(const t of G)if(t.endsWith(":*"))try{const n=new URL(e);if(`${n.protocol}//${n.hostname}:*`===t)return!0}catch{}else if(e===t)return!0;return!1}const w=Object.freeze({...window.__FRAME_PREAMBLE?.capabilities??{}}),E=window.__FRAME_PREAMBLE?.transforms,C=/^[\w.-]+\.js$/,V=/^[a-z][a-z0-9_-]{0,63}$/;let A=null,g=null;function P(e,t,n){try{Object.defineProperty(e,t,{value:n,writable:!1,configurable:!1,enumerable:!0})}catch{try{Object.defineProperty(e,t,{value:n,writable:!1,configurable:!0,enumerable:!0})}catch{}}}let R=!1;function N(e){const t=document.documentElement;e==="light"||e==="dark"?(t.dataset.theme=e,t.style.colorScheme=e,R=!0):R&&(delete t.dataset.theme,t.style.colorScheme="",R=!1)}const _=new Map;function Q(e,t){const n=_.get(e);if(!n)return;Object.assign(n.impl,t),n.impl.__settled=()=>Promise.reject({code:"capability_removed",message:`${e}: method not in this runtime`});const u=n.queue;n.queue=[];for(const o of u){const i=t[o.method];i?i(...o.args).then(o.resolve,o.reject):o.reject({code:"capability_removed",message:`${e}.${o.method} is not in this runtime`})}}function O(e,t){const n=_.get(e);if(!n)return;n.impl.__settled=()=>Promise.reject(t);const u=n.queue;n.queue=[];for(const o of u)o.reject(t)}const j=Object.getOwnPropertyDescriptor(window,"claude");if(window!==top&&!(j&&j.writable===!1)){z(),W();const e=j?.value??{};P(window,"claude",e);const t=s=>{const d={impl:Object.create(null),queue:[]};_.set(s,d);const m=new Proxy(d.impl,{get:(c,l)=>{if(typeof l=="string"&&!(l==="then"||l==="toJSON"||l==="valueOf"))return l==="toString"?Object.prototype.toString:(...h)=>{const p=c[l]??c.__settled;return p?p(...h):new Promise((b,S)=>{d.queue.push({method:l,args:h,resolve:b,reject:S})})}},set:()=>!1});P(e,s,m)};for(const s of Object.keys(w)){if(e[s]!==void 0){P(e,s,e[s]);continue}t(s)}let n=null,u=null,o=0;const i=s=>{s.source!==parent||!J(s.origin)||$(s.data)&&(n=s.data.__frame_init,g=s.origin,removeEventListener("message",i),clearTimeout(o),u?.())};addEventListener("message",i),parent.postMessage({__frame_connect:!0},"*");const f=new Promise(s=>{u=s,o=setTimeout(()=>{removeEventListener("message",i),s()},K)}),a=document.readyState==="loading"?new Promise(s=>document.addEventListener("DOMContentLoaded",()=>s(),{once:!0})):Promise.resolve();f.then(async()=>{if(!n||!g){for(const r of _.keys())O(r,{code:"not_granted",message:"frame initialization did not arrive - capability unavailable"});return}N(n.theme);const s=g;addEventListener("message",r=>{r.source!==parent||r.origin!==s||q(r.data)&&N(r.data.__frame_theme.theme)});const d=r=>U(()=>import("/_runtime/"+r),void 0),m=Object.keys(n.capabilities??{});for(const r of m)Object.hasOwn(w,r)||V.test(r)&&e[r]===void 0&&(t(r),O(r,{code:"capability_disabled",message:"capability not in this runtime generation"}));const c=m.filter(r=>Object.hasOwn(w,r)).map(r=>[r,w[r]]).filter(r=>typeof r[1]=="string"&&C.test(r[1])),[l,...h]=await Promise.allSettled([E&&C.test(E)?d(E):Promise.resolve({}),...c.map(([,r])=>d(r))]),p=g;A=H(n,l.status==="fulfilled"&&l.value?.TRANSFORMS||{},{shellOrigin:p,mount:Q},r=>parent.postMessage({__frame_cap_telemetry:r},p));const b=r=>parent.postMessage({__frame_cap_telemetry:{kind:"cap-load-error",cap:r}},p),S=A;h.forEach((r,v)=>{const I=c[v][0];if(r.status!=="fulfilled"){b(I);return}try{r.value?.install?.(S)}catch{b(I)}});for(const[r,v]of _)v.queue.length===0&&Object.keys(v.impl).length>0||O(r,{code:m.includes(r)?"capability_disabled":"not_granted",message:"capability not available in this session"});await a,parent.postMessage({__frame_ready:!0},g)})}})();</script><!-- /frame-runtime --><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}</style></head><body>
+<title>発展要件3: タグ・ジャンル管理 — 実装解説ドシエ</title>
+<style>
+  :root {
+    --bg: #FBFAF8;
+    --surface: #FFFFFF;
+    --surface2: #F4F1EC;
+    --ink: #26201D;
+    --muted: #6F655E;
+    --faint: #9C918A;
+    --accent: #A31631;
+    --accent-ink: #FFFFFF;
+    --accent-soft: #F7E8EA;
+    --line: #E5DFD8;
+    --line-strong: #CFC7BE;
+    --good: #2E6E4E;
+    --good-soft: #E5F0E9;
+    --warn: #8A5A12;
+    --warn-soft: #F7EEDD;
+    --code-bg: #221D1B;
+    --code-ink: #E9E3DC;
+    --code-line: #37302C;
+    --code-cmt: #837770;
+    --code-str: #A9C98F;
+    --code-sym: #D9A15F;
+    --code-kw: #E4728B;
+    --code-dsl: #85B7D6;
+    --code-const: #E0C185;
+    --code-num: #C79ED2;
+    --shadow: 0 1px 2px rgba(38,32,29,.05), 0 4px 16px rgba(38,32,29,.05);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #17130F;
+      --surface: #201B17;
+      --surface2: #282221;
+      --ink: #EDE7E0;
+      --muted: #A99E96;
+      --faint: #7E746D;
+      --accent: #E36A80;
+      --accent-ink: #2A0A12;
+      --accent-soft: #3A2226;
+      --line: #372F2A;
+      --line-strong: #4A413B;
+      --good: #7FC49E;
+      --good-soft: #22322A;
+      --warn: #DFAE5E;
+      --warn-soft: #362C1B;
+      --code-bg: #14100E;
+      --code-line: #2E2723;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 4px 16px rgba(0,0,0,.25);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #17130F;
+    --surface: #201B17;
+    --surface2: #282221;
+    --ink: #EDE7E0;
+    --muted: #A99E96;
+    --faint: #7E746D;
+    --accent: #E36A80;
+    --accent-ink: #2A0A12;
+    --accent-soft: #3A2226;
+    --line: #372F2A;
+    --line-strong: #4A413B;
+    --good: #7FC49E;
+    --good-soft: #22322A;
+    --warn: #DFAE5E;
+    --warn-soft: #362C1B;
+    --code-bg: #14100E;
+    --code-line: #2E2723;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 4px 16px rgba(0,0,0,.25);
+  }
+  :root[data-theme="light"] {
+    --bg: #FBFAF8;
+    --surface: #FFFFFF;
+    --surface2: #F4F1EC;
+    --ink: #26201D;
+    --muted: #6F655E;
+    --faint: #9C918A;
+    --accent: #A31631;
+    --accent-ink: #FFFFFF;
+    --accent-soft: #F7E8EA;
+    --line: #E5DFD8;
+    --line-strong: #CFC7BE;
+    --good: #2E6E4E;
+    --good-soft: #E5F0E9;
+    --warn: #8A5A12;
+    --warn-soft: #F7EEDD;
+    --code-bg: #221D1B;
+    --code-ink: #E9E3DC;
+    --code-line: #37302C;
+    --code-cmt: #837770;
+    --code-str: #A9C98F;
+    --code-sym: #D9A15F;
+    --code-kw: #E4728B;
+    --code-dsl: #85B7D6;
+    --code-const: #E0C185;
+    --code-num: #C79ED2;
+    --shadow: 0 1px 2px rgba(38,32,29,.05), 0 4px 16px rgba(38,32,29,.05);
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 24px; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", "Noto Sans JP", sans-serif;
+    font-size: 15px;
+    line-height: 1.85;
+    -webkit-font-smoothing: antialiased;
+  }
+  .serif { font-family: "Hiragino Mincho ProN", "Yu Mincho", "Noto Serif JP", serif; }
+  code, pre, .mono {
+    font-family: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+  }
+
+  .frame { display: grid; grid-template-columns: 232px minmax(0, 1fr); max-width: 1180px; margin: 0 auto; gap: 40px; padding: 0 28px; }
+  @media (max-width: 940px) { .frame { grid-template-columns: minmax(0, 1fr); gap: 0; padding: 0 18px; } }
+
+  /* ---- sidebar ---- */
+  .toc { position: sticky; top: 0; align-self: start; height: 100vh; overflow-y: auto; padding: 36px 0 24px; }
+  .toc-title { font-size: 11px; letter-spacing: .18em; color: var(--faint); text-transform: uppercase; margin: 0 0 14px 2px; }
+  .toc ol { list-style: none; margin: 0; padding: 0; border-left: 1px solid var(--line); }
+  .toc a {
+    display: flex; gap: 9px; align-items: baseline;
+    padding: 6px 10px 6px 14px; margin-left: -1px;
+    color: var(--muted); text-decoration: none; font-size: 13px; line-height: 1.5;
+    border-left: 2px solid transparent;
+  }
+  .toc a .no { font-size: 11px; color: var(--faint); font-variant-numeric: tabular-nums; }
+  .toc a:hover { color: var(--ink); }
+  .toc a.now { color: var(--accent); border-left-color: var(--accent); font-weight: 600; }
+  .toc a.now .no { color: var(--accent); }
+  .toc a:focus-visible, a:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+  @media (max-width: 940px) { .toc { display: none; } }
+
+  main { padding: 44px 0 90px; min-width: 0; }
+
+  /* ---- header ---- */
+  .doc-head { border-bottom: 3px double var(--line-strong); padding-bottom: 26px; margin-bottom: 14px; }
+  .doc-eyebrow { display: flex; align-items: center; gap: 10px; font-size: 12px; letter-spacing: .14em; color: var(--accent); font-weight: 600; }
+  .doc-eyebrow::before { content: ""; width: 26px; height: 1px; background: var(--accent); }
+  h1 { font-size: clamp(26px, 4.5vw, 38px); line-height: 1.35; margin: 10px 0 8px; font-weight: 600; letter-spacing: .02em; text-wrap: balance; }
+  .doc-sub { color: var(--muted); font-size: 14px; margin: 0 0 18px; max-width: 46em; }
+  .stack-row { display: flex; flex-wrap: wrap; gap: 7px; }
+  .chip {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 12px; line-height: 1; padding: 6px 10px;
+    border: 1px solid var(--line); border-radius: 999px;
+    background: var(--surface); color: var(--muted); white-space: nowrap;
+  }
+  .chip b { color: var(--ink); font-weight: 600; }
+  .chip.ver { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
+  .repo-line { margin-top: 16px; font-size: 13px; color: var(--muted); }
+  .repo-line a { color: var(--accent); }
+
+  /* ---- sections ---- */
+  section { padding: 40px 0 8px; border-bottom: 1px solid var(--line); }
+  section:last-of-type { border-bottom: none; }
+  .sec-head { display: flex; align-items: baseline; gap: 14px; margin-bottom: 6px; }
+  .sec-no {
+    font-size: 12px; font-weight: 700; letter-spacing: .1em;
+    color: var(--accent); border: 1px solid var(--accent);
+    padding: 3px 8px; border-radius: 3px; font-variant-numeric: tabular-nums;
+    white-space: nowrap; align-self: center;
+  }
+  h2 { font-size: 23px; margin: 0; font-weight: 600; letter-spacing: .02em; line-height: 1.4; text-wrap: balance; }
+  .sec-req { font-size: 12px; color: var(--faint); margin: 0 0 18px 0; }
+  h3 { font-size: 15px; margin: 30px 0 10px; letter-spacing: .06em; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+  h3::before { content: ""; width: 8px; height: 8px; background: var(--accent); border-radius: 1px; flex: none; }
+  p { margin: 0 0 14px; max-width: 44em; }
+  section > p:first-of-type, .lead { font-size: 15.5px; }
+  li { margin-bottom: 6px; }
+  ul, ol { padding-left: 1.4em; margin: 0 0 14px; max-width: 44em; }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  strong { font-weight: 700; }
+  .small { font-size: 13px; color: var(--muted); }
+
+  /* inline code */
+  p code, li code, td code, .qa code, h2 code, dd code {
+    background: var(--surface2); border: 1px solid var(--line);
+    padding: .5px 5px; border-radius: 4px; font-size: .88em; white-space: nowrap;
+  }
+
+  /* ---- code blocks ---- */
+  .codebox { margin: 16px 0 20px; border-radius: 8px; overflow: hidden; box-shadow: var(--shadow); }
+  .codebox .path {
+    background: var(--code-bg); color: var(--code-cmt);
+    border-bottom: 1px solid var(--code-line);
+    font-size: 11.5px; padding: 8px 14px; letter-spacing: .04em;
+    display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+    font-family: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+  }
+  .codebox .path .lang { color: var(--code-sym); }
+  .codebox pre { margin: 0; background: var(--code-bg); color: var(--code-ink); padding: 14px 16px; overflow-x: auto; font-size: 12.8px; line-height: 1.75; }
+  .tok-s { color: var(--code-str); }
+  .tok-c { color: var(--code-cmt); font-style: italic; }
+  .tok-y { color: var(--code-sym); }
+  .tok-k { color: var(--code-kw); }
+  .tok-d { color: var(--code-dsl); }
+  .tok-t { color: var(--code-const); }
+  .tok-n { color: var(--code-num); }
+
+  /* ---- callouts ---- */
+  .why { border-left: 3px solid var(--accent); background: var(--accent-soft); padding: 14px 18px; border-radius: 0 8px 8px 0; margin: 16px 0 20px; max-width: 46em; }
+  .why .cap { font-size: 12px; font-weight: 700; letter-spacing: .12em; color: var(--accent); margin-bottom: 6px; }
+  .why p { margin-bottom: 8px; max-width: none; }
+  .why p:last-child { margin-bottom: 0; }
+  .note { border-left: 3px solid var(--warn); background: var(--warn-soft); padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 16px 0 20px; max-width: 46em; font-size: 13.5px; }
+  .note .cap { font-weight: 700; color: var(--warn); font-size: 12px; letter-spacing: .1em; margin-bottom: 4px; }
+
+  /* ---- rails feature list ---- */
+  .feats { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 10px; margin: 14px 0 20px; padding: 0; list-style: none; max-width: none; }
+  .feats li { margin: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 11px 13px; font-size: 13px; line-height: 1.65; }
+  .feats .fname { display: flex; align-items: center; gap: 8px; font-weight: 700; margin-bottom: 3px; flex-wrap: wrap; }
+  .feats .fname code { background: none; border: none; padding: 0; font-size: 12.5px; color: var(--accent); white-space: normal; }
+  .vtag { font-size: 10px; font-weight: 700; letter-spacing: .06em; color: var(--accent); background: var(--accent-soft); border-radius: 3px; padding: 2px 5px; white-space: nowrap; }
+  .feats .fdesc { color: var(--muted); }
+
+  /* ---- diff links ---- */
+  .difflist { list-style: none; padding: 0; margin: 12px 0 20px; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; max-width: 46em; }
+  .difflist li { margin: 0; border-bottom: 1px solid var(--line); }
+  .difflist li:last-child { border-bottom: none; }
+  .difflist a { display: flex; align-items: baseline; gap: 12px; padding: 9px 14px; text-decoration: none; color: var(--ink); font-size: 13.5px; background: var(--surface); }
+  .difflist a:hover { background: var(--surface2); }
+  .difflist .sha { font-family: ui-monospace, Menlo, monospace; font-size: 12px; color: var(--accent); white-space: nowrap; min-width: 4.6em; }
+  .difflist .pr { font-weight: 700; color: var(--accent); white-space: nowrap; min-width: 4.6em; font-size: 12.5px; }
+  .difflist .arrow { margin-left: auto; color: var(--faint); font-size: 12px; }
+
+  /* ---- sources ---- */
+  .sources { background: var(--surface2); border: 1px solid var(--line); border-radius: 8px; padding: 14px 18px; margin: 16px 0 24px; font-size: 13.5px; max-width: 46em; }
+  .sources .cap { font-size: 11.5px; font-weight: 700; letter-spacing: .14em; color: var(--faint); margin-bottom: 8px; }
+  .sources ul { list-style: none; padding: 0; margin: 0; }
+  .sources li { margin-bottom: 7px; }
+  .sources li:last-child { margin-bottom: 0; }
+  .sources .kw { color: var(--muted); }
+  .sources .kw code { white-space: normal; }
+
+  /* ---- tables ---- */
+  .tblwrap { overflow-x: auto; margin: 14px 0 20px; border: 1px solid var(--line); border-radius: 8px; }
+  table { border-collapse: collapse; width: 100%; font-size: 13.5px; background: var(--surface); }
+  th, td { text-align: left; padding: 9px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { font-size: 12px; letter-spacing: .08em; color: var(--faint); font-weight: 600; white-space: nowrap; background: var(--surface2); }
+  tr:last-child td { border-bottom: none; }
+
+  /* ---- ER diagram ---- */
+  .er-wrap { overflow-x: auto; margin: 18px 0 8px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); box-shadow: var(--shadow); }
+  .er-wrap svg { display: block; min-width: 980px; width: 100%; height: auto; }
+  .er-legend { display: flex; gap: 18px; flex-wrap: wrap; font-size: 12.5px; color: var(--muted); margin: 10px 2px 20px; }
+  .er-legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .lg-m2m { width: 22px; height: 3px; background: var(--accent); border-radius: 2px; }
+  .lg-o2m { width: 22px; height: 0; border-top: 2px solid var(--faint); }
+
+  /* ---- Q&A ---- */
+  .qa { border: 1px solid var(--line); border-radius: 10px; background: var(--surface); margin: 0 0 14px; max-width: 48em; box-shadow: var(--shadow); }
+  .qa summary { cursor: pointer; list-style: none; padding: 14px 18px; display: flex; gap: 12px; align-items: baseline; font-weight: 600; line-height: 1.6; }
+  .qa summary::-webkit-details-marker { display: none; }
+  .qa summary .q { color: var(--accent); font-weight: 800; font-size: 13px; letter-spacing: .06em; flex: none; }
+  .qa summary::after { content: "＋"; margin-left: auto; color: var(--faint); flex: none; }
+  .qa[open] summary::after { content: "−"; }
+  .qa .a { padding: 2px 18px 16px 44px; border-top: 1px dashed var(--line); }
+  .qa .a p { font-size: 14px; margin: 10px 0 8px; }
+  .qa .verdict { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .08em; border-radius: 3px; padding: 2px 8px; margin-right: 6px; vertical-align: 1px; }
+  .qa .verdict.ok { color: var(--good); background: var(--good-soft); }
+  .qa .verdict.gap { color: var(--warn); background: var(--warn-soft); }
+
+  .strengths { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin: 16px 0 26px; padding: 0; list-style: none; max-width: none; }
+  .strengths li { margin: 0; border: 1px solid var(--line); border-top: 3px solid var(--accent); border-radius: 8px; background: var(--surface); padding: 14px 16px; font-size: 13.5px; box-shadow: var(--shadow); }
+  .strengths b { display: block; font-size: 14.5px; margin-bottom: 4px; }
+  .strengths span { color: var(--muted); }
+
+  footer { margin-top: 30px; padding-top: 18px; border-top: 3px double var(--line-strong); color: var(--faint); font-size: 12.5px; }
+</style>
+
+<div class="frame">
+<nav class="toc" aria-label="目次">
+  <p class="toc-title">目次</p>
+  <ol>
+    <li><a href="#overview"><span class="no">00</span>全体像とER図</a></li>
+    <li><a href="#schema"><span class="no">01</span>多対多の土台</a></li>
+    <li><a href="#form"><span class="no">02</span>タグ付与フォーム</a></li>
+    <li><a href="#filter"><span class="no">03</span>タグ絞り込み</a></li>
+    <li><a href="#tdd"><span class="no">04</span>TDD の記録</a></li>
+    <li><a href="#qa"><span class="no">05</span>想定問答</a></li>
+  </ol>
+</nav>
+
+<main>
+<header class="doc-head">
+  <p class="doc-eyebrow">レビュー会 準備資料 · 2026-07-07</p>
+  <h1 class="serif">発展要件3: タグ・ジャンル管理 — 実装解説ドシエ</h1>
+  <p class="doc-sub">書籍にジャンル・タグを付けられる「書籍（多）― タグ（多）」の多対多を実装した。必須要件の Book–Author で確立したパターン（join モデル明示・二層ユニーク制約・仮想属性）を<strong>2度目の多対多として再適用</strong>し、一覧のタグ絞り込みまで含めた記録。</p>
+  <div class="stack-row">
+    <span class="chip ver"><b>PR #12</b></span>
+    <span class="chip">Rails <b>8.1.3</b></span>
+    <span class="chip">テーブル <b>+2</b>（tags / book_tags）</span>
+    <span class="chip">テスト <b>118件</b>（+15, 全 Green）</span>
+    <span class="chip">新規画面 <b>0</b>（既存3画面を拡張）</span>
+  </div>
+  <p class="repo-line">リポジトリ: <a href="https://github.com/junhat6/book-management-system-speee" target="_blank" rel="noopener">junhat6/book-management-system-speee</a> ・ テスト: <code>rails test</code>（Minitest, TDD で作成）</p>
+</header>
+
+<!-- ================================================================ -->
+<section id="overview">
+  <div class="sec-head"><span class="sec-no">00</span><h2 class="serif">全体像とER図</h2></div>
+  <p class="sec-req">発展要件 3（タグ・ジャンル管理。書籍（多）― タグ（多）の多対多）に対応</p>
+
+  <p class="lead">追加したテーブルは <strong>tags と book_tags の2つだけ</strong>。「ジャンル（技術書、小説…）」と「タグ（Ruby、入門…）」を別テーブルに分けず、<strong>単一の Tag モデル</strong>として扱う設計を選んだ（着手前にユーザーと合意）。books ↔ authors の多対多と完全に相似形になっている。</p>
+
+  <div class="er-wrap">
+  <svg viewBox="0 0 1120 470" role="img" aria-label="ER図：books と tags の多対多（book_tags 経由）。上段に既存の books と authors の多対多を併記">
+    <style>
+      .tbl-h { fill: var(--accent); }
+      .tbl-hx { fill: var(--accent-ink); font-size: 13px; font-weight: 700; font-family: ui-monospace, Menlo, monospace; }
+      .tbl-b { fill: var(--surface); stroke: var(--line-strong); }
+      .tbl-b.ghost { stroke-dasharray: 5 4; }
+      .tbl-h.ghost { fill: var(--faint); }
+      .col { fill: var(--ink); font-size: 11.5px; font-family: ui-monospace, Menlo, monospace; }
+      .col.dim { fill: var(--muted); }
+      .tag { fill: var(--accent); font-size: 10px; font-weight: 700; font-family: ui-monospace, Menlo, monospace; }
+      .tag2 { fill: var(--faint); font-size: 10px; font-family: ui-monospace, Menlo, monospace; }
+      .edge { stroke: var(--faint); stroke-width: 1.6; fill: none; }
+      .edge-m2m { stroke: var(--accent); stroke-width: 2.4; fill: none; }
+      .mult { fill: var(--muted); font-size: 11px; font-weight: 700; font-family: ui-monospace, Menlo, monospace; }
+      .er-note { fill: var(--accent); font-size: 11px; font-weight: 600; }
+      .er-note2 { fill: var(--muted); font-size: 11px; }
+    </style>
+
+    <!-- 既存: books ↔ authors（上段・淡色） -->
+    <g>
+      <rect class="tbl-b ghost" x="430" y="20" width="250" height="104" rx="6"/>
+      <path class="tbl-h ghost" d="M430 26 a6 6 0 0 1 6 -6 h238 a6 6 0 0 1 6 6 v24 h-250 z"/>
+      <text class="tbl-hx" x="442" y="40">book_authors（既存）</text>
+      <text class="col dim" x="442" y="68">id</text><text class="tag2" x="640" y="68">PK</text>
+      <text class="col dim" x="442" y="89">book_id</text><text class="tag2" x="640" y="89">FK</text>
+      <text class="col dim" x="442" y="110">author_id</text><text class="tag2" x="640" y="110">FK</text>
+    </g>
+    <g>
+      <rect class="tbl-b ghost" x="850" y="30" width="220" height="83" rx="6"/>
+      <path class="tbl-h ghost" d="M850 36 a6 6 0 0 1 6 -6 h208 a6 6 0 0 1 6 6 v24 h-220 z"/>
+      <text class="tbl-hx" x="862" y="50">authors（既存）</text>
+      <text class="col dim" x="862" y="78">id</text><text class="tag2" x="1040" y="78">PK</text>
+      <text class="col dim" x="862" y="99">name</text><text class="tag2" x="1040" y="99">UQ</text>
+    </g>
+    <line class="edge" x1="250" y1="150" x2="390" y2="150"/>
+    <line class="edge" x1="390" y1="150" x2="390" y2="72"/>
+    <line class="edge" x1="390" y1="72" x2="430" y2="72"/>
+    <text class="mult" x="398" y="66">N</text>
+    <line class="edge" x1="680" y1="72" x2="850" y2="72"/>
+    <text class="mult" x="688" y="66">N</text><text class="mult" x="830" y="66">1</text>
+    <text class="er-note2" x="430" y="145">必須要件3で実装済みの多対多。今回はこのパターンをそのまま再適用</text>
+
+    <!-- books -->
+    <g>
+      <rect class="tbl-b" x="30" y="120" width="220" height="167" rx="6"/>
+      <path class="tbl-h" d="M30 126 a6 6 0 0 1 6 -6 h208 a6 6 0 0 1 6 6 v24 h-220 z"/>
+      <text class="tbl-hx" x="42" y="140">books</text>
+      <text class="col" x="42" y="168">id</text><text class="tag" x="220" y="168">PK</text>
+      <text class="col" x="42" y="189">title</text>
+      <text class="col" x="42" y="210">isbn</text><text class="tag" x="220" y="210">UQ</text>
+      <text class="col" x="42" y="231">published_year</text>
+      <text class="col" x="42" y="252">publisher</text>
+      <text class="col dim" x="42" y="273">（著者・在庫は既存関連）</text>
+    </g>
+
+    <!-- book_tags -->
+    <g>
+      <rect class="tbl-b" x="430" y="200" width="250" height="146" rx="6"/>
+      <path class="tbl-h" d="M430 206 a6 6 0 0 1 6 -6 h238 a6 6 0 0 1 6 6 v24 h-250 z"/>
+      <text class="tbl-hx" x="442" y="220">book_tags（中間・新規）</text>
+      <text class="col" x="442" y="248">id</text><text class="tag" x="640" y="248">PK</text>
+      <text class="col" x="442" y="269">book_id</text><text class="tag" x="640" y="269">FK</text>
+      <text class="col" x="442" y="290">tag_id</text><text class="tag" x="640" y="290">FK</text>
+      <text class="col" x="442" y="311">created_at</text>
+      <text class="col" x="442" y="332">updated_at</text>
+    </g>
+    <text class="er-note" x="430" y="375">◆ (book_id, tag_id) 複合ユニーク index</text>
+    <text class="er-note" x="445" y="393">同じ本に同じタグは1回だけ（DB 層の最終防衛線 → 01）</text>
+
+    <!-- tags -->
+    <g>
+      <rect class="tbl-b" x="850" y="220" width="220" height="104" rx="6"/>
+      <path class="tbl-h" d="M850 226 a6 6 0 0 1 6 -6 h208 a6 6 0 0 1 6 6 v24 h-220 z"/>
+      <text class="tbl-hx" x="862" y="240">tags（新規）</text>
+      <text class="col" x="862" y="268">id</text><text class="tag" x="1040" y="268">PK</text>
+      <text class="col" x="862" y="289">name</text><text class="tag" x="1040" y="289">UQ</text>
+      <text class="col dim" x="862" y="310">NOT NULL・ユニーク index</text>
+    </g>
+    <text class="er-note2" x="850" y="360">「技術書」も「Ruby」も同列のタグ。</text>
+    <text class="er-note2" x="850" y="378">ジャンル／タグの区別カラムは持たない（→ Q1）</text>
+
+    <!-- m2m edges -->
+    <line class="edge-m2m" x1="250" y1="240" x2="430" y2="240"/>
+    <text class="mult" x="258" y="233">1</text><text class="mult" x="410" y="233">N</text>
+    <line class="edge-m2m" x1="680" y1="272" x2="850" y2="272"/>
+    <text class="mult" x="688" y="265">N</text><text class="mult" x="830" y="265">1</text>
+  </svg>
+  </div>
+  <div class="er-legend">
+    <span><span class="lg-m2m"></span>今回追加した多対多（books ↔ tags、has_many :through）</span>
+    <span><span class="lg-o2m"></span>既存の多対多（books ↔ authors）</span>
+    <span>PK=主キー / FK=外部キー / UQ=ユニーク index</span>
+  </div>
+
+  <h3>着手前に決めた設計判断（AskUserQuestion で合意）</h3>
+  <div class="tblwrap">
+    <table>
+      <thead><tr><th>論点</th><th>採用</th><th>そうしないとどうなるか</th></tr></thead>
+      <tbody>
+        <tr><td>ジャンルとタグの区別</td><td><strong>単一 Tag モデル</strong>（区別しない）</td><td>Genre / Tag 分離だとテーブル4つ・フォーム2系統・バリデーション2系統になり、要件（多対多を1本）に対して過剰</td></tr>
+        <tr><td>機能スコープ</td><td>付与＋バッジ表示＋<strong>タグクリックで絞り込み</strong></td><td>付与だけだとタグを付ける動機が薄い。逆にタグ専用 CRUD 画面まで作ると Author（専用画面なし）と管理粒度が不揃いになる</td></tr>
+        <tr><td>新規タグの入力方式</td><td>「、」「,」区切りの<strong>一括入力</strong></td><td>著者と同じ「1回1個」方式だと、タグは1冊に複数付けるのが普通なので保存を何往復もすることになる</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>差分を見る</h3>
+  <ul class="difflist">
+    <li><a href="https://github.com/junhat6/book-management-system-speee/pull/12/files" target="_blank" rel="noopener"><span class="pr">PR #12</span>タグ・ジャンル管理を実装（feature/tag-management → Files changed）<span class="arrow">↗</span></a></li>
+  </ul>
+
+  <div class="sources">
+    <div class="cap">情報源</div>
+    <ul>
+      <li><a href="https://railsguides.jp/association_basics.html" target="_blank" rel="noopener">Active Record の関連付け</a> — 多対多の2方式（has_many :through / habtm）の選択基準はこの章が原典。</li>
+      <li class="kw">検索キーワード: <code>Rails has_many through tagging</code> / <code>single table tags vs categories design</code></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================================================================ -->
+<section id="schema">
+  <div class="sec-head"><span class="sec-no">01</span><h2 class="serif">多対多の土台 — マイグレーションと3モデル</h2></div>
+  <p class="sec-req">tags / book_tags テーブル、Tag / BookTag モデル、Book への関連追加</p>
+
+  <p class="lead">マイグレーション1本で2テーブルを作る。<strong>NOT NULL・外部キー・ユニーク index という DB 層の制約をこの時点で全部入れる</strong>のがこのリポジトリの流儀（在庫管理・貸出と同じ）。</p>
+
+  <div class="codebox">
+    <div class="path"><span>db/migrate/20260707090000_create_tags_and_book_tags.rb（全文）</span><span class="lang">ruby</span></div>
+    <pre><code class="ruby">class CreateTagsAndBookTags &lt; ActiveRecord::Migration[8.1]
+  def change
+    create_table :tags do |t|
+      t.string :name, null: false
+
+      t.timestamps
+    end
+    add_index :tags, :name, unique: true
+
+    create_table :book_tags do |t|
+      t.references :book, null: false, foreign_key: true
+      t.references :tag, null: false, foreign_key: true
+
+      t.timestamps
+    end
+    add_index :book_tags, [ :book_id, :tag_id ], unique: true
+  end
+end</code></pre>
+  </div>
+
+  <div class="codebox">
+    <div class="path"><span>app/models/tag.rb ・ book_tag.rb（スキーマ注釈を除く全文）</span><span class="lang">ruby</span></div>
+    <pre><code class="ruby">class Tag &lt; ApplicationRecord
+  has_many :book_tags, dependent: :restrict_with_error  # 使用中タグは消せない
+  has_many :books, through: :book_tags
+
+  validates :name, presence: true, uniqueness: true
+end
+
+class BookTag &lt; ApplicationRecord
+  belongs_to :book
+  belongs_to :tag
+
+  validates :tag_id, uniqueness: { scope: :book_id }  # アプリ層の重複防止
+end</code></pre>
+  </div>
+
+  <div class="codebox">
+    <div class="path"><span>app/models/book.rb（関連の追加部分）</span><span class="lang">ruby</span></div>
+    <pre><code class="ruby">has_many :book_tags, dependent: :destroy  # 本を消せばタグ付けも道連れ
+has_many :tags, through: :book_tags</code></pre>
+  </div>
+
+  <h3>活用した Rails の機能</h3>
+  <ul class="feats">
+    <li><div class="fname"><code>has_many :through</code></div><div class="fdesc">中間モデルを明示する多対多。habtm と違い、将来「タグ付け日時」「付けた人」等の属性を中間に足せる。</div></li>
+    <li><div class="fname"><code>t.references ... foreign_key: true</code></div><div class="fdesc">FK カラム＋外部キー制約＋単独 index を1行で。孤児レコード（存在しない本へのタグ付け）を DB が拒否。</div></li>
+    <li><div class="fname"><code>add_index ..., unique: true</code></div><div class="fdesc">tags.name の一意性と (book_id, tag_id) の複合一意性。並行リクエストでも重複を通さない最終防衛線。</div></li>
+    <li><div class="fname"><code>dependent:</code> の使い分け</div><div class="fdesc">Book 側は <code>:destroy</code>、Tag 側は <code>:restrict_with_error</code>。同じ関連でも向きで削除ポリシーが変わる。</div></li>
+    <li><div class="fname"><code>validates uniqueness: { scope: }</code></div><div class="fdesc">複合ユニークのアプリ層版。ユーザーに見せられるエラーメッセージを担当。</div></li>
+    <li><div class="fname">annotaterb</div><div class="fdesc">マイグレーション実行と同時にモデル・テストへスキーマ注釈を自動付与。コードだけでテーブル構造が読める。</div></li>
+  </ul>
+
+  <div class="why">
+    <div class="cap">なぜこの設計か</div>
+    <p><strong>ユニーク制約は二層で張る</strong>。アプリ層の <code>uniqueness</code> だけだと、同時リクエストが両方バリデーションを通過して重複が入り得る（SELECT と INSERT の間に隙間がある）。逆に DB 層だけだと、普通の重複入力までもが例外＝500 エラー画面になる。<strong>モデル層＝UX、DB 層＝整合性</strong>という役割分担は、貸出の三層防御（必須要件4）から一貫している。</p>
+    <p><strong>dependent の非対称</strong>も Author とまったく同じ理屈。本を消すときタグ付けの行だけ残っても無意味なので Book 側は <code>:destroy</code>。一方 Tag は複数の本から共有されるので、使用中に消すと他の本のタグまで消える。専用削除画面が無い現状では <code>:restrict_with_error</code> で誤削除から守る保守的な既定にしておく。</p>
+    <p><strong>habtm を選ばない</strong>のは必須要件3の ADR と同じ判断。中間テーブルにモデルが無いと、属性を足したくなった時点でテーブル再設計になる。</p>
+  </div>
+
+  <div class="sources">
+    <div class="cap">情報源</div>
+    <ul>
+      <li><a href="https://railsguides.jp/active_record_validations.html" target="_blank" rel="noopener">Active Record バリデーション</a> — uniqueness 検証が競合状態を防げず DB 制約の併用が必要、という注意書きの原典。</li>
+      <li><a href="https://railsguides.jp/active_record_migrations.html" target="_blank" rel="noopener">Active Record マイグレーション</a> — <code>references</code> / <code>foreign_key</code> / <code>add_index</code> のオプションはこの章。</li>
+      <li class="kw">検索キーワード: <code>Rails composite unique index join table</code> / <code>dependent restrict_with_error vs destroy</code></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================================================================ -->
+<section id="form">
+  <div class="sec-head"><span class="sec-no">02</span><h2 class="serif">タグ付与フォーム — new_tag_names 仮想属性</h2></div>
+  <p class="sec-req">書籍フォームで「既存タグの複数選択」と「新規タグの一括作成」を両対応</p>
+
+  <p class="lead">著者で使った仮想属性パターン（<code>new_author_name</code>）を拡張し、<strong>「、」「,」区切りで複数タグを一度に作成・紐付けできる</strong> <code>new_tag_names</code> を追加した。DB カラムではない入力を <code>attr_reader</code> ＋カスタム setter で受け、<code>before_save</code> で取り込む。</p>
+
+  <div class="codebox">
+    <div class="path"><span>app/models/book.rb（仮想属性と取り込み）</span><span class="lang">ruby</span></div>
+    <pre><code class="ruby">attr_reader :new_author_name, :new_tag_names, :initial_stock_count
+before_save :attach_new_tags
+
+def new_tag_names=(value)
+  @new_tag_names = value.to_s.strip.presence  # 空白だけの入力は nil に潰す
+end
+
+private
+
+def attach_new_tags
+  # 読点・カンマのどちらでも区切れるようにする（日本語入力での「、」を想定）
+  new_tag_names.to_s.split(/[、,]/).map(&amp;:strip).reject(&amp;:blank?).uniq.each do |name|
+    tag = Tag.find_or_create_by!(name: name)
+    tags &lt;&lt; tag unless tags.exists?(tag.id)
+  end
+end</code></pre>
+  </div>
+
+  <div class="codebox">
+    <div class="path"><span>app/views/books/_form.html.erb（追加部分・抜粋）</span><span class="lang">erb</span></div>
+    <pre><code>&lt;div class="space-y-2"&gt;
+  &lt;%= form.label :tag_ids, "タグ・ジャンル（既存）", class: "label" %&gt;
+  &lt;%= form.collection_select :tag_ids, @tags, :id, :name, {},
+        { multiple: true, class: "select select-bordered w-full min-h-32" } %&gt;
+&lt;/div&gt;
+
+&lt;div&gt;
+  &lt;%= form.label :new_tag_names, "新しいタグを追加", class: "label" %&gt;
+  &lt;%= form.text_field :new_tag_names, class: "input input-bordered w-full",
+        placeholder: "例: 技術書、Ruby（「、」区切りで複数登録）" %&gt;
+&lt;/div&gt;</code></pre>
+  </div>
+
+  <div class="codebox">
+    <div class="path"><span>app/controllers/books_controller.rb（strong parameters）</span><span class="lang">ruby</span></div>
+    <pre><code class="ruby">def book_params
+  params.require(:book).permit(:title, :isbn, :published_year, :publisher, :new_author_name, :new_tag_names, :initial_stock_count, author_ids: [], tag_ids: [])
+end</code></pre>
+  </div>
+
+  <h3>活用した Rails の機能</h3>
+  <ul class="feats">
+    <li><div class="fname">仮想属性（<code>attr_reader</code> ＋カスタム setter）</div><div class="fdesc">DB カラムに無いフォーム入力をモデルで受ける定番。setter で正規化（strip / presence）まで済ませる。</div></li>
+    <li><div class="fname"><code>find_or_create_by!</code></div><div class="fdesc">同名タグは再利用、無ければ作成。「技術書」タグが本の数だけ増殖するのを防ぐ。</div></li>
+    <li><div class="fname"><code>before_save</code> コールバック</div><div class="fdesc">create / update 両方で発火するため、新規登録でも編集でも同じ経路でタグが取り込まれる。</div></li>
+    <li><div class="fname"><code>collection_select multiple</code></div><div class="fdesc">既存タグの複数選択。<code>tag_ids=</code> は has_many :through が自動生成する差し替え用 setter。</div></li>
+    <li><div class="fname">strong parameters の配列許可</div><div class="fdesc"><code>tag_ids: []</code> の明示が必要。書き忘れると Rails はエラーにせず黙って捨てる（気づきにくいバグの温床）。</div></li>
+  </ul>
+
+  <div class="why">
+    <div class="cap">なぜこの設計か</div>
+    <p><strong>なぜ複数一括入力にしたか</strong>：著者は1冊に1〜2人だが、タグは「技術書・Ruby・入門」のように<strong>まとめて付けるのが自然な単位</strong>。1個ずつしか足せないと、タグがまだ無い初期ほど保存を何往復もさせられる。区切り文字に「、」を含めたのは、日本語 IME で打ちやすい記号だから（カンマだけだと入力のたびに IME 切り替えが要る）。</p>
+    <p><strong>取り込みロジックがタグ付与の重複に3段構えで耐える</strong>：入力内の重複は <code>uniq</code> が畳み、既存タグとの重複は <code>find_or_create_by!</code> が再利用し、紐付け済みタグは <code>tags.exists?</code> ガードがスキップする。これが無いと「既に付いているタグ名を入れて保存 → 複合ユニーク index 違反で 500」になる。</p>
+    <p><strong>ロジックをモデルに置く</strong>のは、コントローラに書くと new / create / edit / update の4箇所で同じ処理が要るから。モデルの <code>before_save</code> なら保存経路が何であれ1箇所で済み、モデル単体テストで検証できる。</p>
+  </div>
+
+  <div class="sources">
+    <div class="cap">情報源</div>
+    <ul>
+      <li><a href="https://railsguides.jp/active_record_callbacks.html" target="_blank" rel="noopener">Active Record コールバック</a> — before_save がいつ発火するか（create / update 両方）の原典。</li>
+      <li><a href="https://railsguides.jp/form_helpers.html" target="_blank" rel="noopener">Action View フォームヘルパー</a> — collection_select と複数選択の仕様はこの章。</li>
+      <li class="kw">検索キーワード: <code>Rails virtual attribute form input</code> / <code>find_or_create_by race condition</code></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================================================================ -->
+<section id="filter">
+  <div class="sec-head"><span class="sec-no">03</span><h2 class="serif">タグ絞り込み — with_tag スコープ</h2></div>
+  <p class="sec-req">一覧・詳細のタグバッジをクリックすると、そのタグが付いた本だけに絞り込む</p>
+
+  <p class="lead">絞り込みロジックは検索（<code>scope :search</code>）と同じく<strong>モデルのスコープ</strong>に置いた。blank なら <code>all</code> を返す設計にしてあるので、<strong>検索キーワードとタグ絞り込みをメソッドチェーンでそのまま合成できる</strong>。</p>
+
+  <div class="codebox">
+    <div class="path"><span>app/models/book.rb（scope :with_tag）</span><span class="lang">ruby</span></div>
+    <pre><code class="ruby">scope :with_tag, -&gt;(tag_id) {
+  return all if tag_id.blank?
+
+  joins(:tags).where(tags: { id: tag_id })
+}</code></pre>
+  </div>
+
+  <div class="codebox">
+    <div class="path"><span>app/controllers/books_controller.rb（index）</span><span class="lang">ruby</span></div>
+    <pre><code class="ruby">def index
+  # 存在しない tag_id は絞り込みなしとして扱う（フィルタ表示も出さない）
+  @current_tag = Tag.find_by(id: params[:tag_id])
+  @books = Book.search(params[:q]).with_tag(@current_tag&amp;.id)
+               .includes(:authors, :tags, copies: :rentals).order(created_at: :desc)
+end</code></pre>
+  </div>
+
+  <div class="codebox">
+    <div class="path"><span>app/views/books/index.html.erb（タグバッジと絞り込み表示・抜粋）</span><span class="lang">erb</span></div>
+    <pre><code>&lt;%# 検索フォームに hidden で tag_id を持たせ、検索してもタグ絞り込みが外れないようにする %&gt;
+&lt;%= form.hidden_field :tag_id, value: params[:tag_id] %&gt;
+
+&lt;% if @current_tag %&gt;
+  &lt;div class="mb-4 flex items-center gap-2"&gt;
+    &lt;span class="text-sm text-base-content/60"&gt;タグで絞り込み中:&lt;/span&gt;
+    &lt;span class="badge badge-primary"&gt;&lt;%= @current_tag.name %&gt;&lt;/span&gt;
+    &lt;%= link_to "解除", books_path(q: params[:q].presence), class: "link link-hover text-sm" %&gt;
+  &lt;/div&gt;
+&lt;% end %&gt;
+
+&lt;%# 一覧の各行：タグをクリック可能なバッジとして表示（現在の検索語 q は引き継ぐ） %&gt;
+&lt;% book.tags.each do |tag| %&gt;
+  &lt;%= link_to tag.name, books_path(tag_id: tag.id, q: params[:q].presence),
+        class: "badge badge-outline badge-primary" %&gt;
+&lt;% end %&gt;</code></pre>
+  </div>
+
+  <h3>活用した Rails の機能</h3>
+  <ul class="feats">
+    <li><div class="fname">スコープの合成</div><div class="fdesc"><code>Book.search(q).with_tag(id).includes(...)</code> と数珠つなぎにできる。各スコープが「blank なら all」を守っているのが合成可能性の鍵。</div></li>
+    <li><div class="fname"><code>joins(:tags)</code></div><div class="fdesc">INNER JOIN で「タグが付いている本」だけに絞る。単一 tag_id との一致なので行の複製が起きず <code>distinct</code> 不要。</div></li>
+    <li><div class="fname"><code>find_by</code>（例外を投げない検索）</div><div class="fdesc"><code>find</code> だと不正な tag_id で 404。<code>find_by</code> は nil を返すので「絞り込みなし」に自然に落とせる。</div></li>
+    <li><div class="fname"><code>includes(:tags)</code></div><div class="fdesc">一覧で各行のタグを表示するため eager load。無いと書籍数ぶんのタグ取得クエリが走る（N+1）。</div></li>
+  </ul>
+
+  <div class="why">
+    <div class="cap">なぜこの設計か</div>
+    <p><strong>スコープをモデルに置く</strong>のは検索実装（必須要件5）と同じ理由。コントローラに <code>where</code> を直書きすると、検索との組み合わせ分岐（q あり／tag あり／両方）がコントローラ内で爆発する。「blank なら all」のスコープ2つを常に両方通す形にすれば、<strong>分岐そのものが消える</strong>。</p>
+    <p><strong>存在しない tag_id を「絞り込みなし」に落とす</strong>のは UX の選択。URL を手で書き換えた・削除済みタグの古いリンクを踏んだ、という場合に「0件です」と出すより、全件表示に戻して絞り込み表示も出さないほうが行き止まりにならない。<code>@current_tag&amp;.id</code>（safe navigation）でスコープに nil が渡り、<code>all</code> に落ちる。</p>
+    <p><strong>hidden_field で tag_id を運ぶ</strong>のは、GET フォームは action の URL クエリを引き継がないから。これが無いと「タグで絞り込んでから検索」した瞬間に絞り込みが静かに外れる。逆方向（タグクリック時に <code>q</code> を渡す）も同様で、<strong>検索とタグ絞り込みが直交する2軸</strong>として共存する。</p>
+  </div>
+
+  <div class="sources">
+    <div class="cap">情報源</div>
+    <ul>
+      <li><a href="https://railsguides.jp/active_record_querying.html" target="_blank" rel="noopener">Active Record クエリインターフェイス</a> — scope・joins・includes（N+1 対策）の使い分けがすべてこの章にある。</li>
+      <li class="kw">検索キーワード: <code>Rails scope composition filter params</code> / <code>Rails joins vs includes filtering association</code></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================================================================ -->
+<section id="tdd">
+  <div class="sec-head"><span class="sec-no">04</span><h2 class="serif">TDD の記録 — Red の中身まで確認する</h2></div>
+  <p class="sec-req">CLAUDE.md のルール：「意図した理由・意図した箇所で Red になっているか」を失敗メッセージで目視確認してから実装</p>
+
+  <p class="lead">テスト15件（モデル11・コントローラ4）を先に書き、実装前に <code>rails test</code> を実行。<strong>0 failures / 15 errors — 失敗したのは新規テストだけで、全件が「実装が存在しない」ことを理由に落ちている</strong>のを確認してから実装に入った。</p>
+
+  <div class="tblwrap">
+    <table>
+      <thead><tr><th>Red 時の失敗メッセージ</th><th>意味（＝これから実装するもの）</th></tr></thead>
+      <tbody>
+        <tr><td><code>NameError: uninitialized constant Tag</code></td><td>Tag モデルが存在しない（8件）</td></tr>
+        <tr><td><code>NoMethodError: undefined method `tag_ids='</code></td><td>Book–Tag の関連が存在しない</td></tr>
+        <tr><td><code>NoMethodError: undefined method `new_tag_names='</code></td><td>仮想属性が存在しない</td></tr>
+        <tr><td><code>NoMethodError: undefined method `with_tag'</code></td><td>絞り込みスコープが存在しない</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note">
+    <div class="cap">なぜ Red の「理由」まで見るのか</div>
+    実装が無くても通ってしまうテスト（偽陽性）は、将来その機能が壊れても Green のままになる。「Red になった」ではなく「<strong>期待した箇所が・期待した理由で</strong> Red になった」ことを failures/errors の内訳とメッセージで確認して初めて、このテストは実装を検証していると言える。今回は fixtures を使わずテスト内で <code>Tag.create!</code> する構成にしたため、テーブルが無い段階でも既存テストを1件も巻き込まずに Red を観測できた。
+  </div>
+
+  <h3>テストの見どころ（抜粋）</h3>
+  <div class="codebox">
+    <div class="path"><span>test/models/book_test.rb（一括作成と再利用）</span><span class="lang">ruby</span></div>
+    <pre><code class="ruby">test "new_tag_names で複数の新しいタグを作成して紐づける（読点・カンマ区切り）" do
+  @book.new_tag_names = "技術書、Ruby, 入門"
+
+  assert_difference("Tag.count", 3) do
+    assert @book.save
+  end
+
+  assert_equal [ "Ruby", "入門", "技術書" ], @book.reload.tags.map(&amp;:name).sort
+end
+
+test "既に紐づいているタグ名を指定しても重複して紐づけない" do
+  tag = Tag.create!(name: "技術書")
+  @book.tag_ids = [ tag.id ]
+  @book.save!
+  @book.new_tag_names = "技術書"
+
+  assert_no_difference("BookTag.count") do
+    assert @book.save
+  end
+end</code></pre>
+  </div>
+
+  <h3>結果と実機検証</h3>
+  <ul>
+    <li>実装後の <code>rails test</code>：<strong>118 tests / 282 assertions / 0 failures / 0 errors</strong>（既存103件も全て Green のまま）</li>
+    <li>curl による実画面フロー検証：管理者ログイン → 「技術書、Ruby」を一括入力して書籍登録 → 一覧・詳細にバッジ表示 → バッジクリックで対象1冊のみに絞り込み（全111冊中）→ 編集フォームで選択状態保持 → 不正な <code>tag_id</code> は絞り込み無視、まで確認済み</li>
+  </ul>
+
+  <div class="sources">
+    <div class="cap">情報源</div>
+    <ul>
+      <li><a href="https://railsguides.jp/testing.html" target="_blank" rel="noopener">Rails テスティングガイド</a> — assert_difference・fixtures・テスト分類（モデル／コントローラ）の原典。</li>
+      <li class="kw">検索キーワード: <code>TDD red green refactor false positive test</code> / <code>Rails assert_difference</code></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================================================================ -->
+<section id="qa">
+  <div class="sec-head"><span class="sec-no">05</span><h2 class="serif">想定問答 — 強みと、正直な弱点</h2></div>
+  <p class="sec-req">レビュー会で聞かれそうな質問と回答の準備。<span class="verdict ok" style="position:static">強み</span>は胸を張って、<span class="verdict gap" style="position:static">未実装</span>は正直に + 「やるならこうする」をセットで</p>
+
+  <h3>まず押さえる3つの強み</h3>
+  <ul class="strengths">
+    <li><b>パターンの一貫性</b><span>join モデル明示・二層ユニーク制約・仮想属性・dependent の非対称——必須要件の Book–Author と同じ設計語彙で2本目の多対多を組んだ（→ 01, 02）</span></li>
+    <li><b>合成可能なスコープ設計</b><span>「blank なら all」を守る search × with_tag で、検索とタグ絞り込みが分岐ゼロで直交する。hidden_field で状態も相互保持（→ 03）</span></li>
+    <li><b>Red の理由まで見る TDD</b><span>15件全部が「実装が無い」ことを理由に落ちるのを確認してから着手。偽陽性の混入をプロセスで防いだ（→ 04）</span></li>
+  </ul>
+
+  <h3>想定問答（クリックで回答を開く）</h3>
+
+  <details class="qa">
+    <summary><span class="q">Q1</span>「ジャンル」と「タグ」を区別しなくてよかったのですか？</summary>
+    <div class="a">
+      <p><span class="verdict ok">説明できる選択</span>要件は「ジャンルやタグをつけられる」「書籍―タグの多対多」で、両者の区別は求めていません。区別を持ち込むと Genre/Tag 分離ならテーブル4つ、kind カラム方式でもフォームと検証が2系統になり、得られるのは表示上の分類だけです。着手前に選択肢3案（単一 Tag／kind カラム／テーブル分離)を比較して単一 Tag を選びました。<strong>将来区別が必要になったら</strong>、tags に <code>kind</code> カラムを足す enum 方式へマイグレーション1本＋既定値で移行でき、単一テーブルにしておいたことが移行コストを下げる方向に働きます。</p>
+    </div>
+  </details>
+
+  <details class="qa">
+    <summary><span class="q">Q2</span>タグの改名や削除はどこでやるのですか？</summary>
+    <div class="a">
+      <p><span class="verdict gap">未実装</span>タグ専用の管理画面（CRUD）は意図的に作っていません。Author に専用画面が無いのと同じ管理粒度に揃えています。書籍からタグを外すことはできますが、タグ自体の改名・削除はできません。</p>
+      <p><strong>やるなら</strong>：管理者専用の <code>TagsController</code>（index / update / destroy）を追加します。認可は既存の <code>require_admin</code> を before_action で掛けるだけ、削除は <code>dependent: :restrict_with_error</code> が既に効いているので「使用中タグは消せません」のエラーメッセージ付きで安全に落ちます。土台の制約が先にあるので、画面は薄く作れます。</p>
+    </div>
+  </details>
+
+  <details class="qa">
+    <summary><span class="q">Q3</span>どの本からも外された「未使用タグ」が溜まりませんか？</summary>
+    <div class="a">
+      <p><span class="verdict gap">改善余地</span>溜まります。書籍からタグを外しても tags の行は残り、現状それを掃除する仕組みはありません。ただし未使用タグは書籍フォームの選択肢に出続けるだけで、一覧・詳細の表示や絞り込み結果を壊すことはありません。</p>
+      <p><strong>やるなら</strong>：2案あります。①BookTag の <code>after_destroy</code> で「最後の1件を外したときにタグも消す」——即時性はあるが、直後に再利用するタグまで消える。②未使用タグを <code>Tag.where.missing(:book_tags)</code>（Rails 7 の <code>missing</code>）で洗い出す定期ジョブか管理画面——運用で判断できる余地が残る。管理画面（Q2）とセットなら②が自然です。</p>
+    </div>
+  </details>
+
+  <details class="qa">
+    <summary><span class="q">Q4</span>「技術書 かつ Ruby」のような複数タグの絞り込みはできますか？</summary>
+    <div class="a">
+      <p><span class="verdict gap">未実装</span>絞り込みは1タグずつです（バッジをクリックするとそのタグに切り替わる）。AND 検索は未対応です。</p>
+      <p><strong>やるなら</strong>：<code>with_tags(tag_ids)</code> スコープを追加し、<code>joins(:tags).where(tags: { id: tag_ids }).group(:id).having("COUNT(DISTINCT tags.id) = ?", tag_ids.size)</code> で「指定タグを全部持つ本」を取ります。JOIN で1本=タグ数ぶんの行に増えることを利用して件数一致で判定する、多対多 AND 検索の定石です。UI 側は選択中タグの配列を URL クエリ（<code>tag_ids[]</code>）で持ち回る変更が必要で、モデルよりビューの改修が大きくなります。</p>
+    </div>
+  </details>
+
+  <details class="qa">
+    <summary><span class="q">Q5</span>同時に2人が同じ名前の新規タグで保存したらどうなりますか？</summary>
+    <div class="a">
+      <p><span class="verdict gap">正直に言うと隙間あり</span><code>find_or_create_by!</code> は「SELECT → 無ければ INSERT」の2ステップなので、同時実行では両方が「無い」と判定し得ます。その場合、後着の INSERT は tags.name のユニーク index（DB 層の最終防衛線）に弾かれて例外になり、タグの重複行は入りませんが、ユーザーには 500 画面が見えます。貸出機能では同種の例外を <code>rescue_from</code> で UX に変換しましたが、タグでは未対応です。書籍登録は管理者のみ・同名タグの同時作成という条件の狭さから、発生確率を考えて割り切りました。</p>
+      <p><strong>やるなら</strong>：<code>find_or_create_by!</code> を <code>Tag.create_or_find_by!(name: name)</code>（Rails 6+）に差し替えます。こちらは先に INSERT を試みてユニーク制約違反なら既存行を取り直すため、この競合をリトライなしで吸収できます。</p>
+    </div>
+  </details>
+
+  <details class="qa">
+    <summary><span class="q">Q6</span>「Ruby」と「ruby」は別タグになりますか？（表記ゆれ）</summary>
+    <div class="a">
+      <p><span class="verdict gap">改善余地</span>別タグになります。tags.name の一意性は大文字小文字を区別したままで、正規化は前後空白の除去（strip）だけです。authors.name も同じ割り切りなので、リポジトリ内では一貫しています。</p>
+      <p><strong>やるなら</strong>：表示名は入力どおり残したいので、単純な <code>normalizes ... downcase</code> は使えません。比較用の <code>name_normalized</code> カラム（downcase を保存、ここにユニーク index）を足し、<code>find_or_create_by!</code> の検索キーをそちらに切り替えます。「表示用の値と一意性判定用の値を分ける」のが表記ゆれ対策の定石です。</p>
+    </div>
+  </details>
+
+  <details class="qa">
+    <summary><span class="q">Q7</span>タグ絞り込みで一覧が遅くなりませんか？（N+1）</summary>
+    <div class="a">
+      <p><span class="verdict ok">強み</span>一覧は <code>includes(:authors, :tags, copies: :rentals)</code> でタグも著者も在庫もまとめて eager load しており、書籍数が増えてもクエリ本数は一定です。絞り込み自体は <code>joins</code> による INNER JOIN で、book_tags には book_id / tag_id 両方の index（<code>t.references</code> が自動生成）が張ってあるので index が効きます。開発環境では bullet gem が N+1 を検知する体制もあります。残る課題は全件表示そのもの（ページネーション未導入、発展要件5）で、これはタグ機能ではなく一覧全体の課題として把握しています。</p>
+    </div>
+  </details>
+</section>
+
+<footer>
+  <p>発展要件3: タグ・ジャンル管理 実装解説ドシエ ・ 生成 2026-07-07 ・ ソース: <a href="https://github.com/junhat6/book-management-system-speee/pull/12" target="_blank" rel="noopener">PR #12</a>（feature/tag-management @ 6900364）</p>
+</footer>
+</main>
+</div>
+
+<script>
+(function () {
+  // --- Ruby ミニハイライタ（文字列→コメント→シンボル/ハッシュキー→キーワード→DSL→定数→数値の順で1パス走査）
+  var esc = function (s) {
+    return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  };
+  var re = /("(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*')|(#[^\n]*)|(:[A-Za-z_][A-Za-z0-9_]*[?!]?|\b[A-Za-z_][A-Za-z0-9_]*:(?=\s))|\b(class|module|def|end|do|if|unless|else|elsif|then|return|private|extend|include|self|true|false|nil|case|when|rescue|begin)\b|\b(validates|validate|has_many|has_one|belongs_to|has_secure_password|normalizes|scope|before_save|before_action|skip_before_action|helper_method|rescue_from|allow_unauthenticated_access|rate_limit|add_index|create_table|resources|resource|root|get|mount|attr_reader|delegate|redirect_to|render)\b|\b([A-Z][A-Za-z0-9_]*(?:::[A-Z][A-Za-z0-9_]*)*)\b|\b(\d+(?:\.\d+)?)\b/g;
+  var cls = ["tok-s", "tok-c", "tok-y", "tok-k", "tok-d", "tok-t", "tok-n"];
+  document.querySelectorAll("pre > code.ruby").forEach(function (block) {
+    var src = block.textContent;
+    var out = "";
+    var last = 0;
+    var m;
+    re.lastIndex = 0;
+    while ((m = re.exec(src)) !== null) {
+      out += esc(src.slice(last, m.index));
+      var i;
+      for (i = 1; i <= 7; i++) { if (m[i] !== undefined) break; }
+      out += '<span class="' + cls[i - 1] + '">' + esc(m[0]) + "</span>";
+      last = m.index + m[0].length;
+    }
+    out += esc(src.slice(last));
+    block.innerHTML = out;
+  });
+
+  // --- 目次スクロールスパイ
+  var links = Array.prototype.slice.call(document.querySelectorAll(".toc a"));
+  var map = {};
+  links.forEach(function (a) { map[a.getAttribute("href").slice(1)] = a; });
+  if ("IntersectionObserver" in window) {
+    var current = null;
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) {
+          if (current) current.classList.remove("now");
+          current = map[e.target.id];
+          if (current) current.classList.add("now");
+        }
+      });
+    }, { rootMargin: "-15% 0px -70% 0px" });
+    document.querySelectorAll("main section[id]").forEach(function (s) { io.observe(s); });
+  }
+})();
+</script>
+
+</body></html>
