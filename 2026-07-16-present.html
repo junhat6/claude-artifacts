@@ -1,0 +1,643 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>We部 第1回チーム制作 成果発表会</title>
+<style>*,*::before,*::after{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,'Hiragino Sans',sans-serif;line-height:1.6;-webkit-text-size-adjust:100%}img{max-width:100%}</style>
+</head>
+<body>
+<title>We部 第1回チーム制作 成果発表会</title>
+<style>
+  :root {
+    --paper: #F1F4F2;
+    --paper-raised: #FFFFFF;
+    --ink: #142238;
+    --ink-soft: #57647D;
+    --accent: #E2992E;
+    --accent-deep: #8C5E12;
+    --line: rgba(20, 35, 59, 0.18);
+    --grid-line: rgba(20, 35, 59, 0.06);
+    --ruler-w: 34px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper: #0E1620;
+      --paper-raised: #16202C;
+      --ink: #E7ECF3;
+      --ink-soft: #93A1B8;
+      --accent: #F0B44C;
+      --accent-deep: #F0B44C;
+      --line: rgba(231, 236, 243, 0.2);
+      --grid-line: rgba(231, 236, 243, 0.055);
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #0E1620;
+    --paper-raised: #16202C;
+    --ink: #E7ECF3;
+    --ink-soft: #93A1B8;
+    --accent: #F0B44C;
+    --accent-deep: #F0B44C;
+    --line: rgba(231, 236, 243, 0.2);
+    --grid-line: rgba(231, 236, 243, 0.055);
+  }
+  :root[data-theme="light"] {
+    --paper: #F1F4F2;
+    --paper-raised: #FFFFFF;
+    --ink: #142238;
+    --ink-soft: #57647D;
+    --accent: #E2992E;
+    --accent-deep: #8C5E12;
+    --line: rgba(20, 35, 59, 0.18);
+    --grid-line: rgba(20, 35, 59, 0.06);
+  }
+  @media (max-width: 640px) {
+    :root { --ruler-w: 20px; }
+  }
+
+  * { box-sizing: border-box; }
+  html, body {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    background: var(--paper);
+    color: var(--ink);
+  }
+  body {
+    font-family: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic Medium",
+      "YuGothic", "Noto Sans JP", "Segoe UI", sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .mono {
+    font-family: ui-monospace, "SF Mono", "Cascadia Code", "Roboto Mono", Consolas,
+      Menlo, monospace;
+    font-variant-numeric: tabular-nums;
+  }
+  *:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+
+  /* ---- ruler (left rail: blueprint ruler + progress) ---- */
+  .ruler {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: var(--ruler-w);
+    height: 100dvh;
+    border-right: 1px solid var(--line);
+    background: var(--paper-raised);
+    z-index: 20;
+  }
+  .ruler-ticks {
+    position: absolute;
+    inset: 24px 0;
+    right: 0;
+    left: 0;
+  }
+  .ruler-ticks span {
+    position: absolute;
+    right: 4px;
+    width: 8px;
+    height: 1px;
+    background: var(--line);
+  }
+  .ruler-progress {
+    position: absolute;
+    left: 4px;
+    right: 10px;
+    height: 2px;
+    background: var(--accent);
+    top: 24px;
+    transition: top 0.5s ease;
+    border-radius: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ruler-progress { transition: none; }
+  }
+
+  /* ---- persistent top bar (wordmark + slide counter) ---- */
+  .topbar {
+    position: fixed;
+    top: clamp(20px, 4vw, 40px);
+    left: calc(var(--ruler-w) + clamp(28px, 7vw, 110px));
+    right: clamp(28px, 7vw, 110px);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    z-index: 20;
+    pointer-events: none;
+  }
+  .wordmark {
+    font-size: 0.75rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+  .counter {
+    font-size: 0.85rem;
+    color: var(--ink-soft);
+    letter-spacing: 0.04em;
+    margin: 0;
+  }
+  @media (max-width: 640px) {
+    .topbar { left: calc(var(--ruler-w) + 22px); right: 22px; }
+  }
+
+  /* ---- deck ---- */
+  .deck {
+    margin-left: var(--ruler-w);
+    height: 100dvh;
+    width: calc(100vw - var(--ruler-w));
+    display: flex;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .deck { scroll-behavior: auto; }
+  }
+  .deck::-webkit-scrollbar { display: none; }
+
+  .slide {
+    flex: 0 0 100%;
+    width: calc(100vw - var(--ruler-w));
+    height: 100dvh;
+    scroll-snap-align: start;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: clamp(28px, 6vw, 88px) clamp(28px, 7vw, 110px);
+    background-color: var(--paper);
+    background-image:
+      repeating-linear-gradient(0deg, var(--grid-line) 0 1px, transparent 1px 34px),
+      repeating-linear-gradient(90deg, var(--grid-line) 0 1px, transparent 1px 34px);
+  }
+  @media (max-width: 640px) {
+    .slide { width: 100vw; padding: 22px 22px 96px; }
+    .deck { width: 100vw; }
+  }
+
+  .eyebrow {
+    font-size: 0.8rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent-deep);
+    margin: 0 0 18px;
+  }
+  h1, h2 {
+    font-weight: 700;
+    line-height: 1.25;
+    text-wrap: balance;
+    margin: 0 0 20px;
+    color: var(--ink);
+  }
+  .slide h1 { font-size: clamp(2.1rem, 5.4vw, 4rem); }
+  .slide h2 { font-size: clamp(1.7rem, 4vw, 2.9rem); }
+  .slide p, .slide li {
+    font-size: clamp(1rem, 1.5vw, 1.28rem);
+    line-height: 1.75;
+    color: var(--ink-soft);
+    max-width: 62ch;
+  }
+  .slide p.lead {
+    color: var(--ink);
+    font-size: clamp(1.15rem, 2vw, 1.55rem);
+    line-height: 1.7;
+    max-width: 34ch;
+    margin: 0 0 8px;
+  }
+
+  /* ---- facts row ---- */
+  .facts {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 28px;
+    max-width: 56ch;
+  }
+  .fact {
+    display: grid;
+    grid-template-columns: 8.5em 1fr;
+    gap: 16px;
+    padding: 12px 0;
+    border-top: 1px solid var(--line);
+    align-items: baseline;
+  }
+  .fact:last-child { border-bottom: 1px solid var(--line); }
+  .fact-label {
+    font-size: 0.85rem;
+    color: var(--accent-deep);
+    letter-spacing: 0.04em;
+  }
+  .fact-value {
+    color: var(--ink);
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+  @media (max-width: 640px) {
+    .fact { grid-template-columns: 1fr; gap: 4px; }
+  }
+
+  /* ---- timeline (git-log) ---- */
+  .timeline {
+    position: relative;
+    margin-top: 10px;
+    max-width: 70ch;
+  }
+  .timeline::before {
+    content: "";
+    position: absolute;
+    left: 5.5px;
+    top: 12px;
+    bottom: 12px;
+    width: 2px;
+    background: var(--line);
+  }
+  .log-row {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 9px 0;
+    flex-wrap: wrap;
+  }
+  .log-dot {
+    flex: 0 0 13px;
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    background: var(--paper);
+    border: 2px solid var(--ink-soft);
+  }
+  .log-row.is-now .log-dot {
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+  .log-row.is-gap .log-dot {
+    border-style: dashed;
+    background: transparent;
+  }
+  .log-date {
+    color: var(--ink-soft);
+    font-size: 1.05rem;
+    width: 6.8em;
+    flex-shrink: 0;
+  }
+  .log-tag {
+    color: var(--accent-deep);
+    font-size: 1rem;
+    width: 3.2em;
+    flex-shrink: 0;
+  }
+  .log-msg {
+    color: var(--ink);
+    font-size: 1.1rem;
+    line-height: 1.55;
+    flex: 1 1 240px;
+  }
+  .log-row.is-gap .log-date,
+  .log-row.is-gap .log-tag,
+  .log-row.is-gap .log-msg {
+    color: var(--ink-soft);
+    font-style: italic;
+  }
+  .log-row.is-now .log-date,
+  .log-row.is-now .log-tag { color: var(--accent-deep); font-weight: 700; }
+  .log-row.is-now .log-msg { font-weight: 700; font-style: normal; }
+  @media (max-width: 640px) {
+    .log-msg { flex-basis: 100%; margin-left: calc(13px + 16px); }
+  }
+
+  /* ---- agenda ---- */
+  .agenda {
+    margin-top: 8px;
+    max-width: 54ch;
+  }
+  .agenda-item {
+    display: flex;
+    gap: 18px;
+    align-items: flex-start;
+    padding: 14px 0;
+    border-top: 1px solid var(--line);
+  }
+  .agenda-item:last-child { border-bottom: 1px solid var(--line); }
+  .agenda-num {
+    color: var(--accent);
+    font-size: 1.1rem;
+    width: 1.6em;
+    flex-shrink: 0;
+  }
+  .agenda-text b {
+    display: block;
+    color: var(--ink);
+    font-size: 1.08rem;
+    margin-bottom: 2px;
+  }
+  .agenda-text span {
+    color: var(--ink-soft);
+    font-size: 0.95rem;
+  }
+  .callout {
+    margin-top: 22px;
+    padding: 16px 20px;
+    border-left: 2px solid var(--accent);
+    background: var(--paper-raised);
+    max-width: 54ch;
+  }
+  .callout p {
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: var(--ink-soft);
+    max-width: none;
+  }
+  .callout p + p { margin-top: 8px; }
+
+  .slide .closing {
+    font-size: clamp(2.8rem, 9vw, 6.8rem);
+    font-weight: 700;
+    line-height: 1.3;
+    text-wrap: balance;
+    max-width: 13ch;
+    margin: 0;
+    color: var(--ink);
+  }
+  .closing .accent-line { color: var(--accent-deep); }
+
+  /* ---- nav controls ---- */
+  .nav {
+    position: fixed;
+    bottom: clamp(18px, 3.5vw, 34px);
+    left: var(--ruler-w);
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    z-index: 20;
+    pointer-events: none;
+  }
+  .dots {
+    display: flex;
+    gap: 9px;
+    pointer-events: auto;
+  }
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: 1px solid var(--ink-soft);
+    background: transparent;
+    padding: 0;
+    cursor: pointer;
+  }
+  .dot.is-active {
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+  .arrow-btn {
+    pointer-events: auto;
+    background: var(--paper-raised);
+    border: 1px solid var(--line);
+    color: var(--ink);
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .arrow-btn:hover { border-color: var(--accent); color: var(--accent-deep); }
+  .arrow-btn:disabled { opacity: 0.3; cursor: default; }
+
+  .hint {
+    position: fixed;
+    bottom: clamp(18px, 3.5vw, 34px);
+    right: clamp(24px, 5vw, 64px);
+    font-size: 0.72rem;
+    color: var(--ink-soft);
+    opacity: 0.7;
+    z-index: 20;
+    margin: 0;
+  }
+  @media (max-width: 640px) {
+    .hint { display: none; }
+  }
+</style>
+
+<div class="ruler">
+  <div class="ruler-ticks" id="ruler-ticks"></div>
+  <div class="ruler-progress" id="ruler-progress"></div>
+</div>
+
+<div class="topbar">
+  <p class="wordmark">We部 — Web Community</p>
+  <p class="counter mono" id="counter">01 / 05</p>
+</div>
+
+<main class="deck" id="deck">
+
+  <section class="slide">
+    <p class="eyebrow mono">TEAM SEISAKU ① · MVP DEMO DAY</p>
+    <h1>第1回チーム制作<br>成果発表会</h1>
+    <p class="lead">2026.07.16（木）<br>@ OPTiM Club KOBE</p>
+  </section>
+
+  <section class="slide">
+    <p class="eyebrow mono">ABOUT US</p>
+    <h2>We部とは</h2>
+    <p class="lead">長期インターンに向けて、<br>チーム開発の経験を積む学生コミュニティ。</p>
+    <div class="facts">
+      <div class="fact">
+        <div class="fact-label mono">対象</div>
+        <div class="fact-value">神戸電子専門学校 IT学科 1・2年生</div>
+      </div>
+      <div class="fact">
+        <div class="fact-label mono">メンバー</div>
+        <div class="fact-value">11名。多くはプログラミング未経験からのスタート</div>
+      </div>
+      <div class="fact">
+        <div class="fact-label mono">連携</div>
+        <div class="fact-value">株式会社オプティム — 本日はこの場所をお借りしています</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <p class="eyebrow mono">OUR LOG — 05.07 → 07.16</p>
+    <h2>ここまでの歩み</h2>
+    <div class="timeline">
+      <div class="log-row">
+        <div class="log-dot"></div>
+        <div class="log-date mono">05.07</div>
+        <div class="log-tag mono">#01</div>
+        <div class="log-msg">キックオフ — オリエンテーション・自己紹介・チーム分け</div>
+      </div>
+      <div class="log-row">
+        <div class="log-dot"></div>
+        <div class="log-date mono">05.14</div>
+        <div class="log-tag mono">#02</div>
+        <div class="log-msg">OPTiM Club KOBE 始動 — Gemini CLI ハンズオン</div>
+      </div>
+      <div class="log-row">
+        <div class="log-dot"></div>
+        <div class="log-date mono">05.21</div>
+        <div class="log-tag mono">#03</div>
+        <div class="log-msg">Git・GitHub ハンズオン</div>
+      </div>
+      <div class="log-row">
+        <div class="log-dot"></div>
+        <div class="log-date mono">05.28</div>
+        <div class="log-tag mono">#04</div>
+        <div class="log-msg">デザインスプリント — アプリの種を考える</div>
+      </div>
+      <div class="log-row">
+        <div class="log-dot"></div>
+        <div class="log-date mono">06.04</div>
+        <div class="log-tag mono">#05</div>
+        <div class="log-msg">モックアップ発表・技術スタック共有</div>
+      </div>
+      <div class="log-row">
+        <div class="log-dot"></div>
+        <div class="log-date mono">06.11</div>
+        <div class="log-tag mono">#06</div>
+        <div class="log-msg">PRD レビュー・タスク分解・環境構築開始</div>
+      </div>
+      <div class="log-row is-gap">
+        <div class="log-dot"></div>
+        <div class="log-date mono">06.18〜07.09</div>
+        <div class="log-tag mono">+4</div>
+        <div class="log-msg">コア機能開発・本番デプロイ・仕上げ（4回の活動）</div>
+      </div>
+      <div class="log-row is-now">
+        <div class="log-dot"></div>
+        <div class="log-date mono">07.16</div>
+        <div class="log-tag mono">NOW</div>
+        <div class="log-msg">→ 成果発表①（本日）</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <p class="eyebrow mono">TODAY'S AGENDA</p>
+    <h2>本日の流れ</h2>
+    <p class="lead">本日は、2チームの発表を聞いてください。</p>
+    <div class="agenda">
+      <div class="agenda-item">
+        <div class="agenda-num mono">01</div>
+        <div class="agenda-text">
+          <b>Team 1 発表</b>
+          <span>作ったMVPのデモ + 質疑・フィードバック</span>
+        </div>
+      </div>
+      <div class="agenda-item">
+        <div class="agenda-num mono">02</div>
+        <div class="agenda-text">
+          <b>Team 2 発表</b>
+          <span>作ったMVPのデモ + 質疑・フィードバック</span>
+        </div>
+      </div>
+    </div>
+    <div class="callout">
+      <p>機能を1〜2個に絞ったMVPです。まずはチームで動くものを一周作り切りました。</p>
+      <p>場所を貸してくださっているオプティムの皆さん、いつもありがとうございます。</p>
+    </div>
+  </section>
+
+  <section class="slide">
+    <p class="closing">それでは、<br><span class="accent-line">発表スタート</span>です。</p>
+  </section>
+
+</main>
+
+<nav class="nav">
+  <button class="arrow-btn" id="prev" aria-label="前のスライド">←</button>
+  <div class="dots" id="dots"></div>
+  <button class="arrow-btn" id="next" aria-label="次のスライド">→</button>
+</nav>
+<p class="hint mono">← → で移動</p>
+
+<script>
+  (function () {
+    var deck = document.getElementById('deck');
+    var slides = Array.prototype.slice.call(deck.querySelectorAll('.slide'));
+    var dotsEl = document.getElementById('dots');
+    var counterEl = document.getElementById('counter');
+    var rulerProgress = document.getElementById('ruler-progress');
+    var rulerTicks = document.getElementById('ruler-ticks');
+    var prevBtn = document.getElementById('prev');
+    var nextBtn = document.getElementById('next');
+    var current = 0;
+
+    slides.forEach(function (_, i) {
+      var d = document.createElement('button');
+      d.className = 'dot';
+      d.setAttribute('aria-label', 'スライド ' + (i + 1) + ' へ');
+      d.addEventListener('click', function () { goTo(i); });
+      dotsEl.appendChild(d);
+    });
+    var dots = Array.prototype.slice.call(dotsEl.children);
+
+    for (var t = 0; t <= 10; t++) {
+      var tick = document.createElement('span');
+      tick.style.top = (t * 10) + '%';
+      rulerTicks.appendChild(tick);
+    }
+
+    function pad(n) { return n < 10 ? '0' + n : '' + n; }
+
+    function updateUI(i) {
+      current = i;
+      dots.forEach(function (d, idx) { d.classList.toggle('is-active', idx === i); });
+      counterEl.textContent = pad(i + 1) + ' / ' + pad(slides.length);
+      rulerProgress.style.top = ((i / (slides.length - 1)) * 100) + '%';
+      prevBtn.disabled = i === 0;
+      nextBtn.disabled = i === slides.length - 1;
+    }
+
+    function goTo(i) {
+      i = Math.max(0, Math.min(slides.length - 1, i));
+      deck.scrollTo({ left: i * deck.clientWidth, behavior: 'smooth' });
+    }
+
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting && entry.intersectionRatio > 0.6) {
+          updateUI(slides.indexOf(entry.target));
+        }
+      });
+    }, { root: deck, threshold: [0.6] });
+    slides.forEach(function (s) { io.observe(s); });
+
+    prevBtn.addEventListener('click', function () { goTo(current - 1); });
+    nextBtn.addEventListener('click', function () { goTo(current + 1); });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+        goTo(current + 1); e.preventDefault();
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        goTo(current - 1); e.preventDefault();
+      }
+    });
+
+    var resizeTimer;
+    window.addEventListener('resize', function () {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(function () {
+        deck.scrollTo({ left: current * deck.clientWidth, behavior: 'auto' });
+      }, 120);
+    });
+
+    updateUI(0);
+  })();
+</script>
+
+</body>
+</html>
