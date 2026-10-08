@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>npm と aqua、ツールを入れる仕組み</title>
+<style>
+:root{color-scheme:light;--ink:#18304c;--muted:#455c72;--blue:#164cad;--pale:#edf4fc;--line:#ced9e5;--white:#fff;--code:#eaf0f6;--focus:#b7430d}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:28px}body{margin:0;background:var(--white);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic",Meiryo,sans-serif;font-size:17px;line-height:1.85}::selection{background:#c5dcff;color:#142b46}a{color:var(--blue);text-underline-offset:4px}a:hover{text-decoration-thickness:2px}button,a,summary{touch-action:manipulation}a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid var(--focus);outline-offset:5px}button{font:inherit;cursor:pointer}code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}code{font-size:.87em;overflow-wrap:anywhere;background:var(--code);padding:2px 5px;border-radius:4px}pre{margin:20px 0;padding:22px;background:var(--code);border-radius:12px;white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.7;font-size:14px}pre code{padding:0;background:none;font-size:inherit}h1,h2,h3,p{margin-top:0}h1{font-size:clamp(34px,4.4vw,58px);line-height:1.35;letter-spacing:-.025em;margin-bottom:22px;max-width:880px;text-wrap:balance}h2{font-size:clamp(25px,3vw,34px);line-height:1.5;margin-bottom:24px;text-wrap:balance}h3{font-size:21px;line-height:1.5;margin-bottom:12px}p{margin-bottom:20px}strong{font-weight:700}header{max-width:1080px;margin:auto;padding:27px 40px 20px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:20px;align-items:center}header .name{font-weight:700;font-size:16px}nav{display:flex;flex-wrap:wrap;gap:12px 22px;font-size:14px}main{max-width:1080px;margin:auto;padding:54px 40px 72px}.intro{max-width:740px;font-size:20px;line-height:1.8;margin-bottom:28px}.date{font-size:13px;color:var(--muted)}section{margin-top:64px}section:first-of-type{margin-top:36px}.prose{max-width:750px}.roles{display:grid;grid-template-columns:1fr 1fr 1fr;gap:30px;margin:28px 0}.roles>div{border-top:2px solid var(--ink);padding-top:17px}.roles dt{font-size:24px;font-weight:700;margin-bottom:9px}.roles dd{margin:0}.roles small{display:block;color:var(--muted);font-size:14px;margin-top:12px}.diagram{background:var(--pale);padding:28px;border-radius:16px}.switch{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:25px}.switch button{border:1px solid #a9bbd1;border-radius:8px;padding:10px 15px;background:var(--white);color:var(--ink);font-size:15px;min-height:44px}.switch button[aria-pressed=true]{background:var(--blue);border-color:var(--blue);color:var(--white)}.switch button:hover{box-shadow:inset 0 0 0 1px currentColor}.phase{display:grid;grid-template-columns:108px 1fr;gap:22px;align-items:center;padding:20px 0}.phase+.phase{border-top:1px solid #b9cce2}.phase-label{font-weight:700;line-height:1.65}.phase-label small{font-weight:400;display:block;font-size:13px;color:var(--muted)}.path{display:flex;gap:12px;align-items:stretch}.part{flex:1;min-width:0;background:var(--white);border:1px solid #bfd1e6;padding:16px;border-radius:10px;display:flex;flex-direction:column;justify-content:center;line-height:1.6}.part b{display:block;font-size:18px;margin-bottom:6px}.part span{font-size:13px;color:var(--muted)}.arrow{width:22px;align-self:center;flex-shrink:0;height:2px;background:var(--blue);position:relative}.arrow:after{content:"";position:absolute;right:0;top:-4px;width:8px;height:8px;border-top:2px solid var(--blue);border-right:2px solid var(--blue);transform:rotate(45deg)}.flow-note{margin:18px 0 0;font-size:15px;min-height:56px}.mise-note{padding:15px 0 0;margin:18px 0 0;border-top:1px solid #b9cce2;font-size:14px;color:var(--muted)}.source{font-size:13px;color:var(--muted);margin-top:16px}.source a{white-space:normal}.split{display:grid;grid-template-columns:1fr 1fr;gap:36px}.example{border-top:1px solid var(--line);padding-top:20px}.example p{font-size:16px}.emphasis{font-size:23px;color:var(--blue);line-height:1.6;margin:30px 0}.checks{padding-left:24px}.checks li{padding:5px 0}.table-hint{display:none}.table-wrap{overflow-x:auto;margin:20px 0}table{border-collapse:collapse;width:100%;font-size:15px;line-height:1.7}caption{text-align:left;font-size:21px;font-weight:700;padding-bottom:15px}th{text-align:left;background:var(--pale);font-weight:700}td,th{padding:17px 16px;border-bottom:1px solid var(--line);vertical-align:top}td:first-child{font-weight:700;width:22%}td:nth-child(2){width:34%}td small{display:block;font-weight:400;color:var(--muted);font-size:13px}details{border-top:1px solid var(--line);padding:20px 0}details:last-of-type{border-bottom:1px solid var(--line)}summary{cursor:pointer;font-size:18px;font-weight:700;padding-right:8px}details p{margin:15px 0 0;max-width:750px;font-size:16px}.decision{display:grid;grid-template-columns:1fr 1fr;gap:30px}.decision>div{border-top:2px solid var(--blue);padding-top:20px}.sources{display:grid;grid-template-columns:1fr 1fr;gap:12px 30px;padding-left:20px;font-size:14px}.sources li{padding-left:3px}footer{border-top:1px solid var(--line);font-size:13px;color:var(--muted);padding-top:20px;margin-top:55px}.visually-hidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}@media(max-width:720px){body{font-size:16px}header{padding:20px;display:block}nav{margin-top:10px}main{padding:36px 20px 50px}section{margin-top:48px}.intro{font-size:18px}.roles{grid-template-columns:1fr;gap:20px}.roles dt{font-size:22px}.split,.decision,.sources{grid-template-columns:1fr;gap:20px}.diagram{padding:20px}.phase{grid-template-columns:1fr;gap:12px}.phase-label small{display:inline;margin-left:10px}.path{flex-direction:column;gap:14px}.part{padding:14px}.arrow{transform:rotate(90deg);height:2px;width:18px;margin:4px 0}.flow-note{min-height:0}td,th{padding:13px 10px}table{min-width:560px}.table-hint{display:block;font-size:13px;color:var(--muted);margin-bottom:10px}caption{width:calc(100vw - 40px)}.emphasis{font-size:21px}}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}@media print{nav,.switch{display:none}main{max-width:none;padding:20px}header{padding:0 20px}section{break-inside:avoid;margin-top:30px}.diagram{print-color-adjust:exact}a{color:inherit}details p{display:block}.table-wrap{overflow:visible}table{min-width:0}}
+</style>
+</head>
+<body>
+<header><div class="name">ツールを入れる仕組み</div><nav aria-label="目次"><a href="#roles">役割</a><a href="#paths">経路を比べる</a><a href="#error">今回のエラー</a><a href="#choices">他の選択肢</a><a href="#names">名前の背景</a></nav></header>
+<main>
+<h1>npm と aqua、<br>ツールを入れる仕組み</h1>
+<p class="intro">npm は、公開されたプログラムを取得して使えるようにする道具です。Node.js は、JavaScript で書かれたプログラムを動かします。aqua は、あなたの OS と CPU に合った実行ファイルを取得します。</p>
+<p class="prose">パソコンの基本機能を管理する仕組みが <strong>OS</strong> です。Mac では macOS がその役割を担います。計算処理を行う部品が <strong>CPU</strong> です。今回の「実行ファイル」は、Mac が起動できる形に用意されたプログラムを指します。</p>
+<p class="date">2026年10月8日確認 · Apple Silicon の Mac と、今回の mise 設定を例にしています。</p>
+
+<section id="roles" aria-labelledby="roles-title">
+<h2 id="roles-title">入れる役割と、動かす役割を分ける</h2>
+<dl class="roles">
+<div><dt>npm</dt><dd>プログラムを取得し、そのプログラムが使う別のプログラムも一緒にそろえます。こうした取得・更新・削除を扱う道具を<strong>パッケージマネージャー</strong>と呼びます。</dd><small>npm は、コマンドの名前でも、プログラムの配布サービスの名前でもあります。</small></div>
+<div><dt>Node.js</dt><dd>JavaScript という言語で書かれたプログラムを、インターネット上の文書を表示するブラウザの外で動かします。プログラムの実行に必要な仕組みを<strong>ランタイム</strong>と呼びます。</dd><small>npm 自体も Node.js で動きます。</small></div>
+<div><dt>mise</dt><dd>どのツールの、どのバージョンを使うかを設定で管理します。バージョンは、公開された版を区別する名前や番号です。取得方法は <code>npm:</code> や <code>aqua:</code> などから選べます。</dd><small>mise は、取得する方法と、使用するバージョンをまとめて管理します。</small></div>
+</dl>
+<p class="source">役割の根拠：<a href="https://docs.npmjs.com/about-npm">npm 公式</a> · <a href="https://nodejs.org/en/learn/getting-started/introduction-to-nodejs">Node.js 公式</a> · <a href="https://mise.jdx.dev/dev-tools/backends/">mise の取得方法</a></p>
+</section>
+
+<section id="paths" aria-labelledby="paths-title">
+<h2 id="paths-title">同じ「npm で入れる」でも、動き方は違う</h2>
+<p class="prose">図の例を選ぶと、インストール時と実行時の経路が変わります。「何で入れたか」だけでは、「動かすために何が必要か」は決まりません。</p>
+<div class="diagram">
+<div class="switch" role="group" aria-label="図の例を選ぶ">
+<button type="button" data-flow="js" aria-pressed="true">npm で入れる czg</button>
+<button type="button" data-flow="npm-native" aria-pressed="false">npm で入れる Codex</button>
+<button type="button" data-flow="aqua" aria-pressed="false">aqua で入れる Codex</button>
+</div>
+<div class="phase"><div class="phase-label">インストール<small>使えるようにする</small></div><div class="path" id="install-path"><div class="part"><b>npm の配布サービス</b><span>czg と、必要なプログラムを公開</span></div><span class="arrow" aria-hidden="true"></span><div class="part"><b>npm が取得・配置</b><span>czg コマンドを用意</span></div><span class="arrow" aria-hidden="true"></span><div class="part"><b>Mac に保存</b><span>JavaScript のプログラム</span></div></div></div>
+<div class="phase"><div class="phase-label">実行<small>ツールを動かす</small></div><div class="path" id="run-path"><div class="part"><b>czg を入力</b><span>ターミナルから起動</span></div><span class="arrow" aria-hidden="true"></span><div class="part"><b>Node.js</b><span>保存されたプログラムを読む</span></div><span class="arrow" aria-hidden="true"></span><div class="part"><b>czg が動く</b><span>変更履歴に添える説明文を作成</span></div></div></div>
+<p class="flow-note" id="flow-note">czg は JavaScript で動くツールです。インストールが終わった後も、動かすために Node.js が必要です。</p>
+<p class="mise-note">mise の <code>npm:</code> は npm の配布サービスから取得する指定です。この Mac の mise は、実際の取得・配置に内蔵の <strong>aube</strong> を使っていました。上の npm の図は、npm コマンドで直接入れる場合の経路です。</p>
+<p class="visually-hidden" id="flow-announcement" aria-live="polite"></p>
+<noscript><p>このブラウザでは切り替え操作が無効です。表示中の czg の例と、以下の本文で比較できます。</p></noscript>
+</div>
+<p class="source">czg：<a href="https://github.com/Zhengqbbb/cz-git">公式の配布方法</a> · Codex：今回の起動ファイルと取得結果を確認 · aube：<a href="https://mise.jdx.dev/dev-tools/backends/npm.html">mise 公式</a></p>
+</section>
+
+<section id="npm" aria-labelledby="npm-title">
+<h2 id="npm-title">なぜ npm でツールを入れられるのか</h2>
+<div class="prose">
+<p>用途に沿って使うプログラムを、ここでは <strong>アプリ</strong> と呼びます。プログラムの動作を記述した命令が <strong>コード</strong> です。</p>
+<p>npm では、プログラムと、その名前・バージョン・必要な部品をまとめて配布します。この配布単位を<strong>パッケージ</strong>と呼びます。部品として組み込むプログラムだけでなく、ターミナルから使うツールも配布できます。</p>
+<p>作者が「このファイルを、このコマンド名で起動する」と指定しておくと、npm がそのコマンドを使えるように配置します。ツールが使う別のパッケージも、作者の指定に合わせて取得します。こうした別のパッケージとの関係が<strong>依存関係</strong>です。</p>
+<p class="emphasis">npm が必要かどうかは、<br>作者の配布方法と、ツールの動き方で決まります。</p>
+<p>npm からだけ配布され、Node.js で動くツールなら、npm 系の取得方法が自然です。一方、作者が OS ごとの実行ファイルを公開していれば、aqua などで直接取得できる場合があります。</p>
+<p>CPU が直接実行できる形に用意されたプログラムを<strong>ネイティブ版</strong>と呼びます。npm からネイティブ版を配布することもできます。今回の Codex と、現在の Claude Code がその例です。ネイティブ版でも、OS の機能や、別のプログラムの部品が必要な場合はあります。</p>
+</div>
+<div class="split">
+<div class="example"><h3>自分がコマンドとして使う</h3><pre><code>npm install -g czg</code></pre><p><code>-g</code> は、開発中のアプリの外で使うための指定です。実際にコマンドを見つけるには、保存先がコマンドを実行するときの検索対象に入っている必要があります。その検索先の一覧を <strong>PATH</strong> と呼びます。</p></div>
+<div class="example"><h3>開発中のアプリに部品を入れる</h3><pre><code>npm install lodash</code></pre><p>これは、数値や文字の集まりを加工する部品の lodash を入れる説明用の例です。アプリが使う部品を、そのアプリのファイル群に追加します。ツールを普段使いするためのインストールとは、管理する場所と目的が違います。</p></div>
+</div>
+<p class="source">根拠：<a href="https://docs.npmjs.com/cli/v11/configuring-npm/package-json/#bin">コマンドの指定</a> · <a href="https://docs.npmjs.com/cli/v11/configuring-npm/package-json/#dependencies">依存関係</a> · <a href="https://code.claude.com/docs/en/setup#install-with-npm">Claude Code の npm 版</a></p>
+</section>
+
+<section id="error" aria-labelledby="error-title">
+<h2 id="error-title">今回の Codex は、起動先が欠けていた</h2>
+<pre><code>Missing optional dependency @openai/codex-darwin-arm64</code></pre>
+<div class="prose">
+<p>Apple Silicon に対応する CPU の種類は <code>arm64</code> と表記されます。Mac 用の配布物では、OS を <code>darwin</code> や <code>macos</code> と表すことがあります。<code>darwin-arm64</code> は、この二つを組み合わせた環境の名前です。</p>
+<p>npm 版 Codex 0.161.0 は、起動用の JavaScript と、OS・CPU ごとの実行ファイルを別のパッケージとして配布していました。あなたの Mac では、起動用のファイルはあるのに、Apple Silicon 用の実行ファイルが見つからず停止しました。</p>
+<p><code>optional dependency</code> は、取得に失敗しても全体のインストールを続けられる依存パッケージです。別の OS や CPU 用の、不要な版を入れずに済む仕組みですが、<strong>自分の環境用の版は実行に必要</strong>です。</p>
+<ul class="checks"><li>この Mac の CPU は <code>arm64</code> で、Node.js もその CPU 用の版でした。</li><li>0.161.0 の取得記録には、必要な <code>darwin-arm64</code> がありませんでした。</li><li>aqua から Apple Silicon 用の配布ファイルを取得すると、Codex は起動しました。</li></ul>
+<p>aqua 経由では、npm 側で OS 別の依存パッケージをそろえる手順を経ずに取得できます。ただし、元の欠落が「配布情報・取得情報の一時保存・mise/aube による依存パッケージの選択」のどこで起きたかは、今回の記録だけでは断定できません。</p>
+<p class="source">この節の根拠は、今回の Mac 内の調査と起動確認です。optional dependency の仕組み：<a href="https://docs.npmjs.com/cli/v11/configuring-npm/package-json/#optionaldependencies">npm 公式</a></p>
+</div>
+</section>
+
+<section id="choices" aria-labelledby="choices-title">
+<h2 id="choices-title">選択肢は、何を取得したいかで分ける</h2>
+<p class="prose">「npm の代わり」と「別の配布元を使う」は違います。pnpm に変えても、取得元は npm の配布サービスです。aqua に変えると、公開された実行ファイルを取得する経路になります。</p>
+<p class="table-hint">表を横に動かすと「選ぶ場面」まで読めます。</p><div class="table-wrap" tabindex="0" role="region" aria-label="npm の取得方法の比較表。横に動かせます"><table><caption>npm の配布サービスを使う選択肢</caption><thead><tr><th scope="col">道具</th><th scope="col">何をするか</th><th scope="col">選ぶ場面</th></tr></thead><tbody>
+<tr><td>npm</td><td>パッケージを取得し、依存関係をそろえる。</td><td>作者の案内が npm、または開発中のアプリが npm を使っている。</td></tr>
+<tr><td>pnpm</td><td>同じ配布サービスを利用。取得した部品を共有して、保存容量を抑える。</td><td>複数の JavaScript アプリを開発する。すでに pnpm で管理している。</td></tr>
+<tr><td>Yarn</td><td>JavaScript アプリのパッケージと依存関係を管理する。</td><td>開発中のアプリやチームが Yarn を採用している。</td></tr>
+<tr><td>Bun</td><td>パッケージの取得と、JavaScript を動かす機能を両方持つ。</td><td>Bun を前提とするアプリの開発。既存ツールとの対応は個別に確認する。</td></tr>
+<tr><td>aube<small>この Mac の mise に内蔵</small></td><td>mise の <code>npm:</code> ツールについて、パッケージの取得・配置を担当する。</td><td>mise の標準設定で npm ツールを入れる。普段は意識しなくてよい。</td></tr>
+</tbody></table></div>
+<p class="source">公式説明：<a href="https://pnpm.io/motivation">pnpm</a> · <a href="https://yarnpkg.com/getting-started">Yarn</a> · <a href="https://bun.sh/docs">Bun</a> · <a href="https://mise.jdx.dev/dev-tools/backends/npm.html">mise と aube</a></p>
+<p class="prose">コードや配布ファイルを公開するサービスに <strong>GitHub</strong> があります。そこで作者が版ごとに公開する配布物が <strong>リリース</strong> です。ファイルの公開先を示すアドレスを <strong>URL</strong> と呼びます。</p>
+<p class="table-hint">表を横に動かすと「選ぶ場面」まで読めます。</p><div class="table-wrap" tabindex="0" role="region" aria-label="実行ファイルの取得方法の比較表。横に動かせます"><table><caption>実行ファイルやアプリを取得する選択肢</caption><thead><tr><th scope="col">道具・取得方法</th><th scope="col">何をするか</th><th scope="col">選ぶ場面</th></tr></thead><tbody>
+<tr><td>aqua</td><td>ツールごとの取得ルールを使い、OS・CPU に合う配布ファイルを選ぶ。mise から利用できる。</td><td>Codex や Claude Code など、実行ファイルが配布され、aqua に登録されているツール。</td></tr>
+<tr><td>mise の github: / http:</td><td>GitHub のリリースや指定 URL から取得する。ツールによってファイル名などの指定が必要。</td><td>aqua に登録がなくても、実行ファイルの公開先が分かっている。</td></tr>
+<tr><td>mise の packslip:</td><td>作者が公開する配布情報を使う。その情報が作者のものかも確かめて取得する。</td><td>そのツールが packslip の配布情報を提供している。</td></tr>
+<tr><td>Homebrew</td><td>Mac で使うコマンドやアプリ、必要な部品を管理する。完成済みのものを取得する場合と、作者のコードから作る場合がある。</td><td>画面を操作して使うアプリや共通の部品を含め、Mac の環境を整える。現在の dotfiles でも使用中。</td></tr>
+<tr><td>作者の公式インストーラー</td><td>作者が配るインストール用のプログラムで入れる。ツールによって更新も担当する。</td><td>作者推奨の管理方法を使う。mise で版をそろえる運用とは、どちらが更新するかを決める。</td></tr>
+</tbody></table></div>
+<p class="source">取得方法：<a href="https://mise.jdx.dev/dev-tools/backends/">mise 公式</a> · <a href="https://mise.jdx.dev/dev-tools/backends/aqua.html">aqua の仕組み</a> · <a href="https://docs.brew.sh/Formula-Cookbook">Homebrew</a> · <a href="https://code.claude.com/docs/en/setup">Claude Code の公式インストーラー</a></p>
+<div class="prose"><h3>別の言語で作られたツールにも、専用の方法がある</h3><p>プログラムを書く言語には、JavaScript のほかに Python・Rust・Go などがあります。Python のツールなら <strong>pipx</strong> などで、ツールごとに必要な部品を分けて入れられます。Rust なら <strong>Cargo</strong>、Go なら <code>go install</code> でプログラムを実行ファイルに作り直して入れられます。この作業を<strong>ビルド</strong>と呼びます。mise にも <code>pipx:</code>、<code>cargo:</code>、<code>go:</code> があります。</p><p>完成した実行ファイルが用意されているなら、それを取得すればビルドの手間を省けます。ただし、どの OS・CPU に対応するかはツールごとに違います。</p><p class="source">根拠：<a href="https://pipx.pypa.io/stable/">pipx</a> · <a href="https://doc.rust-lang.org/cargo/commands/cargo-install.html">Cargo</a> · <a href="https://go.dev/doc/go-get-install-deprecation">go install</a></p></div>
+</section>
+
+<section id="names" aria-labelledby="names-title">
+<h2 id="names-title">名前には、どんな背景があるのか</h2>
+<div class="prose">
+<p>名前そのものの意味と、作者がその名前を選んだ理由は分けて確認しました。公式に説明されている由来と、資料からの解釈を区別して載せています。</p>
+<h3>Node.js：通信でつながる「接続点」</h3>
+<p><strong>node</strong> は、何かがつながる点を表す英語です。コンピューターの通信では、つながった機器や、処理を担う一つのプログラムを node と呼ぶことがあります。</p>
+<p>作者の Ryan Dahl は2011年のインタビューで、Node を複数のプログラムが通信しながら大きな処理を行うための土台と説明し、それらを「nodes」と呼んでいます。<strong>一つの処理を担う接続点を作り、それらをつなぐ</strong>という考え方と結び付けて、名前を理解できます。</p>
+<p>これは作者の説明からの解釈です。このインタビューには「この理由で Node と命名した」という明言はないため、命名理由として断定はしていません。<code>.js</code> は JavaScript を連想させる表記ですが、ここで特定のファイルを指しているわけではありません。</p>
+<p class="source">単語の意味：<a href="https://www.merriam-webster.com/dictionary/node">Merriam-Webster</a> · 作者の説明：<a href="https://web.archive.org/web/20160304014940/http://bostinno.streetwise.co/2011/01/31/node-js-interview-4-questions-with-creator-ryan-dahl/">Ryan Dahl インタビューの保存版（2011年1月31日）</a></p>
+<h3>aqua：単語は「水」、採用理由は未確認</h3>
+<p><strong>aqua</strong> はラテン語に由来する「水」を表す単語です。ただし、このツールの作者が何を意図して aqua という名前を選んだのかは、今回確認した公式の紹介文・よくある質問と回答・作者の紹介記事には説明がありませんでした。</p>
+<p>そのため、<strong>単語の意味は確認済み、ツールの命名理由は未確認</strong>としています。単語の意味だけで、作者がこの名前を選んだ理由までは分かりません。</p>
+<p class="source">単語の意味：<a href="https://www.merriam-webster.com/dictionary/aqua">Merriam-Webster</a> · 確認した資料：<a href="https://github.com/aquaproj/aqua">公式の紹介文</a> · <a href="https://aquaproj.github.io/docs/faq/">公式のよくある質問と回答</a> · <a href="https://zenn.dev/shunsuke_suzuki/articles/what-is-aqua">作者の紹介記事</a></p>
+<h3>mise：料理を始める前に準備を整える</h3>
+<p><strong>mise</strong> は、フランス語の <strong>mise-en-place</strong> に由来します。料理を始める前に、材料や道具を使える状態にそろえておくことを表します。</p>
+<p>開発でも、作業の前にツール・設定・コマンドを用意します。料理の準備と、開発環境の準備を重ねた名前です。この由来は公式サイトで説明されています。</p>
+<p class="source">由来：<a href="https://mise.jdx.dev/about.html">mise 公式 About</a></p>
+<h3>npm：「Node Package Manager」の略ではない</h3>
+<p>役割から npm を <strong>Node Package Manager</strong> の略だと思いやすいのですが、公式の紹介文 はその説明を否定しています。前身は、プログラムを入れるための <strong>pm</strong> という道具で、その名前は <strong>pkgmakeinst</strong> を短くしたものでした。公式の紹介文は、名前を略として読む場合の候補として <strong>node pm</strong> や <strong>new pm</strong> も挙げています。ただし、どちらかを正式名称とする説明ではありません。</p>
+<p>公式には、<strong>npm is not an acronym</strong>、つまり「npm は頭文字を並べた略語ではない」という言葉遊びも紹介されています。機能はパッケージ管理ですが、名前の由来を単純に Node Package Manager と説明すると正確ではありません。</p>
+<p class="source">由来：<a href="https://github.com/npm/cli/blob/latest/README.md#faq-on-branding">npm 公式の紹介文の名前についての説明</a></p>
+<h3>pnpm：「効率よく動く npm」</h3>
+<p><strong>pnpm</strong> は <strong>performant npm</strong> の略です。performant は、性能がよく効率的に動くことを表します。名前を考えたのは <strong>@rstacruz</strong> で、この点も公式のよくある質問と回答 に記載されています。</p>
+<p class="source">由来：<a href="https://pnpm.io/faq#what-does-pnpm-stand-for">pnpm 公式のよくある質問と回答</a></p>
+</div>
+</section>
+
+<section id="your-tools" aria-labelledby="your-tools-title">
+<h2 id="your-tools-title">あなたの設定では、この使い分けにした</h2>
+<div class="decision"><div><h3>aqua に移行</h3><p><strong>Codex と Claude Code</strong><br>Apple Silicon 用の実行ファイルを直接取得します。mise でバージョンを管理する方針を維持しました。</p><p>確認結果：Codex <code>0.161.0</code>、Claude Code <code>2.1.293</code>。どちらも <code>arm64</code> で、バージョンと使い方の表示を確認しました。</p></div><div><h3>npm を維持</h3><p><strong>czg と Cloudflare の cf</strong><br>czg は変更履歴に添える説明文を作るツールです。cf は、インターネット上のページなどの公開・運用を支援する Cloudflare のサービスを操作します。どちらも、今回確認したインストールでは Node.js を使います。npm の配布を利用する方法が自然です。</p><p>mise の短い名前 <code>cf</code> は 別の製品のツールを指します。Cloudflare の方は <code>npm:cf</code> と明示します。</p></div></div>
+<pre><code>[tools]
+"aqua:anthropics/claude-code" = { version = "latest", minimum_release_age = "0s" }
+"aqua:openai/codex" = { version = "latest", minimum_release_age = "1h", os = ["macos/arm64"] }
+"npm:czg" = "1.14.0"
+"npm:cf" = "latest"</code></pre>
+<p class="prose"><code>latest</code> は、条件に合う最新の版を選ぶ指定です。<code>minimum_release_age</code> は公開後に待つ時間で、<code>1h</code> は1時間、<code>0s</code> は待たずに選ぶ指定です。<code>os = ["macos/arm64"]</code> は、このツールをその環境だけで有効にする条件です。OS 別の依存パッケージを強制的に選び直す設定ではありません。</p>
+<p class="source">根拠：今回の設定と実行結果 · <a href="https://mise.jdx.dev/dev-tools/index.html#os-architecture-combinations">mise の OS・CPU 条件</a> · <a href="https://github.com/aquaproj/aqua-registry/blob/main/pkgs/anthropics/claude-code/registry.yaml">Claude Code の aqua 登録</a></p>
+</section>
+
+<section id="faq" aria-labelledby="faq-title"><h2 id="faq-title">混ざりやすい疑問</h2>
+<details open><summary>全部 aqua にそろえた方がよい？</summary><p>ツールの配布方法に合わせて選びます。JavaScript の部品を npm から取得する仕事は、aqua では置き換えられません。mise の中で npm と aqua を併用して問題ありません。</p></details>
+<details><summary>npm で入れるなら、実行にも npm が必要？</summary><p>npm は取得する役割です。JavaScript のツールなら実行時に Node.js が必要です。ネイティブ版なら、実行時に Node.js を必要としないことがあります。今回の npm 版 Codex は、起動用 JavaScript に Node.js を使っていました。現在の Claude Code の npm 版は、取得後にネイティブ版を直接起動します。</p></details>
+<details><summary>mise の npm: は、必ず npm コマンドを呼ぶ？</summary><p>必ずではありません。現在の mise は、標準で内蔵の aube を使って取得します。そのため、取得するだけなら Node.js や npm が別途なくても動きます。ただし、取得したツールが Node.js を必要とするなら、実行のために Node.js を用意します。<a href="https://mise.jdx.dev/dev-tools/backends/npm.html">mise 公式</a></p></details>
+<details><summary>aqua 自体もインストールする必要がある？</summary><p>mise の aqua 経由を使うときは不要です。mise 自身が aqua の登録情報を読み、配布ファイルを取得します。aqua という独立したツールもありますが、今回の運用ではそれを起動しません。<a href="https://mise.jdx.dev/dev-tools/backends/aqua.html">mise 公式</a></p></details>
+<details><summary>npx は何をするもの？</summary><p>npm パッケージのコマンドを、その場で実行する入口です。手元に必要なパッケージがない場合は、取得して保存してから実行します。「取得せずに動く」という意味ではありません。<a href="https://docs.npmjs.com/cli/v11/commands/npm-exec/">npm 公式</a></p></details>
+<details><summary>Homebrew と mise はどちらを使う？</summary><p>現在の dotfiles は、画面を操作して使うアプリや共通の部品を Homebrew、ランタイムや開発用のコマンドを mise で管理する方針です。mise はツールの版を設定に残し、開発するアプリごとに使い分けたい場合に向いています。今回もこの方針に合わせています。</p></details>
+</section>
+<footer>この資料の一般的な仕組みは本文中の公式資料に基づきます。あなたの環境に関する記述は、2026年10月8日の設定・取得記録・起動確認に基づきます。設定例は実施済みの内容で、HTML のボタンは図の表示だけを変えます。</footer>
+</main>
+<script>
+const examples={
+js:{install:[["npm の配布サービス","czg と、必要なプログラムを公開"],["npm が取得・配置","czg コマンドを用意"],["Mac に保存","JavaScript のプログラム"]],run:[["czg を入力","ターミナルから起動"],["Node.js","保存されたプログラムを読む"],["czg が動く","変更履歴に添える説明文を作成"]],note:"czg は JavaScript で動くツールです。インストールが終わった後も、動かすために Node.js が必要です。"},
+"npm-native":{install:[["npm の配布サービス","起動用ファイルと OS 別の版を公開"],["npm が取得・配置","Mac の CPU に合う版も必要"],["Mac に保存","起動用 JavaScript と実行ファイル"]],run:[["codex を入力","ターミナルから起動"],["Node.js","起動用ファイルを実行"],["Codex の実行ファイル","Apple Silicon 用の版が動く"]],note:"npm 版 Codex 0.161.0 の例です。Node.js は起動を担当し、処理は別の実行ファイルが担います。今回は最後の実行ファイルが欠けていました。"},
+aqua:{install:[["作者の配布先","OS・CPU ごとの完成済みファイル"],["mise の aqua 経由","登録ルールから arm64 版を選ぶ"],["Mac に保存","Codex の実行ファイル"]],run:[["codex を入力","ターミナルから起動"],["Mac が直接起動","OS が実行ファイルを読み込む"],["Codex が動く","Node.js による起動は不要"]],note:"aqua 版 Codex の例です。npm パッケージの依存関係をそろえる経路を経ずに、Apple Silicon 用の実行ファイルを取得します。"}
+};
+function renderPath(id,parts){const target=document.getElementById(id);target.replaceChildren();parts.forEach(([title,description],index)=>{if(index){const arrow=document.createElement("span");arrow.className="arrow";arrow.setAttribute("aria-hidden","true");target.append(arrow)}const block=document.createElement("div");block.className="part";const heading=document.createElement("b");heading.textContent=title;const text=document.createElement("span");text.textContent=description;block.append(heading,text);target.append(block)})}
+document.querySelectorAll("[data-flow]").forEach(button=>button.addEventListener("click",()=>{const example=examples[button.dataset.flow];document.querySelectorAll("[data-flow]").forEach(other=>other.setAttribute("aria-pressed",String(other===button)));renderPath("install-path",example.install);renderPath("run-path",example.run);document.getElementById("flow-note").textContent=example.note;document.getElementById("flow-announcement").textContent=button.textContent+"。"+example.note}));
+</script>
+</body>
+</html>
